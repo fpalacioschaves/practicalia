@@ -92,10 +92,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['accion'] ?? '') === 'guard
       $stChkP = $pdo->prepare("
         SELECT curso_id
         FROM cursos_profesores
-        WHERE profesor_id = :p AND curso_id IN ($inMarks)
+        WHERE profesor_id = ? AND curso_id IN ($inMarks)
       ");
-      $stChkP->bindValue(':p', $profId, PDO::PARAM_INT);
-      foreach ($cursosIds as $i => $val) $stChkP->bindValue($i + 1, $val, PDO::PARAM_INT);
+      $stChkP->bindValue(1, $profId, PDO::PARAM_INT);
+      foreach ($cursosIds as $i => $val) {
+        $stChkP->bindValue($i + 2, $val, PDO::PARAM_INT);
+      }
       $stChkP->execute();
       $permisos = array_map('intval', $stChkP->fetchAll(PDO::FETCH_COLUMN));
       sort($permisos); sort($cursosIds);
