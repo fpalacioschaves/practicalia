@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <title>Redirigiendo…</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Fallback por si JS tarda o está desactivado -->
+  <meta http-equiv="refresh" content="0; url=/public/">
+  <link rel="canonical" href="/public/">
+  <style>
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;display:grid;place-items:center;height:100vh;margin:0;background:#f8fafc;color:#0f172a}
+    .card{background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:24px;box-shadow:0 10px 20px rgba(0,0,0,.04)}
+    .muted{color:#64748b;font-size:14px;margin-top:8px}
+  </style>
+  <script>
+    (function () {
+      // Si estás en un subdirectorio distinto, ajusta la ruta aquí
+      var target = "/public/";
+      // Mantén el esquema y host actuales
+      var url = window.location.origin + target;
+      window.location.replace(url);
+    })();
+  </script>
+</head>
+<body>
+  <div class="card">
+    <div>Redirigiendo a <strong>/public/</strong>…</div>
+    <div class="muted">Si no ocurre automáticamente, <a href="/public/">haz clic aquí</a>.</div>
+  </div>
+</body>
+</html>
