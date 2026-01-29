@@ -6,50 +6,29 @@ require_once __DIR__ . '/../../middleware/require_staff.php';
 require_once __DIR__ . '/../../lib/auth.php';
 
 $user = current_user();
-$profId = (int)($user['id'] ?? 0); // admin o profe; se registra tu id
+$profId = (int) ($user['id'] ?? 0);
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-  http_response_code(405); exit('Método no permitido');
+  http_response_code(405);
+  exit('Método no permitido');
 }
+
+$alumnoService = new \App\Services\AlumnoService($pdo);
 
 try {
   csrf_check($_POST['csrf'] ?? null);
 
-  $alumnoId = (int)($_POST['alumno_id'] ?? 0);
-  $tipo     = trim($_POST['tipo'] ?? 'otro');
-  $resumen  = trim($_POST['resumen'] ?? '');
-  $notas    = trim($_POST['notas'] ?? '');
+  $alumnoId = (int) ($_POST['alumno_id'] ?? 0);
+  if ($alumnoId <= 0)
+    throw new RuntimeException('Alumno inválido');
 
-  if ($alumnoId <= 0) throw new RuntimeException('Alumno inválido');
-  if ($resumen === '') throw new RuntimeException('Resumen obligatorio.');
-
-  $tipos = ['llamada','email','tutoria','visita','otro'];
-  if (!in_array($tipo, $tipos, true)) $tipo = 'otro';
-
-  // Verificar acceso al alumno (si es profe)
-  if (!require_role('admin')) {
-    $st = $pdo->prepare("
-      SELECT 1
-      FROM alumnos a
-      JOIN alumnos_cursos ac ON ac.alumno_id = a.id
-      JOIN cursos_profesores cp ON cp.curso_id = ac.curso_id AND cp.profesor_id = :pid
-      WHERE a.id = :id AND a.deleted_at IS NULL
-      LIMIT 1
-    ");
-    $st->execute([':pid'=>$profId, ':id'=>$alumnoId]);
-    if (!$st->fetch()) throw new RuntimeException('No puedes añadir contacto a este alumno.');
+  if (!$alumnoService->checkAccess($alumnoId, $isAdmin, $profId)) {
+    throw new RuntimeException('No puedes añadir contacto a este alumno.');
   }
 
-  $stIns = $pdo->prepare('
-    INSERT INTO alumno_contactos (alumno_id, profesor_id, tipo, resumen, notas)
-    VALUES (:a,:p,:t,:r,:n)
-  ');
-  $stIns->execute([
-    ':a'=>$alumnoId, ':p'=>$profId, ':t'=>$tipo,
-    ':r'=>$resumen, ':n'=>($notas!==''?$notas:null)
-  ]);
+  $alumnoService->createContacto($alumnoId, $profId, $_POST);
 
-  header('Location: ./edit.php?id='.$alumnoId);
+  header('Location: ./edit.php?id=' . $alumnoId);
   exit;
 
 } catch (Throwable $e) {

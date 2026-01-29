@@ -6,7 +6,7 @@ require_once __DIR__ . '/../../middleware/require_auth.php';
 require_once __DIR__ . '/../../lib/auth.php';
 
 $user = current_user();
-$id   = (int)$user['id'];
+$id = (int) $user['id'];
 
 $error = '';
 $success = '';
@@ -15,27 +15,30 @@ $success = '';
 $stU = $pdo->prepare('SELECT id, nombre, email, centro_id FROM usuarios WHERE id = :id LIMIT 1');
 $stU->execute([':id' => $id]);
 $dbUser = $stU->fetch();
-if (!$dbUser) { http_response_code(404); exit('Usuario no encontrado'); }
+if (!$dbUser) {
+  http_response_code(404);
+  exit('Usuario no encontrado');
+}
 
 /** Listas para los selects */
 $centros = $pdo->query("SELECT id, nombre, ciudad FROM centros ORDER BY nombre")->fetchAll();
 /* cursos SIN deleted_at */
-$cursos  = $pdo->query("SELECT id, nombre FROM cursos ORDER BY nombre")->fetchAll();
+$cursos = $pdo->query("SELECT id, nombre FROM cursos ORDER BY nombre")->fetchAll();
 
 /** Curso actual (si existe relación) */
 $stCP = $pdo->prepare("SELECT curso_id FROM cursos_profesores WHERE profesor_id = :p ORDER BY curso_id LIMIT 1");
 $stCP->execute([':p' => $id]);
-$cursoActual = (int)($stCP->fetch()['curso_id'] ?? 0);
+$cursoActual = (int) ($stCP->fetch()['curso_id'] ?? 0);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   try {
     csrf_check($_POST['csrf'] ?? null);
 
-    $nombre   = trim($_POST['nombre'] ?? '');
-    $email    = trim($_POST['email'] ?? '');
-    $pass     = trim($_POST['password'] ?? '');
-    $centroId = (int)($_POST['centro_id'] ?? 0);
-    $cursoId  = (int)($_POST['curso_id'] ?? 0);
+    $nombre = trim($_POST['nombre'] ?? '');
+    $email = trim($_POST['email'] ?? '');
+    $pass = trim($_POST['password'] ?? '');
+    $centroId = (int) ($_POST['centro_id'] ?? 0);
+    $cursoId = (int) ($_POST['curso_id'] ?? 0);
 
     if ($nombre === '' || $email === '') {
       throw new RuntimeException('El nombre y el email son obligatorios.');
@@ -48,12 +51,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($centroId > 0) {
       $st = $pdo->prepare("SELECT 1 FROM centros WHERE id = :id LIMIT 1");
       $st->execute([':id' => $centroId]);
-      if (!$st->fetch()) throw new RuntimeException('Centro no válido.');
+      if (!$st->fetch())
+        throw new RuntimeException('Centro no válido.');
     }
     if ($cursoId > 0) {
       $st = $pdo->prepare("SELECT 1 FROM cursos WHERE id = :id LIMIT 1");
       $st->execute([':id' => $cursoId]);
-      if (!$st->fetch()) throw new RuntimeException('Curso no válido.');
+      if (!$st->fetch())
+        throw new RuntimeException('Curso no válido.');
     }
 
     // Update de usuario (nombre, email, password opcional, centro)
@@ -61,16 +66,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $hash = password_hash($pass, PASSWORD_DEFAULT);
       $st = $pdo->prepare('UPDATE usuarios SET nombre=:n, email=:e, password_hash=:p, centro_id=:c WHERE id=:id');
       $st->execute([
-        ':n'=>$nombre, ':e'=>$email, ':p'=>$hash,
-        ':c'=>($centroId > 0 ? $centroId : null),
-        ':id'=>$id
+        ':n' => $nombre,
+        ':e' => $email,
+        ':p' => $hash,
+        ':c' => ($centroId > 0 ? $centroId : null),
+        ':id' => $id
       ]);
     } else {
       $st = $pdo->prepare('UPDATE usuarios SET nombre=:n, email=:e, centro_id=:c WHERE id=:id');
       $st->execute([
-        ':n'=>$nombre, ':e'=>$email,
-        ':c'=>($centroId > 0 ? $centroId : null),
-        ':id'=>$id
+        ':n' => $nombre,
+        ':e' => $email,
+        ':c' => ($centroId > 0 ? $centroId : null),
+        ':id' => $id
       ]);
     }
 
@@ -78,7 +86,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $pdo->prepare("DELETE FROM cursos_profesores WHERE profesor_id = :p")->execute([':p' => $id]);
     if ($cursoId > 0) {
       $pdo->prepare("INSERT INTO cursos_profesores (curso_id, profesor_id) VALUES (:c,:p)")
-          ->execute([':c' => $cursoId, ':p' => $id]);
+        ->execute([':c' => $cursoId, ':p' => $id]);
       $cursoActual = $cursoId;
     } else {
       $cursoActual = 0;
@@ -86,11 +94,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Refrescar sesión visible
     $_SESSION['user']['nombre'] = $nombre;
-    $_SESSION['user']['email']  = $email;
+    $_SESSION['user']['email'] = $email;
 
     // Refrescar variables para el form
-    $dbUser['nombre']    = $nombre;
-    $dbUser['email']     = $email;
+    $dbUser['nombre'] = $nombre;
+    $dbUser['email'] = $email;
     $dbUser['centro_id'] = ($centroId > 0 ? $centroId : null);
 
     $success = 'Perfil actualizado correctamente.';
@@ -99,75 +107,68 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $error = $e->getMessage();
   }
 }
+$pageTitle = 'Mi perfil';
+$mainClass = 'max-w-lg mx-auto p-6';
+require_once __DIR__ . '/../partials/_header.php';
 ?>
-<!doctype html>
-<html lang="es">
-<head>
-  <meta charset="utf-8">
-  <title>Mi perfil — Practicalia</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gray-50 min-h-screen">
-  <?php require_once __DIR__ . '/../partials/menu.php'; ?>
+<h1 class="text-xl font-semibold mb-4">Mi perfil</h1>
 
-  <main class="max-w-lg mx-auto p-6">
-    <h1 class="text-xl font-semibold mb-4">Mi perfil</h1>
+<?php if ($error): ?>
+  <div class="mb-3 bg-red-50 text-red-700 p-3 rounded"><?= htmlspecialchars($error) ?></div>
+<?php elseif ($success): ?>
+  <div class="mb-3 bg-green-50 text-green-700 p-3 rounded"><?= htmlspecialchars($success) ?></div>
+<?php endif; ?>
 
-    <?php if ($error): ?>
-      <div class="mb-3 bg-red-50 text-red-700 p-3 rounded"><?= htmlspecialchars($error) ?></div>
-    <?php elseif ($success): ?>
-      <div class="mb-3 bg-green-50 text-green-700 p-3 rounded"><?= htmlspecialchars($success) ?></div>
-    <?php endif; ?>
+<form method="post" class="bg-white p-6 rounded-2xl shadow space-y-4">
+  <input type="hidden" name="csrf" value="<?= htmlspecialchars(csrf_token()) ?>">
 
-    <form method="post" class="bg-white p-6 rounded-2xl shadow space-y-4">
-      <input type="hidden" name="csrf" value="<?= htmlspecialchars(csrf_token()) ?>">
+  <div>
+    <label class="block text-sm font-medium">Nombre completo</label>
+    <input name="nombre" value="<?= htmlspecialchars($dbUser['nombre'] ?? '') ?>" required
+      class="mt-1 w-full border rounded-xl p-2">
+  </div>
 
-      <div>
-        <label class="block text-sm font-medium">Nombre completo</label>
-        <input name="nombre" value="<?= htmlspecialchars($dbUser['nombre'] ?? '') ?>" required class="mt-1 w-full border rounded-xl p-2">
-      </div>
+  <div>
+    <label class="block text-sm font-medium">Email</label>
+    <input name="email" type="email" value="<?= htmlspecialchars($dbUser['email'] ?? '') ?>" required
+      class="mt-1 w-full border rounded-xl p-2">
+  </div>
 
-      <div>
-        <label class="block text-sm font-medium">Email</label>
-        <input name="email" type="email" value="<?= htmlspecialchars($dbUser['email'] ?? '') ?>" required class="mt-1 w-full border rounded-xl p-2">
-      </div>
+  <div>
+    <label class="block text-sm font-medium">Contraseña (dejar en blanco para no cambiar)</label>
+    <input name="password" type="password" class="mt-1 w-full border rounded-xl p-2">
+  </div>
 
-      <div>
-        <label class="block text-sm font-medium">Contraseña (dejar en blanco para no cambiar)</label>
-        <input name="password" type="password" class="mt-1 w-full border rounded-xl p-2">
-      </div>
+  <div>
+    <label class="block text-sm font-medium mb-1">Centro</label>
+    <select name="centro_id" class="mt-1 w-full border rounded-xl p-2">
+      <option value="0">— Sin centro —</option>
+      <?php foreach ($centros as $c): ?>
+        <option value="<?= (int) $c['id'] ?>" <?= ((int) ($dbUser['centro_id'] ?? 0) === (int) $c['id']) ? 'selected' : '' ?>>
+          <?= htmlspecialchars($c['nombre'] . (!empty($c['ciudad']) ? ' — ' . $c['ciudad'] : '')) ?>
+        </option>
+      <?php endforeach; ?>
+    </select>
+  </div>
 
-      <div>
-        <label class="block text-sm font-medium mb-1">Centro</label>
-        <select name="centro_id" class="mt-1 w-full border rounded-xl p-2">
-          <option value="0">— Sin centro —</option>
-          <?php foreach ($centros as $c): ?>
-            <option value="<?= (int)$c['id'] ?>" <?= ((int)($dbUser['centro_id'] ?? 0) === (int)$c['id']) ? 'selected' : '' ?>>
-              <?= htmlspecialchars($c['nombre'] . (!empty($c['ciudad']) ? ' — '.$c['ciudad'] : '')) ?>
-            </option>
-          <?php endforeach; ?>
-        </select>
-      </div>
+  <div>
+    <label class="block text-sm font-medium mb-1">Curso / familia profesional</label>
+    <select name="curso_id" class="mt-1 w-full border rounded-xl p-2">
+      <option value="0">— Sin curso —</option>
+      <?php foreach ($cursos as $c):
+        $cid = (int) $c['id']; ?>
+        <option value="<?= $cid ?>" <?= ($cid === (int) $cursoActual) ? 'selected' : '' ?>>
+          <?= htmlspecialchars($c['nombre']) ?>
+        </option>
+      <?php endforeach; ?>
+    </select>
+    <p class="text-xs text-gray-500 mt-1">Esto influye en los alumnos y empresas que verás asociados.</p>
+  </div>
 
-      <div>
-        <label class="block text-sm font-medium mb-1">Curso / familia profesional</label>
-        <select name="curso_id" class="mt-1 w-full border rounded-xl p-2">
-          <option value="0">— Sin curso —</option>
-          <?php foreach ($cursos as $c): $cid=(int)$c['id']; ?>
-            <option value="<?= $cid ?>" <?= ($cid === (int)$cursoActual) ? 'selected' : '' ?>>
-              <?= htmlspecialchars($c['nombre']) ?>
-            </option>
-          <?php endforeach; ?>
-        </select>
-        <p class="text-xs text-gray-500 mt-1">Esto influye en los alumnos y empresas que verás asociados.</p>
-      </div>
-
-      <div class="flex gap-2">
-        <button class="rounded-xl bg-black text-white px-4 py-2">Guardar</button>
-        <a href="<?= $base ?>/index.php" class="rounded-xl border px-4 py-2">Cancelar</a>
-      </div>
-    </form>
-  </main>
-</body>
-</html>
+  <div class="flex gap-2">
+    <button class="rounded-xl bg-black text-white px-4 py-2">Guardar</button>
+    <a href="<?= $base ?>/index.php" class="rounded-xl border px-4 py-2">Cancelar</a>
+  </div>
+</form>
+</main>
+<?php require_once __DIR__ . '/../partials/_footer.php'; ?>

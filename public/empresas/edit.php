@@ -39,6 +39,9 @@ if ($isAdmin) {
   $cursos = $st->fetchAll();
 }
 
+
+$empresaService = new \App\Services\EmpresaService($pdo);
+
 /* ============================================================
    ACCIONES POST — EMPRESA
    ============================================================ */
@@ -46,104 +49,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['accion'] ?? '') === 'guard
   try {
     csrf_check($_POST['csrf'] ?? null);
 
-    $nombre    = trim($_POST['nombre'] ?? '');
-    $cif       = trim($_POST['cif'] ?? '');
-    $nif       = trim($_POST['nif'] ?? '');
-    $sector    = trim($_POST['sector'] ?? '');
-    $email     = trim($_POST['email'] ?? '');
-    $telefono  = trim($_POST['telefono'] ?? '');
-    $web       = trim($_POST['web'] ?? '');
-    $direccion = trim($_POST['direccion'] ?? '');
-    $ciudad    = trim($_POST['ciudad'] ?? '');
-    $provincia = trim($_POST['provincia'] ?? '');
-    $cp        = trim($_POST['codigo_postal'] ?? '');
-    $activo    = (isset($_POST['activo']) && $_POST['activo'] === '1') ? 1 : 0;
-
-    // NUEVO: persona de contacto de tutoría en empresa
-    $responsable_nombre   = trim($_POST['responsable_nombre'] ?? '');
-    $responsable_cargo    = trim($_POST['responsable_cargo'] ?? '');
-    $responsable_email    = trim($_POST['responsable_email'] ?? '');
-    $responsable_telefono = trim($_POST['responsable_telefono'] ?? '');
-
-    // >>> NUEVO: varios cursos seleccionados
     $cursosIds = array_values(array_unique(array_filter(array_map('intval', $_POST['cursos_ids'] ?? []))));
-
-    if ($nombre === '') throw new RuntimeException('El nombre es obligatorio.');
-    if (count($cursosIds) === 0) throw new RuntimeException('Selecciona al menos un curso.');
-    if ($email !== '' && !filter_var($email, FILTER_VALIDATE_EMAIL)) throw new RuntimeException('Email no válido.');
-    if ($responsable_email !== '' && !filter_var($responsable_email, FILTER_VALIDATE_EMAIL)) throw new RuntimeException('Email del responsable no es válido.');
-    if ($cp !== '' && !preg_match('/^[0-9A-Za-z -]{3,10}$/', $cp)) throw new RuntimeException('Código postal no válido.');
-
-    if ($nif !== '') {
-      $stN = $pdo->prepare('SELECT 1 FROM empresas WHERE nif = :nif AND id <> :id AND deleted_at IS NULL LIMIT 1');
-      $stN->execute([':nif'=>$nif, ':id'=>$id]);
-      if ($stN->fetch()) throw new RuntimeException('Ya existe otra empresa con ese NIF.');
-    }
-
-    // Validar cursos existentes y permisos por rol
-    $inMarks = implode(',', array_fill(0, count($cursosIds), '?'));
-    $stChkC  = $pdo->prepare("SELECT id FROM cursos WHERE id IN ($inMarks)");
-    $stChkC->execute($cursosIds);
-    $existentes = array_map('intval', $stChkC->fetchAll(PDO::FETCH_COLUMN));
-    $cursosIds  = array_values(array_intersect($cursosIds, $existentes));
-    if (count($cursosIds) === 0) throw new RuntimeException('Los cursos seleccionados no existen.');
-
-    if (!$isAdmin) {
-      $stChkP = $pdo->prepare("
-        SELECT curso_id
-        FROM cursos_profesores
-        WHERE profesor_id = ? AND curso_id IN ($inMarks)
-      ");
-      $stChkP->bindValue(1, $profId, PDO::PARAM_INT);
-      foreach ($cursosIds as $i => $val) {
-        $stChkP->bindValue($i + 2, $val, PDO::PARAM_INT);
-      }
-      $stChkP->execute();
-      $permisos = array_map('intval', $stChkP->fetchAll(PDO::FETCH_COLUMN));
-      sort($permisos); sort($cursosIds);
-      if ($permisos !== $cursosIds) throw new RuntimeException('No puedes seleccionar alguno de los cursos marcados.');
-    }
-
-    $st = $pdo->prepare('
-      UPDATE empresas SET
-        nombre=:nombre, cif=:cif, nif=:nif, email=:email, telefono=:tel, web=:web,
-        direccion=:dir, ciudad=:ciudad, provincia=:provincia, codigo_postal=:cp,
-        sector=:sector,
-        responsable_nombre=:rnom,
-        responsable_cargo=:rcargo,
-        responsable_email=:remail,
-        responsable_telefono=:rtel,
-        activo=:activo
-      WHERE id=:id
-    ');
-    $st->execute([
-      ':nombre'=>$nombre,
-      ':cif'=>($cif!==''?$cif:null),
-      ':nif'=>($nif!==''?$nif:null),
-      ':email'=>($email!==''?$email:null),
-      ':tel'=>($telefono!==''?$telefono:null),
-      ':web'=>($web!==''?$web:null),
-      ':dir'=>($direccion!==''?$direccion:null),
-      ':ciudad'=>($ciudad!==''?$ciudad:null),
-      ':provincia'=>($provincia!==''?$provincia:null),
-      ':cp'=>($cp!==''?$cp:null),
-      ':sector'=>($sector!==''?$sector:null),
-
-      ':rnom'=>($responsable_nombre!==''?$responsable_nombre:null),
-      ':rcargo'=>($responsable_cargo!==''?$responsable_cargo:null),
-      ':remail'=>($responsable_email!==''?$responsable_email:null),
-      ':rtel'=>($responsable_telefono!==''?$responsable_telefono:null),
-
-      ':activo'=>$activo,
-      ':id'=>$id
-    ]);
-
-    // >>> NUEVO: actualizar M:N con varios cursos
-    $pdo->prepare('DELETE FROM empresa_cursos WHERE empresa_id = :e')->execute([':e'=>$id]);
-    $stRel = $pdo->prepare('INSERT INTO empresa_cursos (empresa_id, curso_id) VALUES (:e,:c)');
-    foreach ($cursosIds as $cid) {
-      $stRel->execute([':e'=>$id, ':c'=>$cid]);
-    }
+    
+    $empresaService->update($id, $_POST, $cursosIds, $isAdmin, $profId);
 
     $okMsg = 'Empresa guardada.';
     header('Location: ./edit.php?id='.$id.'&ok=1');
@@ -336,16 +244,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['accion'] ?? '') === 'guard
 }
 
 /** Cargar empresa */
-$stE = $pdo->prepare('SELECT * FROM empresas WHERE id = :id AND deleted_at IS NULL LIMIT 1');
-$stE->execute([':id'=>$id]);
-$empresa = $stE->fetch();
+$empresa = $empresaService->getById($id);
 if (!$empresa) { http_response_code(404); exit('Empresa no encontrada'); }
 
 /** Cursos actualmente vinculados (pueden ser varios) */
-$stEC = $pdo->prepare('SELECT curso_id FROM empresa_cursos WHERE empresa_id = :e ORDER BY curso_id');
-$stEC->execute([':e'=>$id]);
-$cursosActuales = array_map('intval', $stEC->fetchAll(PDO::FETCH_COLUMN));
-
+$cursosActuales = $empresaService->getAssociatedCursos($id);
 /** Cargar contactos (últimos 50) */
 $stC = $pdo->prepare("
   SELECT ce.*, u.nombre AS autor_nombre
@@ -456,19 +359,9 @@ function dtlocal(?string $mysqlDt): string {
   // mysql "YYYY-MM-DD HH:MM:SS" -> input datetime-local "YYYY-MM-DDTHH:MM"
   return str_replace(' ', 'T', substr($mysqlDt, 0, 16));
 }
+$pageTitle = 'Editar empresa';
+require_once __DIR__ . '/../partials/_header.php';
 ?>
-<!doctype html>
-<html lang="es">
-<head>
-  <meta charset="utf-8">
-  <title>Editar empresa — Practicalia</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gray-50 min-h-screen">
-  <?php require_once __DIR__ . '/../partials/menu.php'; ?>
-
-  <main class="max-w-6xl mx-auto p-4">
     <h1 class="text-xl font-semibold mb-2">
       Editar empresa #<?= (int)$empresa['id'] ?> — <?= h($empresa['nombre']) ?>
     </h1>
@@ -894,5 +787,4 @@ function dtlocal(?string $mysqlDt): string {
     document.querySelectorAll('input[name="cursos_ids[]"]').forEach(cb => { cb.checked = valor; });
   }
   </script>
-</body>
-</html>
+<?php require_once __DIR__ . '/../partials/_footer.php'; ?>

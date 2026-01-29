@@ -156,19 +156,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && (($_POST['accion'] ?? '') === 'crea
     }
   }
 }
+$pageTitle = 'Nuevo RA';
+$mainClass = 'max-w-3xl';
+require_once __DIR__ . '/../partials/_header.php';
 ?>
-<!doctype html>
-<html lang="es">
-<head>
-  <meta charset="utf-8">
-  <title>Nuevo RA — Practicalia</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gray-50 min-h-screen">
-  <?php require_once __DIR__ . '/../partials/menu.php'; ?>
-
-  <main class="max-w-3xl mx-auto p-4">
     <h1 class="text-xl font-semibold mb-4">Nuevo Resultado de Aprendizaje</h1>
 
     <?php if ($error): ?>
@@ -245,5 +236,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && (($_POST['accion'] ?? '') === 'crea
       </div>
     </form>
   </main>
-</body>
-</html>
+<?php require_once __DIR__ . '/../partials/_footer.php'; ?>

@@ -1,0 +1,14 @@
+{
+    "name": "fpalacioschaves/practicalia",
+    "description": "Practicalia - Sistema de gestión de prácticas",
+    "type": "project",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "App\\": "lib/"
+        }
+    },
+    "require": {
+        "php": ">=7.4"
+    }
+}
