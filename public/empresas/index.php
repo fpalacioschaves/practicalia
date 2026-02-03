@@ -86,7 +86,49 @@ require_once __DIR__ . '/../partials/_header.php';
     <?php endif; ?>
   </form>
   <a href="./create.php" class="rounded-xl bg-black text-white px-4 py-2">Nueva empresa</a>
+  <button id="startBatchEmailBtn" class="rounded-xl border border-black text-black px-4 py-2 ml-2 hover:bg-gray-100">
+    ✉ Enviar Email Masivo
+  </button>
 </div>
+
+<!-- Modal Email -->
+<div id="emailModal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50">
+  <div class="bg-white rounded-xl shadow-lg p-6 w-full max-w-2xl max-h-screen overflow-y-auto">
+    <h2 class="text-xl font-bold mb-4">Enviar Email a <span id="selectedCount">0</span> Empresas</h2>
+
+    <div class="mb-4">
+      <label class="block text-sm font-medium mb-1">Cargar Plantilla</label>
+      <select id="templateSelect" class="w-full border rounded p-2">
+        <option value="">-- Seleccionar --</option>
+      </select>
+    </div>
+
+    <div class="mb-4">
+      <label class="block text-sm font-medium mb-1">Asunto</label>
+      <input type="text" id="emailSubject" class="w-full border rounded p-2" placeholder="Asunto del correo">
+    </div>
+
+    <div class="mb-4">
+      <label class="block text-sm font-medium mb-1">Cuerpo del Mensaje</label>
+      <p class="text-xs text-gray-500 mb-2">Variables: {empresa}, {responsable}, {ciudad}</p>
+      <textarea id="emailBody" rows="6" class="w-full border rounded p-2"></textarea>
+    </div>
+
+    <div class="mb-4 border-t pt-4">
+      <label class="block text-sm font-medium mb-1">Guardar como nueva plantilla</label>
+      <div class="flex gap-2">
+        <input type="text" id="newTemplateName" placeholder="Nombre de la plantilla" class="flex-1 border rounded p-2">
+        <button id="saveTemplateBtn" class="bg-gray-200 hover:bg-gray-300 px-3 py-1 rounded">Guardar</button>
+      </div>
+    </div>
+
+    <div class="flex justify-end gap-2 mt-6">
+      <button id="closeModalBtn" class="px-4 py-2 border rounded hover:bg-gray-50">Cancelar</button>
+      <button id="sendBatchBtn" class="px-4 py-2 bg-black text-white rounded hover:bg-gray-800">Enviar Correos</button>
+    </div>
+  </div>
+</div>
+<script src="../js/email_sender.js"></script>
 
 <div class="mb-2 text-sm text-gray-600">
   Mostrando <span class="font-medium"><?= (int) $from ?></span>–<span class="font-medium"><?= (int) $to ?></span> de
@@ -97,26 +139,32 @@ require_once __DIR__ . '/../partials/_header.php';
 <div class="bg-white rounded-2xl shadow overflow-x-auto">
   <table class="min-w-full text-sm">
     <thead class="bg-gray-100">
-      <tr>
-        <th class="text-left p-3">ID</th>
-        <th class="text-left p-3">Nombre</th>
-        <th class="text-left p-3">Ciudad</th>
-        <th class="text-left p-3">Provincia</th>
-        <th class="text-left p-3">CP</th>
-        <th class="text-left p-3">Email</th>
-        <th class="text-left p-3">Cursos</th>
-        <th class="text-left p-3">Acciones</th>
+      <th class="text-left p-3"><input type="checkbox" id="selectAll"></th>
+      <th class="text-left p-3">ID</th>
+      <th class="text-left p-3">Nombre</th>
+      <th class="text-left p-3">Ciudad</th>
+      <th class="text-left p-3">Provincia</th>
+      <th class="text-left p-3">CP</th>
+      <th class="text-left p-3">Email</th>
+      <th class="text-left p-3">Cursos</th>
+      <th class="text-left p-3">Acciones</th>
       </tr>
     </thead>
     <tbody>
       <?php foreach ($rows as $r):
         $id = (int) $r['id']; ?>
         <tr class="border-t hover:bg-gray-50">
+          <td class="p-3"><input type="checkbox" class="company-checkbox" value="<?= $id ?>"></td>
           <td class="p-3"><?= $id ?></td>
           <td class="p-3">
             <a href="./edit.php?id=<?= $id ?>" class="text-gray-900 hover:underline">
               <?= h($r['nombre']) ?>
             </a>
+            <?php if ((int) ($r['es_publica'] ?? 0) === 1): ?>
+              <span class="inline-block ml-2 px-2 py-0.5 rounded text-xs font-medium bg-blue-100 text-blue-800">
+                Compartida
+              </span>
+            <?php endif; ?>
             <?php if (!empty($r['web'])): ?>
               <div class="text-xs text-gray-500"><?= h($r['web']) ?></div>
             <?php endif; ?>

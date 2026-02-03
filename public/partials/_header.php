@@ -6,7 +6,7 @@ declare(strict_types=1);
  * @var string|null $mainClass Clase CSS para el <main> (opcional, por defecto max-w-6xl)
  */
 $pageTitle = $pageTitle ?? 'Practicalia';
-$mainClass = $mainClass ?? 'max-w-6xl';
+$mainClass = $mainClass ?? 'max-w-7xl';
 ?>
 <!doctype html>
 <html lang="es">

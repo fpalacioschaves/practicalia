@@ -491,10 +491,18 @@ require_once __DIR__ . '/../partials/_header.php';
       <!-- >>> NUEVO: Selección múltiple de cursos con checkboxes -->
       <div>
         <div class="flex items-center justify-between mb-1">
-          <label class="block text-sm font-medium">Cursos/Grados asociados *</label>
-          <div class="text-xs">
-            <button type="button" class="underline mr-2" onclick="marcarTodos(true)">Marcar todos</button>
-            <button type="button" class="underline" onclick="marcarTodos(false)">Desmarcar</button>
+          <div>
+            <label class="block text-sm font-medium">Cursos/Grados asociados *</label>
+            <div class="text-xs mt-1">
+                <button type="button" class="underline mr-2" onclick="marcarTodos(true)">Marcar todos</button>
+                <button type="button" class="underline" onclick="marcarTodos(false)">Desmarcar</button>
+            </div>
+          </div>
+          <div class="flex items-center gap-2 bg-blue-50 px-3 py-2 rounded-lg border border-blue-100">
+            <input type="checkbox" name="es_publica" id="es_publica" value="1" <?= ((int)($empresa['es_publica'] ?? 0)===1)?'checked':'' ?>>
+            <label for="es_publica" class="text-sm font-medium text-blue-900 cursor-pointer">
+                Compartir con todos los centros
+            </label>
           </div>
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-64 overflow-auto p-2 border rounded-xl">

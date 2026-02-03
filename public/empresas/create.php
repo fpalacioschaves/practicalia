@@ -116,8 +116,18 @@ require_once __DIR__ . '/../partials/_header.php';
       </div>
 
       <div class="pt-4 border-t">
-        <h3 class="text-sm font-bold mb-2">Vincular Grados</h3>
-        <p class="text-xs text-gray-500 mb-3">Selecciona los grados que tienen convenio o interés en esta empresa.</p>
+        <div class="flex items-center justify-between mb-2">
+            <div>
+                <h3 class="text-sm font-bold">Vincular Grados</h3>
+                <p class="text-xs text-gray-500 mb-3">Selecciona los grados que tienen convenio o interés en esta empresa.</p>
+            </div>
+            <div class="flex items-center gap-2 bg-blue-50 px-3 py-2 rounded-lg border border-blue-100">
+                <input type="checkbox" name="es_publica" id="es_publica" value="1" <?= isset($_POST['es_publica']) ? 'checked' : '' ?>>
+                <label for="es_publica" class="text-sm font-medium text-blue-900 cursor-pointer">
+                    Compartir con todos los centros
+                </label>
+            </div>
+        </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-48 overflow-y-auto p-1 border rounded-lg bg-gray-50">
           <?php foreach ($cursos as $c):
             $cid = (int) $c['id']; ?>

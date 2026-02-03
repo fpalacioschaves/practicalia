@@ -55,6 +55,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       case 'eliminar_asignacion':
         $alumnoService->eliminarAsignacion($id, (int) $_POST['ea_id'], $isAdmin);
         break;
+
+      case 'guardar_ras_alumno':
+          $empresaId = (int)($_POST['empresa_id'] ?? 0);
+          $asigId = (int)($_POST['asignatura_id'] ?? 0);
+          $rasSeleccionados = array_map('intval', $_POST['ras'] ?? []);
+          
+          if ($empresaId > 0 && $asigId > 0) {
+              // 1. Borrar RAs antiguos de esta asignatura para este alumno/empresa
+              $stDel = $pdo->prepare("
+                  DELETE ear FROM empresa_alumno_ras ear
+                  JOIN asignatura_ras ar ON ar.id = ear.ra_id
+                  WHERE ear.empresa_id = :e 
+                    AND ear.alumno_id = :a 
+                    AND ar.asignatura_id = :asig
+              ");
+              $stDel->execute([':e' => $empresaId, ':a' => $id, ':asig' => $asigId]);
+              
+              // 2. Insertar nuevos
+              if ($rasSeleccionados) {
+                  $stIns = $pdo->prepare("INSERT INTO empresa_alumno_ras (empresa_id, alumno_id, ra_id) VALUES (:e, :a, :r)");
+                  foreach ($rasSeleccionados as $rId) {
+                      $stIns->execute([':e' => $empresaId, ':a' => $id, ':r' => $rId]);
+                  }
+              }
+              header('Location: ./edit.php?id=' . $id . '&ok=1#dual'); // Mantener en la sección
+              exit;
+          }
+          break;
+
     }
 
     header('Location: ./edit.php?id=' . $id . '&ok=1' . ($accion !== 'guardar_alumno' ? '#dual' : ''));
@@ -386,45 +415,134 @@ require_once __DIR__ . '/../partials/_header.php';
     </form>
   <?php endif; ?>
 
-</section>
+  <!-- >>> NUEVO: GESTIÓN DE RAs (Panel replicado de empresas/edit.php) -->
+  <?php if ($actual && $asigIdsActual):
+    $empresaId = (int) $actual['empresa_id'];
 
-<!-- HISTÓRICO DE ASIGNACIONES (Si hay más de una) -->
-<?php if (count($asignaciones) > 1): ?>
-  <section class="bg-white p-6 rounded-2xl shadow mb-8">
-    <h2 class="font-semibold mb-3">Histórico de asignaciones</h2>
-    <div class="overflow-x-auto">
-      <table class="min-w-full text-sm">
-        <thead class="bg-gray-50">
-          <tr>
-            <th class="text-left p-2">Empresa</th>
-            <th class="text-left p-2">Tipo</th>
-            <th class="text-left p-2">Inicio</th>
-            <th class="text-left p-2">Fin</th>
-            <th class="text-left p-2">Estado</th>
-            <th class="text-left p-2">Asignaturas</th>
-          </tr>
-        </thead>
-        <tbody>
-          <?php foreach ($asignaciones as $idx => $asig):
-            if ($idx === 0)
-              continue; ?>
-            <tr class="border-t">
-              <td class="p-2"><?= h($asig['empresa_nombre'] ?? '') ?></td>
-              <td class="p-2"><?= h($asig['tipo'] ?? '') ?></td>
-              <td class="p-2"><?= h($asig['fecha_inicio'] ?? '') ?></td>
-              <td class="p-2"><?= h($asig['fecha_fin'] ?? '—') ?></td>
-              <td class="p-2"><?= h($asig['estado'] ?? '') ?></td>
-              <td class="p-2 text-xs">
-                <?= h(implode(', ', $asignaturasPorEA[(int) $asig['id']] ?? [])) ?>
-              </td>
-            </tr>
-          <?php endforeach; ?>
-        </tbody>
-      </table>
+    // Consultas para RAs
+    $stRAs = $pdo->prepare("
+          SELECT ar.id, ar.codigo, ar.titulo
+          FROM asignatura_ras ar
+          WHERE ar.asignatura_id = :asig
+          ORDER BY COALESCE(ar.orden, ar.id)
+      ");
+    $stMarcados = $pdo->prepare("
+          SELECT ear.ra_id
+          FROM empresa_alumno_ras ear
+          WHERE ear.empresa_id = :e AND ear.alumno_id = :a
+      ");
+    $stMarcados->execute([':e' => $empresaId, ':a' => $id]);
+    $marcados = $stMarcados->fetchAll(PDO::FETCH_COLUMN, 0);
+    $mapMarcados = array_fill_keys($marcados, true);
+    ?>
+    <div class="mt-8 border-t pt-6">
+      <h3 class="font-semibold text-lg mb-4">Resultados de Aprendizaje (Dual)</h3>
+      <p class="text-sm text-gray-500 mb-4">Selecciona los RAs que se trabajarán en esta empresa para cada asignatura
+        asignada.</p>
+
+      <div class="space-y-6">
+        <?php foreach ($asigIdsActual as $asigId):
+          $asigName = '';
+          foreach ($asignaturasCurso as $ac) {
+            if ((int) $ac['id'] === (int) $asigId) {
+              $asigName = $ac['nombre'];
+              break;
+            }
+          }
+          $stRAs->execute([':asig' => $asigId]);
+          $ras = $stRAs->fetchAll(PDO::FETCH_ASSOC);
+          ?>
+          <div class="rounded-xl border bg-gray-50">
+            <div class="px-4 py-3 border-b flex items-center justify-between">
+              <h4 class="font-medium"><?= h($asigName) ?></h4>
+              <span class="text-xs text-gray-500"><?= count($ras) ?> RAs disponibles</span>
+            </div>
+            <div class="p-4 bg-white rounded-b-xl">
+              <?php if (!$ras): ?>
+                <p class="text-gray-500 text-sm">No hay RAs definidos para esta asignatura.</p>
+              <?php else: ?>
+                <form method="post">
+                  <input type="hidden" name="csrf" value="<?= h(csrf_token()) ?>">
+                  <input type="hidden" name="id" value="<?= (int) $id ?>">
+                  <input type="hidden" name="accion" value="guardar_ras_alumno">
+                  <input type="hidden" name="empresa_id" value="<?= $empresaId ?>">
+                  <input type="hidden" name="asignatura_id" value="<?= $asigId ?>">
+
+                  <div class="overflow-x-auto border rounded-xl mb-3">
+                    <table class="min-w-full text-sm">
+                      <thead class="bg-gray-50">
+                        <tr>
+                          <th class="text-left p-2 w-24">Código</th>
+                          <th class="text-left p-2">Resultado de Aprendizaje</th>
+                          <th class="text-center p-2 w-16">Dual</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <?php foreach ($ras as $ra):
+                          $checked = isset($mapMarcados[(int) $ra['id']]);
+                          ?>
+                          <tr class="border-t hover:bg-gray-50">
+                            <td class="p-2 font-mono text-xs"><?= h($ra['codigo']) ?></td>
+                            <td class="p-2"><?= h($ra['titulo']) ?></td>
+                            <td class="p-2 text-center">
+                              <input type="checkbox" name="ras[]" value="<?= (int) $ra['id'] ?>" <?= $checked ? 'checked' : '' ?>>
+                            </td>
+                          </tr>
+                        <?php endforeach; ?>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="text-right">
+                    <button class="text-sm bg-black text-white px-3 py-1.5 rounded-lg">Guardar RAs para
+                      <?= h($asigName) ?></button>
+                  </div>
+                </form>
+              <?php endif; ?>
+            </div>
+          </div>
+        <?php endforeach; ?>
+      </div>
     </div>
-  </section>
-<?php endif; ?>
+  <?php endif; ?>
+  <!-- <<< FIN NUEVO -->
 
-<!-- DIARIO DE CONTACTOS -->
-<?php require __DIR__ . '/_edit_contactos.php'; ?>
-<?php require_once __DIR__ . '/../partials/_footer.php'; ?>
+  <!-- HISTÓRICO DE ASIGNACIONES (Si hay más de una) -->
+  <?php if (count($asignaciones) > 1): ?>
+    <section class="bg-white p-6 rounded-2xl shadow mb-8">
+      <h2 class="font-semibold mb-3">Histórico de asignaciones</h2>
+      <div class="overflow-x-auto">
+        <table class="min-w-full text-sm">
+          <thead class="bg-gray-50">
+            <tr>
+              <th class="text-left p-2">Empresa</th>
+              <th class="text-left p-2">Tipo</th>
+              <th class="text-left p-2">Inicio</th>
+              <th class="text-left p-2">Fin</th>
+              <th class="text-left p-2">Estado</th>
+              <th class="text-left p-2">Asignaturas</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php foreach ($asignaciones as $idx => $asig):
+              if ($idx === 0)
+                continue; ?>
+              <tr class="border-t">
+                <td class="p-2"><?= h($asig['empresa_nombre'] ?? '') ?></td>
+                <td class="p-2"><?= h($asig['tipo'] ?? '') ?></td>
+                <td class="p-2"><?= h($asig['fecha_inicio'] ?? '') ?></td>
+                <td class="p-2"><?= h($asig['fecha_fin'] ?? '—') ?></td>
+                <td class="p-2"><?= h($asig['estado'] ?? '') ?></td>
+                <td class="p-2 text-xs">
+                  <?= h(implode(', ', $asignaturasPorEA[(int) $asig['id']] ?? [])) ?>
+                </td>
+              </tr>
+            <?php endforeach; ?>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  <?php endif; ?>
+
+  <!-- DIARIO DE CONTACTOS -->
+  <?php require __DIR__ . '/_edit_contactos.php'; ?>
+  <?php require_once __DIR__ . '/../partials/_footer.php'; ?>

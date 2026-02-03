@@ -5,26 +5,30 @@ declare(strict_types=1);
 require_once __DIR__ . '/../../lib/auth.php';
 
 $user = current_user();
-$isAdmin    = require_role('admin');
+$isAdmin = require_role('admin');
 $isProfesor = require_role('profesor');
 
 // Detecta base URL según entorno (local vs hosting)
-$host = $_SERVER['HTTP_HOST'] ?? '';
-if ($host === 'localhost' || $host === '127.0.0.1') {
-  // Tu ruta local (http://localhost/practicalia/public/...)
-  $base = '/practicalia/public';
-} else {
-  // Hosting (https://practicalia.great-site.net/public/...)
-  $base = '/public';
-}
+$scriptName = $_SERVER['SCRIPT_NAME'] ?? '';
+$publicPos = strpos($scriptName, '/public/');
+$projectRoot = ($publicPos !== false) ? substr($scriptName, 0, $publicPos) : '';
+
+$base = $projectRoot . '/public';
+$apiBase = $projectRoot . '/api';
 
 $path = $_SERVER['SCRIPT_NAME'] ?? '';
 
-function active(string $needle): string {
+function active(string $needle): string
+{
   global $path;
   return str_contains($path, $needle) ? 'text-black font-semibold' : 'text-gray-600';
 }
+
+// Para JS:
 ?>
+<script>
+  window.PRACTICALIA_API = "<?= $apiBase ?>";
+</script>
 <nav class="bg-white shadow mb-6">
   <div class="max-w-6xl mx-auto px-4">
     <div class="flex justify-between h-14 items-center">
@@ -84,6 +88,10 @@ function active(string $needle): string {
 
         <a href="<?= $base ?>/perfil/edit.php" class="<?= active('/perfil/') ?>">
           Mi perfil
+        </a>
+
+        <a href="<?= $base ?>/ayuda.php" class="<?= active('/ayuda.php') ?>">
+          Ayuda
         </a>
       </div>
 

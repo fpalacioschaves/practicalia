@@ -3,6 +3,12 @@
 declare(strict_types=1);
 
 if (session_status() !== PHP_SESSION_ACTIVE) {
+    if (!headers_sent()) {
+        session_set_cookie_params([
+            'path' => '/',
+            'samesite' => 'Lax'
+        ]);
+    }
     session_start();
 }
 
@@ -57,7 +63,8 @@ function is_authenticated(): bool
 function require_role(string $codigoRol): bool
 {
     $user = current_user();
-    if (!$user) return false;
+    if (!$user)
+        return false;
     return in_array($codigoRol, $user['roles_codigos'] ?? [], true);
 }
 
@@ -95,7 +102,7 @@ function ensure_default_roles(PDO $pdo): void
  */
 function first_user_is_admin(PDO $pdo, int $userId): void
 {
-    $count = (int)$pdo->query('SELECT COUNT(*) AS c FROM usuarios')->fetch()['c'];
+    $count = (int) $pdo->query('SELECT COUNT(*) AS c FROM usuarios')->fetch()['c'];
     if ($count === 1) {
         $st = $pdo->prepare("INSERT IGNORE INTO usuarios_roles (usuario_id, rol_id)
                              SELECT :uid, id FROM roles WHERE codigo = 'admin'");
@@ -134,7 +141,7 @@ function register_user(PDO $pdo, string $nombre, string $apellidos, string $emai
     $st = $pdo->prepare('INSERT INTO usuarios (nombre, apellidos, email, password_hash, activo)
                          VALUES (:n,:a,:e,:h,1)');
     $st->execute([':n' => $nombre, ':a' => $apellidos, ':e' => $email, ':h' => $hash]);
-    $userId = (int)$pdo->lastInsertId();
+    $userId = (int) $pdo->lastInsertId();
 
     // Rol por defecto: profesor
     $st2 = $pdo->prepare("INSERT IGNORE INTO usuarios_roles (usuario_id, rol_id)
@@ -153,17 +160,17 @@ function register_user(PDO $pdo, string $nombre, string $apellidos, string $emai
 function attempt_login(PDO $pdo, string $email, string $password): array
 {
     $u = get_user_by_email($pdo, $email);
-    if (!$u || (int)$u['activo'] !== 1) {
+    if (!$u || (int) $u['activo'] !== 1) {
         throw new RuntimeException('Credenciales inválidas');
     }
     if (!password_verify($password, $u['password_hash'])) {
         throw new RuntimeException('Credenciales inválidas');
     }
 
-    $roles = get_roles_for_user($pdo, (int)$u['id']);
+    $roles = get_roles_for_user($pdo, (int) $u['id']);
 
     $_SESSION['user'] = [
-        'id' => (int)$u['id'],
+        'id' => (int) $u['id'],
         'nombre' => $u['nombre'],
         'apellidos' => $u['apellidos'],
         'email' => $u['email'],

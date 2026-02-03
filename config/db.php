@@ -97,7 +97,11 @@ if (!file_exists(__DIR__ . '/../vendor/autoload.php') && isset($_GET['debug_db']
 try {
     $pdo = new PDO($dsn, $DB_USER, $DB_PASS, $options);
 } catch (Throwable $e) {
-    if ($APP_ENV === 'local' || (isset($_GET['debug_db']) && $_GET['debug_db'] === '1')) {
+    $isDebugging = ($APP_ENV === 'local')
+        || (isset($_GET['debug_db']) && $_GET['debug_db'] === '1')
+        || (str_contains($_SERVER['SCRIPT_NAME'] ?? '', 'debug_remote.php'));
+
+    if ($isDebugging) {
         // En local o con flag, muestra el error exacto para depurar
         die('Error de conexión PDO: ' . $e->getMessage() . "\nDSN: " . $dsn);
     }

@@ -48,6 +48,7 @@ class EmpresaService
         $responsable_email = trim($data['responsable_email'] ?? '');
         $nif = trim($data['nif'] ?? '');
         $cp = trim($data['codigo_postal'] ?? '');
+        $esPublica = !empty($data['es_publica']);
 
         if ($nombre === '')
             throw new RuntimeException('El nombre es obligatorio.');
@@ -101,12 +102,12 @@ class EmpresaService
                 INSERT INTO empresas (
                     nombre, cif, nif, email, telefono, web,
                     direccion, ciudad, provincia, codigo_postal,
-                    sector, responsable_nombre, responsable_cargo,
+                    sector, es_publica, responsable_nombre, responsable_cargo,
                     responsable_email, responsable_telefono, activo
                 ) VALUES (
                     :nombre, :cif, :nif, :email, :tel, :web,
                     :dir, :ciudad, :provincia, :cp,
-                    :sector, :rnom, :rcargo,
+                    :sector, :publica, :rnom, :rcargo,
                     :remail, :rtel, :activo
                 )
             ');
@@ -122,6 +123,7 @@ class EmpresaService
                 ':provincia' => ($data['provincia'] !== '' ? $data['provincia'] : null),
                 ':cp' => ($cp !== '' ? $cp : null),
                 ':sector' => ($data['sector'] !== '' ? $data['sector'] : null),
+                ':publica' => $esPublica ? 1 : 0,
                 ':rnom' => ($data['responsable_nombre'] !== '' ? $data['responsable_nombre'] : null),
                 ':rcargo' => ($data['responsable_cargo'] !== '' ? $data['responsable_cargo'] : null),
                 ':remail' => ($responsable_email !== '' ? $responsable_email : null),
@@ -157,6 +159,7 @@ class EmpresaService
         $responsable_email = trim($data['responsable_email'] ?? '');
         $nif = trim($data['nif'] ?? '');
         $cp = trim($data['codigo_postal'] ?? '');
+        $esPublica = !empty($data['es_publica']);
 
         if ($nombre === '')
             throw new RuntimeException('El nombre es obligatorio.');
@@ -187,6 +190,11 @@ class EmpresaService
 
         // Validar permisos si no es admin
         if (!$isAdmin) {
+            // IMPORTANTE: Si es pública, la puede editar CUALQUIERA? No, normalmente solo el creador o quien tenga acceso.
+            // Mantenemos la lógica de que para editar debe tener permiso sobre los cursos asignados (o al menos uno).
+            // Pero si es pública, ¿permitimos que cualquier profesor la edite?
+            // Asumimos: Para EDITAR, debe seguir teniendo relación con los cursos.
+            // La visibilidad pública es solo para VER (getList/getCount).
             $stChkP = $this->pdo->prepare("
                 SELECT curso_id
                 FROM cursos_profesores
@@ -210,7 +218,7 @@ class EmpresaService
                 UPDATE empresas SET
                     nombre=:nombre, cif=:cif, nif=:nif, email=:email, telefono=:tel, web=:web,
                     direccion=:dir, ciudad=:ciudad, provincia=:provincia, codigo_postal=:cp,
-                    sector=:sector,
+                    sector=:sector, es_publica=:publica,
                     responsable_nombre=:rnom,
                     responsable_cargo=:rcargo,
                     responsable_email=:remail,
@@ -230,6 +238,7 @@ class EmpresaService
                 ':provincia' => ($data['provincia'] !== '' ? $data['provincia'] : null),
                 ':cp' => ($cp !== '' ? $cp : null),
                 ':sector' => ($data['sector'] !== '' ? $data['sector'] : null),
+                ':publica' => $esPublica ? 1 : 0,
                 ':rnom' => ($data['responsable_nombre'] !== '' ? $data['responsable_nombre'] : null),
                 ':rcargo' => ($data['responsable_cargo'] !== '' ? $data['responsable_cargo'] : null),
                 ':remail' => ($responsable_email !== '' ? $responsable_email : null),
@@ -277,9 +286,9 @@ class EmpresaService
             $sql = "
                 SELECT COUNT(DISTINCT e.id) c
                 FROM empresas e
-                JOIN empresa_cursos ec ON ec.empresa_id = e.id
-                JOIN cursos_profesores cp ON cp.curso_id = ec.curso_id AND cp.profesor_id = :pid
-                WHERE $where
+                LEFT JOIN empresa_cursos ec ON ec.empresa_id = e.id
+                LEFT JOIN cursos_profesores cp ON cp.curso_id = ec.curso_id AND cp.profesor_id = :pid
+                WHERE $where AND (e.es_publica = 1 OR cp.profesor_id IS NOT NULL)
             ";
             $params[':pid'] = $profId;
         }
@@ -308,7 +317,7 @@ class EmpresaService
 
         if ($isAdmin) {
             $sql = "
-                SELECT e.id, e.nombre, e.telefono, e.email, e.web, e.ciudad, e.provincia, e.codigo_postal
+                SELECT e.*
                 FROM empresas e
                 WHERE $where
                 ORDER BY e.nombre ASC
@@ -316,11 +325,11 @@ class EmpresaService
             ";
         } else {
             $sql = "
-                SELECT DISTINCT e.id, e.nombre, e.telefono, e.email, e.web, e.ciudad, e.provincia, e.codigo_postal
+                SELECT DISTINCT e.*
                 FROM empresas e
-                JOIN empresa_cursos ec ON ec.empresa_id = e.id
-                JOIN cursos_profesores cp ON cp.curso_id = ec.curso_id AND cp.profesor_id = :pid
-                WHERE $where
+                LEFT JOIN empresa_cursos ec ON ec.empresa_id = e.id
+                LEFT JOIN cursos_profesores cp ON cp.curso_id = ec.curso_id AND cp.profesor_id = :pid
+                WHERE $where AND (e.es_publica = 1 OR cp.profesor_id IS NOT NULL)
                 ORDER BY e.id DESC
                 LIMIT :limit OFFSET :offset
             ";
