@@ -15,193 +15,167 @@ require_once __DIR__ . '/partials/_header.php';
         empresas y automatizar comunicaciones de forma eficiente.</p>
 </div>
 
-<div class="space-y-12">
-
-    <!-- Sección: Envío de Email Masivo (EXTENDIDA) -->
-    <section id="email-masivo" class="bg-white rounded-3xl shadow-sm border p-8">
-        <div class="flex items-center gap-4 mb-6">
-            <div class="p-3 bg-purple-100 text-purple-700 rounded-2xl">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24"
-                    stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                </svg>
-            </div>
-            <h2 class="text-2xl font-bold text-gray-800">Guía Maestra: Envío Masivo de Emails</h2>
+<!-- Sección 1: Descubrimiento de Empresas -->
+<section id="descubrimiento" class="bg-white rounded-3xl shadow-sm border p-8 mb-8">
+    <div class="flex items-center gap-4 mb-6">
+        <div class="p-3 bg-blue-100 text-blue-700 rounded-2xl">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
+            </svg>
         </div>
-
-        <div class="prose prose-blue max-w-none text-gray-600">
-            <p class="mb-6">El sistema de envío masivo permite contactar con decenas de empresas en segundos,
-                manteniendo un toque personal gracias a las variables dinámicas.</p>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-                <div class="bg-gray-50 p-6 rounded-2xl border border-gray-100">
-                    <h3 class="text-lg font-semibold text-gray-800 mb-3 flex items-center gap-2">
-                        <span
-                            class="w-6 h-6 bg-purple-600 text-white rounded-full flex items-center justify-center text-xs">1</span>
-                        Procedimiento Paso a Paso
-                    </h3>
-                    <ol class="space-y-3 text-sm list-decimal ml-4">
-                        <li>Ve a la sección <strong>Empresas</strong>.</li>
-                        <li>Usa los filtros (ciudad, sector) para encontrar tu público objetivo.</li>
-                        <li>Marca las casillas individuales o usa el <strong>selector superior</strong> para marcarlas
-                            todas.</li>
-                        <li>Pulsa el botón <strong>✉ Enviar Email Masivo</strong>. Se abrirá un asistente.</li>
-                        <li>Elige una plantilla guardada o escribe un mensaje nuevo.</li>
-                        <li>Revisa el asunto y pulsa <strong>Enviar Correos</strong>.</li>
-                    </ol>
-                </div>
-
-                <div class="bg-blue-50 p-6 rounded-2xl border border-blue-100">
-                    <h3 class="text-lg font-semibold text-blue-800 mb-3 flex items-center gap-2">
-                        <span
-                            class="w-6 h-6 bg-blue-600 text-white rounded-full flex items-center justify-center text-xs">2</span>
-                        Uso de Variables Dinámicas
-                    </h3>
-                    <p class="text-sm mb-4 text-blue-900">Puedes insertar etiquetas que el sistema sustituirá
-                        automáticamente por los datos reales de cada empresa:</p>
-                    <ul class="space-y-2 text-sm">
-                        <li><code
-                                class="bg-white px-2 py-0.5 rounded border border-blue-200 text-blue-700 font-bold">{empresa}</code>:
-                            Nombre de la empresa.</li>
-                        <li><code
-                                class="bg-white px-2 py-0.5 rounded border border-blue-200 text-blue-700 font-bold">{responsable}</code>:
-                            Nombre del contacto (si existe).</li>
-                        <li><code
-                                class="bg-white px-2 py-0.5 rounded border border-blue-200 text-blue-700 font-bold">{ciudad}</code>:
-                            Ciudad donde se ubica.</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="mb-8">
-                <h3 class="text-xl font-bold text-gray-800 mb-4">Ejemplos Prácticos de Plantillas</h3>
-
-                <div class="space-y-4">
-                    <!-- Ejemplo 1 -->
-                    <div class="border rounded-2xl p-5 bg-white">
-                        <div class="text-sm font-bold text-gray-500 mb-2 uppercase tracking-wide">Ejemplo A: Primer
-                            Contacto (Prosperar)</div>
-                        <div class="bg-gray-100 p-4 rounded-xl font-mono text-sm mb-3">
-                            <strong>Asunto:</strong> Propuesta de colaboración FP Dual - {empresa}<br><br>
-                            Hola, {responsable}:<br><br>
-                            Soy profesor en el centro SAFA y le escribo porque estamos buscando plazas de prácticas en
-                            {ciudad} para nuestros alumnos de Grado Superior.<br><br>
-                            He visto que {empresa} tiene una trayectoria excelente y nos encantaría que algún alumno
-                            pudiera aprender con ustedes...
-                        </div>
-                    </div>
-
-                    <!-- Ejemplo 2 -->
-                    <div class="border rounded-2xl p-5 bg-white">
-                        <div class="text-sm font-bold text-gray-500 mb-2 uppercase tracking-wide">Ejemplo B: Seguimiento
-                            de Convenio</div>
-                        <div class="bg-gray-100 p-4 rounded-xl font-mono text-sm mb-3">
-                            <strong>Asunto:</strong> Renovación de colaboración con {empresa}<br><br>
-                            Estimados señores de {empresa}:<br><br>
-                            Nos ponemos en contacto con su sede en {ciudad} para confirmar si este año disponen de
-                            plazas para el periodo de marzo a junio...
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="bg-amber-50 p-6 rounded-2xl border border-amber-200">
-                <h4 class="font-bold text-amber-800 flex items-center gap-2 mb-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd"
-                            d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
-                            clip-rule="evenodd" />
-                    </svg>
-                    Información Crucial sobre Respuestas
-                </h4>
-                <p class="text-sm text-amber-900">
-                    Aunque los emails se envían desde una cuenta técnica centralizada, el sistema configura
-                    automáticamente el campo <span class="font-bold">"Responder a" (Reply-To)</span> con el email
-                    personal del profesor que realiza el envío. <br><br>
-                    <strong>¿Qué significa esto?</strong> Si la empresa responde al correo, ese mensaje llegará
-                    directamente a <strong>tu buzón personal de profesor</strong>, facilitando la gestión directa de la
-                    relación.
-                </p>
-            </div>
-        </div>
-    </section>
-
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <!-- Sección: Alumnos y Seguimiento -->
-        <section class="bg-white rounded-3xl shadow-sm border p-8">
-            <div class="flex items-center gap-4 mb-6">
-                <div class="p-3 bg-red-100 text-red-700 rounded-2xl">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-                    </svg>
-                </div>
-                <h2 class="text-2xl font-bold text-gray-800">Alumnos y Evaluación</h2>
-            </div>
-            <div class="space-y-6 text-sm text-gray-600">
-                <div>
-                    <h3 class="font-bold text-gray-800 mb-1">Fichas de Alumno</h3>
-                    <p>Cada alumno tiene un perfil donde puedes ver sus datos de contacto y a qué grado pertenece. Desde
-                        su ficha puedes marcar si ya tiene una empresa asignada o si está en busca de una.</p>
-                </div>
-                <div>
-                    <h3 class="font-bold text-gray-800 mb-1">Resultados de Aprendizaje (RAs)</h3>
-                    <p>Para evaluar la formación dual, el sistema permite definir RAs por asignatura. Al editar una
-                        Empresa, podrás seleccionar qué RAs específicos va a trabajar el alumno en ese centro de
-                        trabajo.</p>
-                </div>
-                <div class="bg-gray-50 p-4 rounded-xl border">
-                    <p class="font-semibold text-gray-700 italic">"Personaliza la formación marcando individualmente los
-                        RAs que cada empresa puede cubrir realmente."</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Sección: Gestión de Empresas -->
-        <section class="bg-white rounded-3xl shadow-sm border p-8">
-            <div class="flex items-center gap-4 mb-6">
-                <div class="p-3 bg-blue-100 text-blue-700 rounded-2xl">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-10V4m0 10V4m-4 18V12a1 1 0 011-1h2a1 1 0 011 1v10" />
-                    </svg>
-                </div>
-                <h2 class="text-2xl font-bold text-gray-800">Gestión de Empresas</h2>
-            </div>
-            <div class="space-y-6 text-sm text-gray-600">
-                <div>
-                    <h3 class="font-bold text-gray-800 mb-1">Empresas Públicas vs Privadas</h3>
-                    <p>Al crear una empresa, puedes marcarla como <strong>"Compartida"</strong>. Esto permitirá que
-                        profesores de otros centros de la red SAFA puedan ver sus datos básicos y colaborar con ella si
-                        tú lo permites.</p>
-                </div>
-                <div>
-                    <h3 class="font-bold text-gray-800 mb-1">Log de Contactos</h3>
-                    <p>No pierdas el hilo de quién llamó a quién. Registra cada llamada, email o visita dentro de la
-                        ficha de la empresa. Puedes añadir una "Próxima acción" para que no se te olvide volver a llamar
-                        en una fecha concreta.</p>
-                </div>
-                <div class="flex items-center gap-2 text-blue-600 font-medium">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd"
-                            d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z"
-                            clip-rule="evenodd" />
-                    </svg>
-                    <span>Los contactos con candado solo son visibles por ti y administradores.</span>
-                </div>
-            </div>
-        </section>
+        <h2 class="text-2xl font-bold text-gray-800">Descubrimiento Inteligente (OSM)</h2>
     </div>
+
+    <div class="prose prose-blue max-w-none text-gray-600">
+        <p class="mb-6">Ya no necesitas buscar empresas una a una. Practicalia integra un rastreador basado en
+            <strong>OpenStreetMap</strong> para localizar centros de trabajo potenciales en segundos.</p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div>
+                <h3 class="text-lg font-semibold text-gray-800 mb-2 flex items-center gap-2">¿Cómo funciona?</h3>
+                <ol class="space-y-2 text-sm list-decimal ml-4">
+                    <li>Ve a <strong>Empresas</strong> y pulsa el botón <span class="font-bold">🔍 Descubrir
+                            (OSM)</span>.</li>
+                    <li>Indica el <strong>Sector</strong> (ej: Desarrollo web) y la <strong>Provincia</strong>.</li>
+                    <li>El sistema buscará en el mapa oficial y te mostrará una lista de resultados.</li>
+                    <li>Pulsa <strong>Revisar y Añadir</strong> para validar los datos antes de guardarlos.</li>
+                </ol>
+            </div>
+            <div class="bg-blue-50 p-6 rounded-2xl border border-blue-100">
+                <h3 class="text-lg font-semibold text-blue-800 mb-2">Flujo de Prospectos</h3>
+                <p class="text-sm">Las empresas descubiertas se guardan inicialmente como <strong>Prospectos</strong>.
+                    Esto te permite gestionar contactos fríos o pendientes de convenio sin "ensuciar" tu base de datos
+                    principal de empresas colaboradoras activas.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Sección 2: Configuración Académica y Dualización -->
+<section id="academic" class="bg-white rounded-3xl shadow-sm border p-8 mb-8">
+    <div class="flex items-center gap-4 mb-6">
+        <div class="p-3 bg-red-100 text-red-700 rounded-2xl">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+            </svg>
+        </div>
+        <h2 class="text-2xl font-bold text-gray-800">Grados, Asignaturas y RAs</h2>
+    </div>
+
+    <div class="space-y-6 text-sm text-gray-600">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="border p-4 rounded-xl">
+                <h3 class="font-bold text-gray-800 mb-2">1. Grados y Asignaturas</h3>
+                <p>Cada Grado (ej: DAW) tiene sus propias asignaturas. Al crear una asignatura, puedes vincularla a uno
+                    o varios grados de forma simultánea.</p>
+            </div>
+            <div class="border p-4 rounded-xl">
+                <h3 class="font-bold text-gray-800 mb-2">2. Resultados de Aprendizaje</h3>
+                <p>Dentro de cada asignatura se definen los <strong>RAs</strong>. Estos son los objetivos evaluables que
+                    el alumno debe conseguir durante su formación.</p>
+            </div>
+            <div class="border p-4 rounded-xl">
+                <h3 class="font-bold text-gray-800 mb-2">3. Dualización Individual</h3>
+                <p>Al asignar un alumno a una empresa, puedes marcar <strong>qué RAs específicos</strong> se van a
+                    trabajar en esa estancia concreta. ¡Evaluación personalizada!</p>
+            </div>
+        </div>
+
+        <div class="bg-amber-50 p-4 rounded-2xl border border-amber-200">
+            <p class="font-medium text-amber-900 italic text-center">"Desde la ficha de la empresa o del alumno, verás
+                el panel de RAs para marcar con un click los que se están dualizando realmente."</p>
+        </div>
+    </div>
+</section>
+
+<!-- Sección 3: Envío de Email Masivo -->
+<section id="email-masivo" class="bg-white rounded-3xl shadow-sm border p-8 mb-8">
+    <div class="flex items-center gap-4 mb-6">
+        <div class="p-3 bg-purple-100 text-purple-700 rounded-2xl">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+            </svg>
+        </div>
+        <h2 class="text-2xl font-bold text-gray-800">Automatización: Envío Masivo</h2>
+    </div>
+
+    <div class="prose prose-blue max-w-none text-gray-600">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+            <div class="bg-gray-50 p-6 rounded-2xl border border-gray-100">
+                <h3 class="text-lg font-semibold text-gray-800 mb-3 flex items-center gap-2">Variables Dinámicas</h3>
+                <p class="text-sm mb-4">Usa estas etiquetas para que cada correo sea único:</p>
+                <ul class="space-y-2 text-sm font-mono">
+                    <li><span class="text-blue-700 font-bold">{empresa}</span>: Nombre de la compañía.</li>
+                    <li><span class="text-blue-700 font-bold">{responsable}</span>: Tutor/a asignado/a.</li>
+                    <li><span class="text-blue-700 font-bold">{ciudad}</span>: Municipio del centro.</li>
+                </ul>
+            </div>
+
+            <div class="bg-purple-50 p-6 rounded-2xl border border-purple-100 text-purple-900">
+                <h3 class="text-lg font-semibold mb-2">Gestión de Respuestas</h3>
+                <p class="text-sm">Aunque uses la cuenta del centro para el envío masivo, las empresas recibirán el
+                    correo con tu email personal configurado para responder. <strong>¡Las respuestas irán directas a tu
+                        buzón!</strong></p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Sección 4: Gestión Avanzada de Empresas -->
+<section id="empresas-pro" class="bg-white rounded-3xl shadow-sm border p-8">
+    <div class="flex items-center gap-4 mb-6">
+        <div class="p-3 bg-emerald-100 text-emerald-700 rounded-2xl">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-10V4m0 10V4m-4 18V12a1 1 0 011-1h2a1 1 0 011 1v10" />
+            </svg>
+        </div>
+        <h2 class="text-2xl font-bold text-gray-800">Colaboración y Datos</h2>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-sm text-gray-600">
+        <div>
+            <h3 class="font-bold text-gray-800 mb-1">Empresas Compartidas (Publicas)</h3>
+            <p>Al crear o editar una empresa, verás el check <span class="font-bold">"Compartir con todos los
+                    centros"</span>. Esto permite que otros profesores de la red vean que esa empresa ya existe,
+                evitando duplicados y facilitando convenios globales.</p>
+        </div>
+        <div>
+            <h3 class="font-bold text-gray-800 mb-1">Histórico de Contactos</h3>
+            <p>Dentro de cada ficha puedes registrar llamadas, emails o visitas. Si marcas un contacto como <span
+                    class="font-bold">Confidencial</span>, solo tú y los administradores podréis ver el detalle de esa
+                conversación.</p>
+        </div>
+        <div class="md:col-span-2 bg-gray-50 p-4 rounded-xl border flex items-center gap-4">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+            <p><strong>Geolocalización:</strong> Si rellenas la dirección completa y código postal, se activará
+                automáticamente el mapa de Google Maps en la ficha del centro para facilitar visitas de seguimiento.</p>
+        </div>
+    </div>
+</section>
 
 </div>
 
-<div class="mt-12 p-6 bg-gray-100 rounded-2xl text-center">
-    <h3 class="font-semibold text-gray-800">¿Necesitas ayuda técnica adicional?</h3>
-    <p class="text-sm text-gray-600 mt-2">Contacta con el administrador del sistema en tu centro para incidencias
-        relacionadas con accesos o configuración de correo.</p>
+<div class="mt-12 p-8 bg-gray-900 rounded-3xl text-center text-white">
+    <h3 class="text-xl font-bold mb-2">¿Necesitas soporte técnico adicional?</h3>
+    <p class="text-gray-400 mb-6">Contacta con el administrador del sistema de tu centro para incidencias de accesos o
+        configuración SMPT.</p>
+    <a href="mailto:admin@safa.es"
+        class="inline-block bg-white text-black font-bold px-6 py-3 rounded-2xl hover:bg-gray-200 transition-colors">Contactar
+        Soporte</a>
 </div>
 
 <?php require_once __DIR__ . '/partials/_footer.php'; ?>
