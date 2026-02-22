@@ -86,6 +86,9 @@ require_once __DIR__ . '/../partials/_header.php';
     <?php endif; ?>
   </form>
   <a href="./create.php" class="rounded-xl bg-black text-white px-4 py-2">Nueva empresa</a>
+  <a href="./descubrir.php" class="rounded-xl border border-black text-black px-4 py-2 ml-2 hover:bg-gray-100">
+    🔍 Descubrir (OSM)
+  </a>
   <button id="startBatchEmailBtn" class="rounded-xl border border-black text-black px-4 py-2 ml-2 hover:bg-gray-100">
     ✉ Enviar Email Masivo
   </button>

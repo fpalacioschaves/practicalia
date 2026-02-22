@@ -61,6 +61,10 @@ function active(string $needle): string
             Empresas
           </a>
 
+          <a href="<?= $base ?>/prospectos/index.php" class="<?= active('/prospectos/') ?>">
+            Prospectos
+          </a>
+
 
           <a href="<?= $base ?>/centros/index.php" class="<?= active('/centros/') ?>">
             Centros
@@ -82,6 +86,10 @@ function active(string $needle): string
 
           <a href="<?= $base ?>/empresas/index.php" class="<?= active('/empresas/') ?>">
             Empresas
+          </a>
+
+          <a href="<?= $base ?>/prospectos/index.php" class="<?= active('/prospectos/') ?>">
+            Prospectos
           </a>
 
         <?php endif; ?>
