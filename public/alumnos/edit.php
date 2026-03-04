@@ -36,6 +36,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $accion = $_POST['accion'] ?? '';
 
     switch ($accion) {
+      case 'guardar_matricula':
+        $alumnoService->setEnrolledAsignaturas($id, array_map('intval', $_POST['matricula'] ?? []));
+        header('Location: ./edit.php?id=' . $id . '&ok=1#matricula');
+        exit;
+
       case 'guardar_alumno':
         $alumnoService->update($id, $_POST, (int) ($_POST['curso_id'] ?? 0), $isAdmin, $profId);
         break;
@@ -107,6 +112,8 @@ $cursoActual = $alumnoService->getCursoActual($id);
 $cursos = $alumnoService->getAvailableCursos($isAdmin, $profId);
 $asignaturasCurso = $alumnoService->getAsignaturasByCurso($cursoActual);
 $empresasDisponibles = $alumnoService->getAvailableEmpresas($isAdmin, $profId);
+$totalAsignaturasAgrupadas = $alumnoService->getAvailableAsignaturasGrouped($isAdmin, $profId, $cursoActual);
+$matriculaActual = $alumnoService->getEnrolledAsignaturas($id);
 $asignaciones = $alumnoService->getAsignaciones($id);
 
 $actual = $asignaciones[0] ?? null;
@@ -174,6 +181,21 @@ require_once __DIR__ . '/../partials/_header.php';
     </div>
   </div>
 
+  <div class="grid grid-cols-3 gap-3">
+    <div>
+      <label class="block text-sm font-medium">DNI</label>
+      <input name="dni" value="<?= h($al['dni'] ?? '') ?>" class="mt-1 w-full border rounded-xl p-2">
+    </div>
+    <div>
+      <label class="block text-sm font-medium">Seg Social</label>
+      <input name="seg_social" value="<?= h($al['seg_social'] ?? '') ?>" class="mt-1 w-full border rounded-xl p-2">
+    </div>
+    <div>
+      <label class="block text-sm font-medium">Provincia/Localidad</label>
+      <input name="provincia_localidad" value="<?= h($al['provincia_localidad'] ?? '') ?>" class="mt-1 w-full border rounded-xl p-2">
+    </div>
+  </div>
+
   <div class="grid grid-cols-2 gap-3">
     <div>
       <label class="block text-sm font-medium">Fecha de nacimiento</label>
@@ -209,6 +231,48 @@ require_once __DIR__ . '/../partials/_header.php';
     <a href="./index.php" class="rounded-xl px-4 py-2 border">Cancelar</a>
   </div>
 </form>
+
+<!-- MATRÍCULA EN ASIGNATURAS -->
+<section id="matricula" class="bg-white p-6 rounded-2xl shadow mb-8">
+  <h2 class="font-semibold mb-4">Matrícula en Asignaturas</h2>
+  <form method="post">
+    <input type="hidden" name="csrf" value="<?= h(csrf_token()) ?>">
+    <input type="hidden" name="id" value="<?= (int) $id ?>">
+    <input type="hidden" name="accion" value="guardar_matricula">
+
+    <div class="space-y-6">
+      <?php foreach ($totalAsignaturasAgrupadas as $cid => $cursoInfo): ?>
+        <div class="border rounded-xl p-4 bg-gray-50 mb-4">
+          <h3 class="font-medium text-blue-800 mb-3 border-b pb-2"><?= h($cursoInfo['nombre']) ?></h3>
+          
+          <?php foreach ($cursoInfo['niveles'] as $nivelLabel => $asignaturas): ?>
+            <div class="mb-4 last:mb-0">
+              <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2"><?= h($nivelLabel) ?></h4>
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                <?php foreach ($asignaturas as $asig): 
+                  $asid = (int)$asig['id'];
+                  $isEnrolled = in_array($asid, $matriculaActual);
+                ?>
+                  <label class="flex items-start gap-2 p-2 bg-white rounded-lg border hover:border-black cursor-pointer transition-colors">
+                    <input type="checkbox" name="matricula[]" value="<?= $asid ?>" <?= $isEnrolled ? 'checked' : '' ?> class="mt-1">
+                    <span class="text-sm"><?= h($asig['nombre']) ?></span>
+                  </label>
+                <?php endforeach; ?>
+              </div>
+            </div>
+          <?php endforeach; ?>
+        </div>
+      <?php endforeach; ?>
+      <?php if (!$totalAsignaturasAgrupadas): ?>
+        <p class="text-sm text-gray-500 italic">No hay asignaturas disponibles para tus cursos.</p>
+      <?php endif; ?>
+    </div>
+
+    <div class="mt-6">
+      <button class="rounded-xl bg-black text-white px-4 py-2">Guardar Matrícula</button>
+    </div>
+  </form>
+</section>
 
 <!-- ASIGNACIÓN EN EMPRESA -->
 <section id="dual" class="bg-white p-6 rounded-2xl shadow mb-8">

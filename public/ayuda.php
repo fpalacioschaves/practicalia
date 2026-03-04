@@ -15,45 +15,7 @@ require_once __DIR__ . '/partials/_header.php';
         empresas y automatizar comunicaciones de forma eficiente.</p>
 </div>
 
-<!-- Sección 1: Descubrimiento de Empresas -->
-<section id="descubrimiento" class="bg-white rounded-3xl shadow-sm border p-8 mb-8">
-    <div class="flex items-center gap-4 mb-6">
-        <div class="p-3 bg-blue-100 text-blue-700 rounded-2xl">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24"
-                stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
-            </svg>
-        </div>
-        <h2 class="text-2xl font-bold text-gray-800">Descubrimiento Inteligente (OSM)</h2>
-    </div>
-
-    <div class="prose prose-blue max-w-none text-gray-600">
-        <p class="mb-6">Ya no necesitas buscar empresas una a una. Practicalia integra un rastreador basado en
-            <strong>OpenStreetMap</strong> para localizar centros de trabajo potenciales en segundos.</p>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div>
-                <h3 class="text-lg font-semibold text-gray-800 mb-2 flex items-center gap-2">¿Cómo funciona?</h3>
-                <ol class="space-y-2 text-sm list-decimal ml-4">
-                    <li>Ve a <strong>Empresas</strong> y pulsa el botón <span class="font-bold">🔍 Descubrir
-                            (OSM)</span>.</li>
-                    <li>Indica el <strong>Sector</strong> (ej: Desarrollo web) y la <strong>Provincia</strong>.</li>
-                    <li>El sistema buscará en el mapa oficial y te mostrará una lista de resultados.</li>
-                    <li>Pulsa <strong>Revisar y Añadir</strong> para validar los datos antes de guardarlos.</li>
-                </ol>
-            </div>
-            <div class="bg-blue-50 p-6 rounded-2xl border border-blue-100">
-                <h3 class="text-lg font-semibold text-blue-800 mb-2">Flujo de Prospectos</h3>
-                <p class="text-sm">Las empresas descubiertas se guardan inicialmente como <strong>Prospectos</strong>.
-                    Esto te permite gestionar contactos fríos o pendientes de convenio sin "ensuciar" tu base de datos
-                    principal de empresas colaboradoras activas.</p>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Sección 2: Configuración Académica y Dualización -->
+<!-- Sección 1: Configuración Académica y Dualización -->
 <section id="academic" class="bg-white rounded-3xl shadow-sm border p-8 mb-8">
     <div class="flex items-center gap-4 mb-6">
         <div class="p-3 bg-red-100 text-red-700 rounded-2xl">
@@ -92,7 +54,7 @@ require_once __DIR__ . '/partials/_header.php';
     </div>
 </section>
 
-<!-- Sección 3: Envío de Email Masivo -->
+<!-- Sección 2: Envío de Email Masivo -->
 <section id="email-masivo" class="bg-white rounded-3xl shadow-sm border p-8 mb-8">
     <div class="flex items-center gap-4 mb-6">
         <div class="p-3 bg-purple-100 text-purple-700 rounded-2xl">
@@ -127,7 +89,7 @@ require_once __DIR__ . '/partials/_header.php';
     </div>
 </section>
 
-<!-- Sección 4: Gestión Avanzada de Empresas -->
+<!-- Sección 3: Gestión Avanzada de Empresas -->
 <section id="empresas-pro" class="bg-white rounded-3xl shadow-sm border p-8">
     <div class="flex items-center gap-4 mb-6">
         <div class="p-3 bg-emerald-100 text-emerald-700 rounded-2xl">

@@ -97,6 +97,7 @@ $data = [
   'ects' => $asig['ects'] !== null ? (string) $asig['ects'] : '',
   'horas' => $asig['horas'] !== null ? (string) $asig['horas'] : '',
   'semestre' => $asig['semestre'] !== null ? (string) $asig['semestre'] : '',
+  'nivel' => (string) ($asig['nivel'] ?? '1'),
   'descripcion' => (string) ($asig['descripcion'] ?? ''),
   'activo' => (string) ((int) $asig['activo'] ?? 1),
 ];
@@ -112,6 +113,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && (($_POST['accion'] ?? '') === 'actu
     $data['ects'] = normalize_decimal($_POST['ects'] ?? $data['ects']);
     $data['horas'] = trim($_POST['horas'] ?? $data['horas']);
     $data['semestre'] = trim($_POST['semestre'] ?? $data['semestre']);
+    $data['nivel'] = trim($_POST['nivel'] ?? $data['nivel']);
     $data['descripcion'] = trim($_POST['descripcion'] ?? $data['descripcion']);
     $data['activo'] = (isset($_POST['activo']) && $_POST['activo'] === '1') ? '1' : '0';
 
@@ -137,8 +139,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && (($_POST['accion'] ?? '') === 'actu
     if ($data['horas'] !== '' && (!ctype_digit($data['horas']) || (int) $data['horas'] > 2000)) {
       throw new RuntimeException('Horas inválidas (0–2000).');
     }
-    if ($data['semestre'] !== '' && !in_array($data['semestre'], ['1', '2'], true)) {
-      throw new RuntimeException('Semestre inválido (1 ó 2).');
+    if ($data['semestre'] !== '' && !in_array($data['semestre'], ['1', '2', '3', '4'], true)) {
+      throw new RuntimeException('Semestre inválido.');
+    }
+    if ($data['nivel'] !== '' && (!ctype_digit($data['nivel']) || (int) $data['nivel'] > 10)) {
+      throw new RuntimeException('Nivel (curso) inválido.');
     }
 
     // Duplicados (por grado). Usar :cid1 y :cid2 para evitar HY093.
@@ -178,13 +183,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && (($_POST['accion'] ?? '') === 'actu
     // UPDATE principal
     $stU = $pdo->prepare("
       UPDATE asignaturas SET
-        curso_id=:curso_id, nombre=:nombre, codigo=:codigo, ects=:ects,
+        curso_id=:curso_id, nivel=:nivel, nombre=:nombre, codigo=:codigo, ects=:ects,
         horas=:horas, semestre=:semestre, descripcion=:descripcion, activo=:activo
       WHERE id=:id AND deleted_at IS NULL
     ");
     $stU->execute([
       ':id' => $id,
       ':curso_id' => $cursoPrincipal,
+      ':nivel' => ($data['nivel'] !== '' ? (int) $data['nivel'] : 1),
       ':nombre' => $data['nombre'],
       ':codigo' => ($data['codigo'] !== '' ? $data['codigo'] : null),
       ':ects' => ($data['ects'] !== '' ? $data['ects'] : null),
@@ -274,11 +280,13 @@ require_once __DIR__ . '/../partials/_header.php';
     </div>
     <div>
       <label class="block text-sm font-medium">Semestre</label>
-      <select name="semestre" class="mt-1 w-full border rounded-xl p-2">
-        <option value="">—</option>
-        <option value="1" <?= ($data['semestre'] === '1' ? 'selected' : '') ?>>1</option>
-        <option value="2" <?= ($data['semestre'] === '2' ? 'selected' : '') ?>>2</option>
-      </select>
+      <input type="number" name="semestre" min="1" max="10" value="<?= h($data['semestre']) ?>"
+        class="mt-1 w-full border rounded-xl p-2">
+    </div>
+    <div>
+      <label class="block text-sm font-medium">Nivel (Curso) *</label>
+      <input type="number" name="nivel" min="1" max="10" required value="<?= h($data['nivel']) ?>"
+        class="mt-1 w-full border rounded-xl p-2" placeholder="p.ej. 1 para 1º, 2 para 2º...">
     </div>
   </div>
 

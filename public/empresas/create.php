@@ -57,61 +57,125 @@ require_once __DIR__ . '/../partials/_header.php';
     <form method="post" class="bg-white p-6 rounded-2xl shadow space-y-4">
       <input type="hidden" name="csrf" value="<?= htmlspecialchars(csrf_token()) ?>">
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-        <div class="md:col-span-2">
-          <label class="block text-sm font-medium">Nombre de la empresa *</label>
-          <input name="nombre" value="<?= htmlspecialchars($_POST['nombre'] ?? '') ?>" required
-            class="mt-1 w-full border rounded-xl p-2">
-        </div>
+      <!-- SECCIÓN 1: DATOS GENERALES -->
+      <div class="bg-gray-50 p-4 rounded-xl border space-y-4">
+        <h3 class="font-bold text-gray-800 border-b pb-2">1. Datos Generales</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div class="md:col-span-2">
+            <label class="block text-sm font-medium">Nombre de la empresa *</label>
+            <input name="nombre" value="<?= htmlspecialchars($_POST['nombre'] ?? '') ?>" required
+              class="mt-1 w-full border rounded-xl p-2 bg-white">
+          </div>
 
-        <div>
-          <label class="block text-sm font-medium">NIF</label>
-          <input name="nif" value="<?= htmlspecialchars($_POST['nif'] ?? '') ?>"
-            class="mt-1 w-full border rounded-xl p-2" placeholder="Opcional">
-        </div>
-        <div>
-          <label class="block text-sm font-medium">Email general</label>
-          <input name="email" type="email" value="<?= htmlspecialchars($_POST['email'] ?? '') ?>"
-            class="mt-1 w-full border rounded-xl p-2">
-        </div>
+          <div>
+            <label class="block text-sm font-medium">CIF / NIF Empresa</label>
+            <input name="cif" value="<?= htmlspecialchars($_POST['cif'] ?? '') ?>"
+              class="mt-1 w-full border rounded-xl p-2 bg-white" placeholder="CIF de la empresa">
+          </div>
+          <div>
+            <label class="block text-sm font-medium">Actividad / Sector</label>
+            <input name="sector" value="<?= htmlspecialchars($_POST['sector'] ?? '') ?>"
+              class="mt-1 w-full border rounded-xl p-2 bg-white">
+          </div>
 
-        <div>
-          <label class="block text-sm font-medium">Teléfono</label>
-          <input name="telefono" value="<?= htmlspecialchars($_POST['telefono'] ?? '') ?>"
-            class="mt-1 w-full border rounded-xl p-2">
-        </div>
-        <div>
-          <label class="block text-sm font-medium">Web</label>
-          <input name="web" type="url" value="<?= htmlspecialchars($_POST['web'] ?? '') ?>"
-            class="mt-1 w-full border rounded-xl p-2" placeholder="https://...">
+          <div>
+            <label class="block text-sm font-medium">Email general</label>
+            <input name="email" type="email" value="<?= htmlspecialchars($_POST['email'] ?? '') ?>"
+              class="mt-1 w-full border rounded-xl p-2 bg-white">
+          </div>
+          <div>
+            <label class="block text-sm font-medium">Teléfono</label>
+            <input name="telefono" value="<?= htmlspecialchars($_POST['telefono'] ?? '') ?>"
+              class="mt-1 w-full border rounded-xl p-2 bg-white">
+          </div>
+
+          <div class="md:col-span-2">
+            <label class="block text-sm font-medium">Web</label>
+            <input name="web" type="url" value="<?= htmlspecialchars($_POST['web'] ?? '') ?>"
+              class="mt-1 w-full border rounded-xl p-2 bg-white" placeholder="https://...">
+          </div>
+
+          <div class="md:col-span-2">
+            <label class="block text-sm font-medium">Dirección</label>
+            <input name="direccion" value="<?= htmlspecialchars($_POST['direccion'] ?? '') ?>"
+              class="mt-1 w-full border rounded-xl p-2 bg-white">
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium">Código Postal</label>
+            <input name="codigo_postal" value="<?= htmlspecialchars($_POST['codigo_postal'] ?? '') ?>"
+              class="mt-1 w-full border rounded-xl p-2 bg-white">
+          </div>
+          <div>
+            <label class="block text-sm font-medium">Ciudad</label>
+            <input name="ciudad" value="<?= htmlspecialchars($_POST['ciudad'] ?? '') ?>"
+              class="mt-1 w-full border rounded-xl p-2 bg-white">
+          </div>
+          <div>
+            <label class="block text-sm font-medium">Provincia</label>
+            <input name="provincia" value="<?= htmlspecialchars($_POST['provincia'] ?? '') ?>"
+              class="mt-1 w-full border rounded-xl p-2 bg-white">
+          </div>
+
+          <div class="md:col-span-2">
+            <label class="block text-sm font-medium">Horario de realización de las prácticas/dualización</label>
+            <input name="horario_practicas" value="<?= htmlspecialchars($_POST['horario_practicas'] ?? '') ?>"
+              class="mt-1 w-full border rounded-xl p-2 bg-white" placeholder="Ej: Lunes a Viernes de 08:00 a 14:00">
+          </div>
         </div>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-        <div class="md:col-span-2">
-          <label class="block text-sm font-medium">Dirección</label>
-          <input name="direccion" value="<?= htmlspecialchars($_POST['direccion'] ?? '') ?>"
-            class="mt-1 w-full border rounded-xl p-2">
+      <!-- SECCIÓN 2: TUTOR DE PRÁCTICAS -->
+      <div class="bg-blue-50/50 p-4 rounded-xl border border-blue-100 space-y-4">
+        <h3 class="font-bold text-blue-900 border-b border-blue-100 pb-2">2. Datos de Tutor de prácticas en la empresa</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div>
+            <label class="block text-sm font-medium text-blue-800">Nombre del Tutor</label>
+            <input name="responsable_nombre" value="<?= htmlspecialchars($_POST['responsable_nombre'] ?? '') ?>"
+              class="mt-1 w-full border border-blue-200 rounded-xl p-2 bg-white">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-blue-800">NIF del Tutor</label>
+            <input name="tutor_nif" value="<?= htmlspecialchars($_POST['tutor_nif'] ?? '') ?>"
+              class="mt-1 w-full border border-blue-200 rounded-xl p-2 bg-white">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-blue-800">Email del Tutor</label>
+            <input name="responsable_email" type="email" value="<?= htmlspecialchars($_POST['responsable_email'] ?? '') ?>"
+              class="mt-1 w-full border border-blue-200 rounded-xl p-2 bg-white">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-blue-800">Teléfono del Tutor</label>
+            <input name="responsable_telefono" value="<?= htmlspecialchars($_POST['responsable_telefono'] ?? '') ?>"
+              class="mt-1 w-full border border-blue-200 rounded-xl p-2 bg-white">
+          </div>
+          <div class="md:col-span-2">
+            <label class="block text-sm font-medium text-blue-800">Departamento donde realizan las prácticas</label>
+            <input name="tutor_departamento" value="<?= htmlspecialchars($_POST['tutor_departamento'] ?? '') ?>"
+              class="mt-1 w-full border border-blue-200 rounded-xl p-2 bg-white" placeholder="Ej: IT, Recursos Humanos, Contabilidad...">
+          </div>
         </div>
-        <div>
-          <label class="block text-sm font-medium">Código Postal</label>
-          <input name="codigo_postal" value="<?= htmlspecialchars($_POST['codigo_postal'] ?? '') ?>"
-            class="mt-1 w-full border rounded-xl p-2">
-        </div>
-        <div>
-          <label class="block text-sm font-medium">Ciudad</label>
-          <input name="ciudad" value="<?= htmlspecialchars($_POST['ciudad'] ?? '') ?>"
-            class="mt-1 w-full border rounded-xl p-2">
-        </div>
-        <div>
-          <label class="block text-sm font-medium">Provincia</label>
-          <input name="provincia" value="<?= htmlspecialchars($_POST['provincia'] ?? '') ?>"
-            class="mt-1 w-full border rounded-xl p-2">
-        </div>
-        <div>
-          <label class="block text-sm font-medium">País</label>
-          <input name="pais" value="<?= htmlspecialchars($_POST['pais'] ?? 'España') ?>"
-            class="mt-1 w-full border rounded-xl p-2">
+      </div>
+
+      <!-- SECCIÓN 3: REPRESENTANTE LEGAL -->
+      <div class="bg-gray-50/50 p-4 rounded-xl border space-y-4">
+        <h3 class="font-bold text-gray-800 border-b pb-2">3. Datos del representante legal de la empresa</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div class="md:col-span-2">
+            <label class="block text-sm font-medium">Nombre Completo</label>
+            <input name="rep_legal_nombre" value="<?= htmlspecialchars($_POST['rep_legal_nombre'] ?? '') ?>"
+              class="mt-1 w-full border rounded-xl p-2 bg-white">
+          </div>
+          <div>
+            <label class="block text-sm font-medium">NIF</label>
+            <input name="rep_legal_nif" value="<?= htmlspecialchars($_POST['rep_legal_nif'] ?? '') ?>"
+              class="mt-1 w-full border rounded-xl p-2 bg-white">
+          </div>
+          <div>
+            <label class="block text-sm font-medium">Email</label>
+            <input name="rep_legal_email" type="email" value="<?= htmlspecialchars($_POST['rep_legal_email'] ?? '') ?>"
+              class="mt-1 w-full border rounded-xl p-2 bg-white">
+          </div>
         </div>
       </div>
 

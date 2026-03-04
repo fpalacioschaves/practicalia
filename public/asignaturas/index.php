@@ -102,11 +102,11 @@ $sqlRows = "
     a.ects,
     a.horas,
     a.semestre,
+    a.nivel,
     a.activo,
-    GROUP_CONCAT(
-      DISTINCT IFNULL(c0.nombre, c1.nombre)
-      ORDER BY IFNULL(c0.nombre, c1.nombre)
-      SEPARATOR ', '
+    IFNULL(
+      GROUP_CONCAT(DISTINCT c1.nombre ORDER BY c1.nombre SEPARATOR ', '),
+      c0.nombre
     ) AS cursos_nombres
   FROM asignaturas a
   LEFT JOIN cursos c0
@@ -116,7 +116,7 @@ $sqlRows = "
   LEFT JOIN cursos c1
          ON c1.id = ac.curso_id
   $whereSql
-  GROUP BY a.id, a.nombre, a.codigo, a.ects, a.horas, a.semestre, a.activo
+  GROUP BY a.id, a.nombre, a.codigo, a.ects, a.horas, a.semestre, a.nivel, a.activo
   ORDER BY a.nombre ASC, a.id ASC
   LIMIT :limit OFFSET :offset
 ";
@@ -216,6 +216,7 @@ require_once __DIR__ . '/../partials/_header.php';
         <th class="text-left p-3">Código</th>
         <th class="text-left p-3">ECTS</th>
         <th class="text-left p-3">Horas</th>
+        <th class="text-left p-3">Curso</th>
         <th class="text-left p-3">Sem.</th>
         <th class="text-left p-3">Grados</th>
         <th class="text-left p-3">Activa</th>
@@ -234,6 +235,7 @@ require_once __DIR__ . '/../partials/_header.php';
             <td class="p-3"><?= h($r['codigo'] ?? '') ?></td>
             <td class="p-3"><?= h($r['ects'] !== null ? (string) $r['ects'] : '—') ?></td>
             <td class="p-3"><?= h($r['horas'] !== null ? (string) $r['horas'] : '—') ?></td>
+            <td class="p-3 font-bold"><?= h($r['nivel'] !== null ? $r['nivel'] . 'º' : '—') ?></td>
             <td class="p-3"><?= h($r['semestre'] !== null ? (string) $r['semestre'] : '—') ?></td>
             <td class="p-3"><?= h($r['cursos_nombres'] ?? '—') ?></td>
             <td class="p-3">

@@ -77,6 +77,21 @@ require_once __DIR__ . '/../partials/_header.php';
     </div>
   </div>
 
+  <div class="grid grid-cols-3 gap-3">
+    <div>
+      <label class="block text-sm font-medium">DNI</label>
+      <input name="dni" class="mt-1 w-full border rounded-xl p-2">
+    </div>
+    <div>
+      <label class="block text-sm font-medium">Seg Social</label>
+      <input name="seg_social" class="mt-1 w-full border rounded-xl p-2">
+    </div>
+    <div>
+      <label class="block text-sm font-medium">Provincia/Localidad</label>
+      <input name="provincia_localidad" class="mt-1 w-full border rounded-xl p-2">
+    </div>
+  </div>
+
   <div class="grid grid-cols-2 gap-3">
     <div>
       <label class="block text-sm font-medium">Fecha de nacimiento</label>

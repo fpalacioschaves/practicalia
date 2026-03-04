@@ -395,96 +395,117 @@ require_once __DIR__ . '/../partials/_header.php';
       <input type="hidden" name="id" value="<?= (int)$empresa['id'] ?>">
       <input type="hidden" name="accion" value="guardar_empresa">
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-        <div>
-          <label class="block text-sm font-medium">Nombre *</label>
-          <input name="nombre" value="<?= h($empresa['nombre']) ?>" required class="mt-1 w-full border rounded-xl p-2">
-        </div>
-        <div>
-          <label class="block text-sm font-medium">Sector</label>
-          <input name="sector" value="<?= h($empresa['sector'] ?? '') ?>" class="mt-1 w-full border rounded-xl p-2">
-        </div>
-      </div>
-
-      <!-- NUEVO: Persona responsable de la tutoría -->
-      <div class="pt-4 border-t" style="border:1px solid #ccc; padding: 10px; border-radius: 8px;">
-        <h3 class="font-semibold mb-2">Persona de contacto (tutor/a en la empresa)</h3>
-
+      <!-- SECCIÓN 1: DATOS GENERALES -->
+      <div class="bg-gray-50 p-4 rounded-xl border space-y-4">
+        <h3 class="font-bold text-gray-800 border-b pb-2">1. Datos Generales</h3>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div class="md:col-span-2">
+            <label class="block text-sm font-medium">Nombre *</label>
+            <input name="nombre" value="<?= h($empresa['nombre']) ?>" required class="mt-1 w-full border rounded-xl p-2 bg-white">
+          </div>
+          
           <div>
-            <label class="block text-sm font-medium">Nombre y apellidos</label>
-            <input name="responsable_nombre"
-                   value="<?= h($empresa['responsable_nombre'] ?? '') ?>"
-                   class="mt-1 w-full border rounded-xl p-2" placeholder="Ej.: Ana García Ruiz">
+            <label class="block text-sm font-medium">CIF / NIF Empresa</label>
+            <input name="cif" value="<?= h($empresa['cif'] ?? '') ?>" class="mt-1 w-full border rounded-xl p-2 bg-white">
           </div>
           <div>
-            <label class="block text-sm font-medium">Cargo</label>
-            <input name="responsable_cargo"
-                   value="<?= h($empresa['responsable_cargo'] ?? '') ?>"
-                   class="mt-1 w-full border rounded-xl p-2" placeholder="Ej.: Responsable de RR.HH.">
+            <label class="block text-sm font-medium">Actividad / Sector</label>
+            <input name="sector" value="<?= h($empresa['sector'] ?? '') ?>" class="mt-1 w-full border rounded-xl p-2 bg-white">
           </div>
-        </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-3">
           <div>
-            <label class="block text-sm font-medium">Email</label>
-            <input type="email" name="responsable_email"
-                   value="<?= h($empresa['responsable_email'] ?? '') ?>"
-                   class="mt-1 w-full border rounded-xl p-2" placeholder="ana.garcia@empresa.com">
+            <label class="block text-sm font-medium">Email general</label>
+            <input name="email" type="email" value="<?= h($empresa['email'] ?? '') ?>" class="mt-1 w-full border rounded-xl p-2 bg-white">
           </div>
           <div>
             <label class="block text-sm font-medium">Teléfono</label>
-            <input name="responsable_telefono"
-                   value="<?= h($empresa['responsable_telefono'] ?? '') ?>"
-                   class="mt-1 w-full border rounded-xl p-2" placeholder="+34 600 000 000">
+            <input name="telefono" value="<?= h($empresa['telefono'] ?? '') ?>" class="mt-1 w-full border rounded-xl p-2 bg-white">
+          </div>
+
+          <div class="md:col-span-2">
+            <label class="block text-sm font-medium">Web</label>
+            <input name="web" type="url" value="<?= h($empresa['web'] ?? '') ?>" class="mt-1 w-full border rounded-xl p-2 bg-white" placeholder="https://...">
+          </div>
+
+          <div class="md:col-span-2">
+            <label class="block text-sm font-medium">Dirección</label>
+            <input name="direccion" value="<?= h($empresa['direccion'] ?? '') ?>" class="mt-1 w-full border rounded-xl p-2 bg-white">
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3 md:col-span-2">
+            <div>
+              <label class="block text-sm font-medium">Código postal</label>
+              <input name="codigo_postal" value="<?= h($empresa['codigo_postal'] ?? '') ?>" class="mt-1 w-full border rounded-xl p-2 bg-white">
+            </div>
+            <div>
+              <label class="block text-sm font-medium">Ciudad</label>
+              <input name="ciudad" value="<?= h($empresa['ciudad'] ?? '') ?>" class="mt-1 w-full border rounded-xl p-2 bg-white">
+            </div>
+            <div>
+              <label class="block text-sm font-medium">Provincia</label>
+              <input name="provincia" value="<?= h($empresa['provincia'] ?? '') ?>" class="mt-1 w-full border rounded-xl p-2 bg-white">
+            </div>
+          </div>
+
+          <div class="md:col-span-2">
+            <label class="block text-sm font-medium">Horario de realización de las prácticas/dualización</label>
+            <input name="horario_practicas" value="<?= h($empresa['horario_practicas'] ?? '') ?>"
+              class="mt-1 w-full border rounded-xl p-2 bg-white" placeholder="Ej: Lunes a Viernes de 08:00 a 14:00">
           </div>
         </div>
       </div>
-      <!-- /NUEVO -->
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-        <div>
-          <label class="block text-sm font-medium">CIF</label>
-          <input name="cif" value="<?= h($empresa['cif'] ?? '') ?>" class="mt-1 w-full border rounded-xl p-2">
-        </div>
-        <div>
-          <label class="block text-sm font-medium">NIF</label>
-          <input name="nif" value="<?= h($empresa['nif'] ?? '') ?>" class="mt-1 w-full border rounded-xl p-2">
-        </div>
-        <div>
-          <label class="block text-sm font-medium">Teléfono</label>
-          <input name="telefono" value="<?= h($empresa['telefono'] ?? '') ?>" class="mt-1 w-full border rounded-xl p-2">
+      <!-- SECCIÓN 2: TUTOR DE PRÁCTICAS -->
+      <div class="bg-blue-50/50 p-4 rounded-xl border border-blue-100 space-y-4">
+        <h3 class="font-bold text-blue-900 border-b border-blue-100 pb-2">2. Datos de Tutor de prácticas en la empresa</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div>
+            <label class="block text-sm font-medium text-blue-800">Nombre del Tutor</label>
+            <input name="responsable_nombre" value="<?= h($empresa['responsable_nombre'] ?? '') ?>"
+              class="mt-1 w-full border border-blue-200 rounded-xl p-2 bg-white">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-blue-800">NIF del Tutor</label>
+            <input name="tutor_nif" value="<?= h($empresa['tutor_nif'] ?? '') ?>"
+              class="mt-1 w-full border border-blue-200 rounded-xl p-2 bg-white">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-blue-800">Email del Tutor</label>
+            <input name="responsable_email" type="email" value="<?= h($empresa['responsable_email'] ?? '') ?>"
+              class="mt-1 w-full border border-blue-200 rounded-xl p-2 bg-white">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-blue-800">Teléfono del Tutor</label>
+            <input name="responsable_telefono" value="<?= h($empresa['responsable_telefono'] ?? '') ?>"
+              class="mt-1 w-full border border-blue-200 rounded-xl p-2 bg-white">
+          </div>
+          <div class="md:col-span-2">
+            <label class="block text-sm font-medium text-blue-800">Departamento donde realizan las prácticas</label>
+            <input name="tutor_departamento" value="<?= h($empresa['tutor_departamento'] ?? '') ?>"
+              class="mt-1 w-full border border-blue-200 rounded-xl p-2 bg-white" placeholder="Ej: IT, Recursos Humanos, Contabilidad...">
+          </div>
         </div>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-        <div>
-          <label class="block text-sm font-medium">Email</label>
-          <input name="email" type="email" value="<?= h($empresa['email'] ?? '') ?>" class="mt-1 w-full border rounded-xl p-2">
-        </div>
-        <div>
-          <label class="block text-sm font-medium">Web</label>
-          <input name="web" value="<?= h($empresa['web'] ?? '') ?>" class="mt-1 w-full border rounded-xl p-2" placeholder="https://...">
-        </div>
-        <div>
-          <label class="block text-sm font-medium">Código postal</label>
-          <input name="codigo_postal" value="<?= h($empresa['codigo_postal'] ?? '') ?>" class="mt-1 w-full border rounded-xl p-2">
-        </div>
-      </div>
-
-      <div>
-        <label class="block text-sm font-medium">Dirección</label>
-        <input name="direccion" value="<?= h($empresa['direccion'] ?? '') ?>" class="mt-1 w-full border rounded-xl p-2">
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-        <div>
-          <label class="block text-sm font-medium">Ciudad</label>
-          <input name="ciudad" value="<?= h($empresa['ciudad'] ?? '') ?>" class="mt-1 w-full border rounded-xl p-2">
-        </div>
-        <div>
-          <label class="block text-sm font-medium">Provincia</label>
-          <input name="provincia" value="<?= h($empresa['provincia'] ?? '') ?>" class="mt-1 w-full border rounded-xl p-2">
+      <!-- SECCIÓN 3: REPRESENTANTE LEGAL -->
+      <div class="bg-gray-50/50 p-4 rounded-xl border space-y-4">
+        <h3 class="font-bold text-gray-800 border-b pb-2">3. Datos del representante legal de la empresa</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div class="md:col-span-2">
+            <label class="block text-sm font-medium">Nombre Completo</label>
+            <input name="rep_legal_nombre" value="<?= h($empresa['rep_legal_nombre'] ?? '') ?>"
+              class="mt-1 w-full border rounded-xl p-2 bg-white">
+          </div>
+          <div>
+            <label class="block text-sm font-medium">NIF</label>
+            <input name="rep_legal_nif" value="<?= h($empresa['rep_legal_nif'] ?? '') ?>"
+              class="mt-1 w-full border rounded-xl p-2 bg-white">
+          </div>
+          <div>
+            <label class="block text-sm font-medium">Email</label>
+            <input name="rep_legal_email" type="email" value="<?= h($empresa['rep_legal_email'] ?? '') ?>"
+              class="mt-1 w-full border rounded-xl p-2 bg-white">
+          </div>
         </div>
       </div>
 

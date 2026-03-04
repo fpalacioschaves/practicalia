@@ -96,6 +96,7 @@ require_once __DIR__ . '/../partials/_header.php';
       <tr>
         <th class="text-left p-3">ID</th>
         <th class="text-left p-3">Nombre</th>
+        <th class="text-left p-3">DNI</th>
         <th class="text-left p-3">Email</th>
         <th class="text-left p-3">Teléfono</th>
         <th class="text-left p-3">Cursos</th>
@@ -109,6 +110,7 @@ require_once __DIR__ . '/../partials/_header.php';
         <tr class="border-t">
           <td class="p-3"><?= $aid ?></td>
           <td class="p-3"><?= h(($r['nombre'] ?? '') . ' ' . ($r['apellidos'] ?? '')) ?></td>
+          <td class="p-3 font-mono text-xs"><?= h($r['dni'] ?? '—') ?></td>
           <td class="p-3"><?= h($r['email'] ?? '') ?></td>
           <td class="p-3"><?= h($r['telefono'] ?? '') ?></td>
           <td class="p-3"><?= h($r['cursos'] ?? '') ?></td>

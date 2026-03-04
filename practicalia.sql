@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 03-02-2026 a las 12:38:33
+-- Tiempo de generación: 04-03-2026 a las 20:36:12
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -31,6 +31,9 @@ CREATE TABLE `alumnos` (
   `id` int(10) UNSIGNED NOT NULL,
   `nombre` varchar(100) NOT NULL,
   `apellidos` varchar(150) NOT NULL,
+  `dni` varchar(20) DEFAULT NULL,
+  `seg_social` varchar(20) DEFAULT NULL,
+  `provincia_localidad` varchar(100) DEFAULT NULL,
   `email` varchar(190) DEFAULT NULL,
   `telefono` varchar(30) DEFAULT NULL,
   `activo` tinyint(4) NOT NULL DEFAULT 1,
@@ -45,21 +48,42 @@ CREATE TABLE `alumnos` (
 -- Volcado de datos para la tabla `alumnos`
 --
 
-INSERT INTO `alumnos` (`id`, `nombre`, `apellidos`, `email`, `telefono`, `activo`, `fecha_nacimiento`, `notas`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1003, 'Adrián', 'Arroyo García', 'adrianarroyo93@gmail.com', NULL, 1, NULL, NULL, '2025-10-18 09:28:00', '2025-10-18 09:28:00', NULL),
-(1004, 'Jesús', 'Benitez Maestre', 'jesusbenim78@icloud.com', NULL, 1, NULL, NULL, '2025-10-18 09:29:12', '2025-10-18 09:29:12', NULL),
-(1005, 'Juan Carlos', 'Bernal Tortosa', 'jcbernalt@hotmail.com', NULL, 1, NULL, NULL, '2025-10-18 09:29:34', '2025-10-18 09:29:34', NULL),
-(1006, 'Carlos', 'Cobos Medina', 'carlosfactory97@gmail.com', NULL, 1, NULL, NULL, '2025-10-18 09:29:54', '2025-10-18 09:29:54', NULL),
-(1007, 'Francisco Javier', 'Jimenez Cortés', 'al1protocol23@gmail.com', NULL, 1, NULL, NULL, '2025-10-18 09:30:14', '2025-10-18 09:30:14', NULL),
-(1008, 'Pablo', 'López Anelo', 'plastg28@gmail.com', NULL, 1, NULL, NULL, '2025-10-18 09:31:39', '2025-10-18 09:31:39', NULL),
-(1009, 'Félix', 'Martín Navarro', 'felixmn99@gmail.com', NULL, 1, NULL, NULL, '2025-10-18 09:32:03', '2025-10-18 09:32:03', NULL),
-(1010, 'Juan Francisco', 'Mena Cobano', 'juanfranciscomenacobano@gmail.com', NULL, 1, NULL, NULL, '2025-10-18 09:32:26', '2025-10-18 09:32:26', NULL),
-(1011, 'Jaime', 'Morejón Díaz', 'jaimemorejdiaz@gmail.com', NULL, 1, NULL, NULL, '2025-10-18 09:32:46', '2025-10-18 09:32:46', NULL),
-(1012, 'Eugenio', 'Nimo Flor', 'enimo@fundacionsafa.es', NULL, 1, NULL, NULL, '2025-10-18 09:33:06', '2025-10-18 09:33:06', NULL),
-(1013, 'Álvaro', 'Rodríguez Martínez', 'arm1612004@gmail.com', NULL, 1, NULL, NULL, '2025-10-18 09:33:35', '2025-10-18 09:33:35', NULL),
-(1014, 'José Manuel', 'Ruíz Herrera', 'joserom17@gmail.com', NULL, 1, NULL, NULL, '2025-10-18 09:33:57', '2025-10-18 09:33:57', NULL),
-(1015, 'Eduardo Jaime', 'Vera Olmo', 'ejvo1981@hotmail.com', NULL, 1, NULL, NULL, '2025-10-18 09:34:20', '2025-10-18 09:34:20', NULL),
-(1016, 'bj,vbn,', 'nm,bnm,', 'fpalacioschaves@gmail.com', '655925498666', 1, '2007-01-31', 'hgfhjghj', '2026-01-29 17:00:28', '2026-01-29 17:00:28', NULL);
+INSERT INTO `alumnos` (`id`, `nombre`, `apellidos`, `dni`, `seg_social`, `provincia_localidad`, `email`, `telefono`, `activo`, `fecha_nacimiento`, `notas`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1003, 'Adrián', 'Arroyo García', NULL, NULL, NULL, 'adrianarroyo93@gmail.com', NULL, 1, NULL, NULL, '2025-10-18 09:28:00', '2025-10-18 09:28:00', NULL),
+(1004, 'Jesús', 'Benitez Maestre', NULL, NULL, NULL, 'jesusbenim78@icloud.com', NULL, 1, NULL, NULL, '2025-10-18 09:29:12', '2025-10-18 09:29:12', NULL),
+(1005, 'Juan Carlos', 'Bernal Tortosa', NULL, NULL, NULL, 'jcbernalt@hotmail.com', NULL, 1, NULL, NULL, '2025-10-18 09:29:34', '2025-10-18 09:29:34', NULL),
+(1006, 'Carlos', 'Cobos Medina', NULL, NULL, NULL, 'carlosfactory97@gmail.com', NULL, 1, NULL, NULL, '2025-10-18 09:29:54', '2025-10-18 09:29:54', NULL),
+(1007, 'Francisco Javier', 'Jimenez Cortés', NULL, NULL, NULL, 'al1protocol23@gmail.com', NULL, 1, NULL, NULL, '2025-10-18 09:30:14', '2025-10-18 09:30:14', NULL),
+(1008, 'Pablo', 'López Anelo', NULL, NULL, NULL, 'plastg28@gmail.com', NULL, 1, NULL, NULL, '2025-10-18 09:31:39', '2025-10-18 09:31:39', NULL),
+(1009, 'Félix', 'Martín Navarro', NULL, NULL, NULL, 'felixmn99@gmail.com', NULL, 1, NULL, NULL, '2025-10-18 09:32:03', '2025-10-18 09:32:03', NULL),
+(1010, 'Juan Francisco', 'Mena Cobano', NULL, NULL, NULL, 'juanfranciscomenacobano@gmail.com', NULL, 1, NULL, NULL, '2025-10-18 09:32:26', '2025-10-18 09:32:26', NULL),
+(1011, 'Jaime', 'Morejón Díaz', NULL, NULL, NULL, 'jaimemorejdiaz@gmail.com', NULL, 1, NULL, NULL, '2025-10-18 09:32:46', '2025-10-18 09:32:46', NULL),
+(1012, 'Eugenio', 'Nimo Flor', NULL, NULL, NULL, 'enimo@fundacionsafa.es', NULL, 1, NULL, NULL, '2025-10-18 09:33:06', '2025-10-18 09:33:06', NULL),
+(1013, 'Álvaro', 'Rodríguez Martínez', NULL, NULL, NULL, 'arm1612004@gmail.com', NULL, 1, NULL, NULL, '2025-10-18 09:33:35', '2025-10-18 09:33:35', NULL),
+(1014, 'José Manuel', 'Ruíz Herrera', NULL, NULL, NULL, 'joserom17@gmail.com', NULL, 1, NULL, NULL, '2025-10-18 09:33:57', '2025-10-18 09:33:57', NULL),
+(1015, 'Eduardo Jaime', 'Vera Olmo', NULL, NULL, NULL, 'ejvo1981@hotmail.com', NULL, 1, NULL, NULL, '2025-10-18 09:34:20', '2025-10-18 09:34:20', NULL),
+(1016, 'bj,vbn,', 'nm,bnm,', NULL, NULL, NULL, 'fpalacioschaves@gmail.com', '655925498666', 1, '2007-01-31', 'hgfhjghj', '2026-01-29 17:00:28', '2026-01-29 17:00:28', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `alumnos_asignaturas`
+--
+
+CREATE TABLE `alumnos_asignaturas` (
+  `alumno_id` int(10) UNSIGNED NOT NULL,
+  `asignatura_id` int(10) UNSIGNED NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `alumnos_asignaturas`
+--
+
+INSERT INTO `alumnos_asignaturas` (`alumno_id`, `asignatura_id`, `created_at`) VALUES
+(1003, 2, '2026-03-04 16:51:37'),
+(1003, 6, '2026-03-04 16:51:37'),
+(1003, 7, '2026-03-04 16:51:37');
 
 -- --------------------------------------------------------
 
@@ -136,6 +160,7 @@ INSERT INTO `alumno_contactos` (`id`, `alumno_id`, `profesor_id`, `fecha`, `tipo
 CREATE TABLE `asignaturas` (
   `id` int(10) UNSIGNED NOT NULL,
   `curso_id` int(10) UNSIGNED NOT NULL,
+  `nivel` tinyint(3) UNSIGNED DEFAULT 1,
   `nombre` varchar(150) NOT NULL,
   `codigo` varchar(30) DEFAULT NULL,
   `ects` decimal(4,1) DEFAULT NULL,
@@ -152,22 +177,22 @@ CREATE TABLE `asignaturas` (
 -- Volcado de datos para la tabla `asignaturas`
 --
 
-INSERT INTO `asignaturas` (`id`, `curso_id`, `nombre`, `codigo`, `ects`, `horas`, `semestre`, `descripcion`, `activo`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 1, 'Sistemas informáticos', '0483', NULL, 192, NULL, NULL, 1, '2025-10-23 10:21:41', '2025-10-23 10:21:41', NULL),
-(2, 1, 'Bases de datos', '0484', NULL, 192, NULL, NULL, 1, '2025-10-23 10:27:29', '2025-10-23 10:27:29', NULL),
-(3, 1, 'Programación', '0485', NULL, 288, NULL, NULL, 1, '2025-10-23 11:41:22', '2025-10-23 11:41:22', NULL),
-(4, 1, 'Lenguajes de marcas y sistemas de gestión de información', '0486', NULL, 128, NULL, NULL, 1, '2025-10-23 11:45:44', '2025-10-23 11:45:44', NULL),
-(5, 1, 'Entornos de Desarrollo', NULL, NULL, 96, NULL, NULL, 1, '2025-10-26 11:57:32', '2025-10-26 11:57:32', NULL),
-(6, 1, 'Acceso a datos', NULL, NULL, 126, NULL, NULL, 1, '2025-10-26 12:06:24', '2025-10-26 12:06:24', NULL),
-(7, 1, 'Desarrollo de interfaces', '0488', NULL, 80, NULL, NULL, 1, '2025-10-26 12:10:27', '2025-10-26 12:10:27', NULL),
-(8, 1, 'Programación de servicios y procesos', '0490', NULL, 84, NULL, NULL, 1, '2025-10-26 12:13:31', '2025-10-26 12:24:42', NULL),
-(9, 1, 'Programación multimedia y dispositivos móviles', '0491', NULL, 84, NULL, NULL, 1, '2025-10-26 12:25:33', '2025-10-26 12:25:33', NULL),
-(10, 1, 'Sistemas de gestión empresarial', '0492', NULL, 84, NULL, NULL, 1, '2025-10-26 12:27:40', '2025-10-26 12:27:40', NULL),
-(11, 2, 'Desarrollo web en entorno cliente', '0493', NULL, 126, NULL, NULL, 1, '2025-10-26 12:30:48', '2025-10-26 12:30:48', NULL),
-(12, 2, 'Desarrollo web en entorno servidor', '0494', NULL, 126, NULL, NULL, 1, '2025-10-26 12:33:17', '2025-10-26 12:33:17', NULL),
-(13, 2, 'Despliegue de aplicaciones web', '0495', NULL, 63, NULL, NULL, 1, '2025-10-26 12:35:26', '2025-10-26 12:35:26', NULL),
-(14, 2, 'Diseño de interfaces web', '0496', NULL, 84, NULL, NULL, 1, '2025-10-26 12:37:28', '2025-10-26 12:37:28', NULL),
-(15, 2, 'Empresa e iniciativa emprendedora', '0497', NULL, 84, NULL, NULL, 1, '2025-10-26 12:39:54', '2025-10-26 12:39:54', NULL);
+INSERT INTO `asignaturas` (`id`, `curso_id`, `nivel`, `nombre`, `codigo`, `ects`, `horas`, `semestre`, `descripcion`, `activo`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 1, 1, 'Sistemas informáticos', '0483', NULL, 192, NULL, NULL, 1, '2025-10-23 10:21:41', '2025-10-23 10:21:41', NULL),
+(2, 1, 1, 'Bases de datos', '0484', NULL, 192, NULL, NULL, 1, '2025-10-23 10:27:29', '2025-10-23 10:27:29', NULL),
+(3, 1, 1, 'Programación', '0485', NULL, 288, NULL, NULL, 1, '2025-10-23 11:41:22', '2025-10-23 11:41:22', NULL),
+(4, 1, 1, 'Lenguajes de marcas y sistemas de gestión de información', '0486', NULL, 128, NULL, NULL, 1, '2025-10-23 11:45:44', '2025-10-23 11:45:44', NULL),
+(5, 1, 1, 'Entornos de Desarrollo', NULL, NULL, 96, NULL, NULL, 1, '2025-10-26 11:57:32', '2025-10-26 11:57:32', NULL),
+(6, 1, 2, 'Acceso a datos', NULL, NULL, 126, NULL, NULL, 1, '2025-10-26 12:06:24', '2026-03-04 19:12:15', NULL),
+(7, 1, 1, 'Desarrollo de interfaces', '0488', NULL, 80, NULL, NULL, 1, '2025-10-26 12:10:27', '2025-10-26 12:10:27', NULL),
+(8, 1, 2, 'Programación de servicios y procesos', '0490', NULL, 84, NULL, NULL, 1, '2025-10-26 12:13:31', '2026-03-04 19:12:56', NULL),
+(9, 1, 2, 'Programación multimedia y dispositivos móviles', '0491', NULL, 84, NULL, NULL, 1, '2025-10-26 12:25:33', '2026-03-04 19:13:04', NULL),
+(10, 1, 2, 'Sistemas de gestión empresarial', '0492', NULL, 84, NULL, NULL, 1, '2025-10-26 12:27:40', '2026-03-04 19:13:11', NULL),
+(11, 2, 2, 'Desarrollo web en entorno cliente', '0493', NULL, 126, NULL, NULL, 1, '2025-10-26 12:30:48', '2026-03-04 19:12:22', NULL),
+(12, 2, 2, 'Desarrollo web en entorno servidor', '0494', NULL, 126, NULL, NULL, 1, '2025-10-26 12:33:17', '2026-03-04 19:12:27', NULL),
+(13, 2, 2, 'Despliegue de aplicaciones web', '0495', NULL, 63, NULL, NULL, 1, '2025-10-26 12:35:26', '2026-03-04 19:12:34', NULL),
+(14, 2, 2, 'Diseño de interfaces web', '0496', NULL, 84, NULL, NULL, 1, '2025-10-26 12:37:28', '2026-03-04 19:12:40', NULL),
+(15, 2, 1, 'Empresa e iniciativa emprendedora', '0497', NULL, 84, NULL, NULL, 1, '2025-10-26 12:39:54', '2025-10-26 12:39:54', NULL);
 
 -- --------------------------------------------------------
 
@@ -507,11 +532,17 @@ CREATE TABLE `empresas` (
   `provincia` varchar(100) DEFAULT NULL,
   `codigo_postal` varchar(15) DEFAULT NULL,
   `sector` varchar(120) DEFAULT NULL,
+  `horario_practicas` varchar(255) DEFAULT NULL,
   `es_publica` tinyint(1) NOT NULL DEFAULT 0,
   `responsable_nombre` varchar(150) DEFAULT NULL,
   `responsable_cargo` varchar(120) DEFAULT NULL,
   `responsable_email` varchar(190) DEFAULT NULL,
   `responsable_telefono` varchar(30) DEFAULT NULL,
+  `tutor_nif` varchar(20) DEFAULT NULL,
+  `tutor_departamento` varchar(100) DEFAULT NULL,
+  `rep_legal_nombre` varchar(150) DEFAULT NULL,
+  `rep_legal_nif` varchar(20) DEFAULT NULL,
+  `rep_legal_email` varchar(190) DEFAULT NULL,
   `activo` tinyint(1) NOT NULL DEFAULT 1,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
@@ -522,85 +553,25 @@ CREATE TABLE `empresas` (
 -- Volcado de datos para la tabla `empresas`
 --
 
-INSERT INTO `empresas` (`id`, `nombre`, `cif`, `nif`, `email`, `telefono`, `web`, `direccion`, `ciudad`, `provincia`, `codigo_postal`, `sector`, `es_publica`, `responsable_nombre`, `responsable_cargo`, `responsable_email`, `responsable_telefono`, `activo`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(503, 'Atech', NULL, NULL, 'administracion@atech.es', '691269705', 'www.atech.es', 'C/ Fernan Núñez 16, oficina 4', 'Málaga', 'Málaga', '29002', 'TIC', 0, NULL, NULL, NULL, NULL, 1, '2025-10-22 15:01:51', '2025-10-22 15:01:51', NULL),
-(504, 'Dadisa', NULL, NULL, 'joseluis@dadisa.net', '952360412', 'www.dadisa.es', 'C/ Almogía 14, bloque 14, local 4', 'Malaga', 'Málaga', '29007', 'Informática', 0, NULL, NULL, NULL, NULL, 1, '2025-10-22 17:01:29', '2025-10-22 17:01:29', NULL),
-(505, 'Factoria Biz', NULL, NULL, 'rzaragoza@factoriabiz.com', '951923301', 'https://www.factoriabiz.com/', 'Parque Empresarial El Pinillo, C. Decano Antonio Zedano, 3, Nave 5A', 'Torremolinos', 'Málaga', '29620', 'TIC', 0, NULL, NULL, NULL, NULL, 1, '2025-10-23 15:09:17', '2025-10-23 15:09:17', NULL),
-(506, 'factoriakreativa.com', 'ertyertyerty', 'rtyertyerty', 'rrhh@factoriakreativa.com', '5674567567', 'factoriakreativa.com', NULL, 'Málaga', 'Málaga', '567456', 'tecnología', 0, 'Nombre y Apellidos del Contacto', 'Currito', 'currito@curro.com', '666666666', 1, '2025-10-23 15:17:16', '2025-10-29 17:04:32', NULL),
-(507, 'Solbyte: Empresa de Servicios Informáticos en Málaga', NULL, NULL, NULL, NULL, 'https://www.solbyte.com/', NULL, NULL, NULL, NULL, 'software, frontend, backend, móvil, móviles', 0, NULL, NULL, NULL, NULL, 1, '2025-11-02 16:59:03', '2025-11-02 16:59:03', NULL),
-(508, 'Innovacodex: Desarrollo de Software Personalizado en España', NULL, NULL, NULL, NULL, 'https://innovacodex.io/', NULL, NULL, NULL, NULL, 'software, frontend, backend, móvil, móviles', 0, NULL, NULL, NULL, NULL, 1, '2025-11-02 16:59:54', '2025-11-02 16:59:54', NULL),
-(509, '10Code — Desarrollo de software a medida y equipos dedicados', 'A87654321', 'fghfghdfghdfgh', 'fpalacioschaves@gmail.com', '952360412', 'https://desarrollosoftware.es/', 'C/ Almogía 14, bloque 14, local 4', 'Malaga', 'Málaga', '29007', 'software, frontend, backend, móvil, móviles', 1, 'Pepito Responsable', 'Gargo de Responsable', 'joseluis@dadisa.net', '+34952360412', 1, '2025-11-02 17:01:14', '2026-02-03 11:08:26', NULL),
-(510, 'Auroralabs', NULL, NULL, NULL, NULL, 'https://es.linkedin.com/company/auroralabsapps', NULL, NULL, NULL, NULL, 'software, frontend, backend, móvil, móviles', 0, NULL, NULL, NULL, NULL, 1, '2025-11-02 17:02:01', '2025-11-02 17:02:01', NULL),
-(511, 'CSI Servicios Informática', NULL, NULL, NULL, '+34 952 31 28 86', 'https://www.infocsi.es/', NULL, 'Málaga', 'Málaga', NULL, NULL, 0, NULL, NULL, NULL, NULL, 1, '2025-11-02 20:37:58', '2025-11-02 20:37:58', NULL),
-(512, 'La Tienda de Informática del Centro', NULL, NULL, NULL, '+34 952 21 75 96', 'https://www.openstreetmap.org/node/5574303199', NULL, 'Málaga', 'Málaga', NULL, 'TIC', 0, NULL, NULL, NULL, NULL, 1, '2025-11-02 20:42:29', '2025-11-09 12:53:51', '2025-11-09 12:53:51'),
-(513, 'App Informática', NULL, NULL, NULL, NULL, 'https://www.openstreetmap.org/node/4856539942', NULL, 'Málaga', 'Málaga', NULL, NULL, 0, NULL, NULL, NULL, NULL, 1, '2025-11-02 20:43:07', '2025-11-09 12:53:30', '2025-11-09 12:53:30'),
-(514, 'App Informática', NULL, NULL, NULL, NULL, 'https://www.appinformatica.com/', NULL, 'Sevilla', 'Sevilla', NULL, '', 0, NULL, NULL, NULL, NULL, 1, '2025-11-09 12:52:45', '2025-11-09 12:52:45', NULL),
-(515, 'PC BOX', NULL, NULL, NULL, NULL, 'https://www.pcbox.com/', NULL, 'Sevilla', 'Sevilla', NULL, NULL, 0, NULL, NULL, NULL, NULL, 1, '2025-11-09 12:52:51', '2026-01-29 17:03:02', NULL),
-(516, 'App Informática', NULL, NULL, NULL, NULL, 'https://www.openstreetmap.org/node/2211649435', NULL, 'sevilla', 'sevilla', NULL, NULL, 0, NULL, NULL, NULL, NULL, 1, '2025-11-09 12:52:57', '2025-11-09 12:52:57', NULL),
-(517, 'Andaluza de Programación', NULL, NULL, NULL, '+34954086600', 'https://www.apsl.es/', NULL, 'Sevilla', 'Sevilla', NULL, 'TIC', 0, NULL, NULL, NULL, NULL, 1, '2025-11-09 12:53:06', '2026-01-29 17:05:36', NULL),
-(518, 'sdsadtswft', NULL, NULL, NULL, NULL, 'sdfgsdfg', 'dfgsdfgsdfg', 'sdfgsdfgdfg', 'sdfgsdfgsdf', 'sdfdfgdfg', 'sdtsdrtsdert', 0, NULL, NULL, NULL, NULL, 1, '2025-11-12 18:02:38', '2025-11-12 18:03:25', '2025-11-12 18:03:25'),
-(519, 'Empresa de Testeoq', NULL, NULL, NULL, '666666666', NULL, NULL, NULL, NULL, NULL, 'TIC', 0, NULL, NULL, NULL, NULL, 1, '2025-11-12 18:09:25', '2025-11-12 18:09:25', NULL);
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `empresas_prospectos`
---
-
-CREATE TABLE `empresas_prospectos` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `nombre` varchar(190) NOT NULL,
-  `sector` varchar(120) DEFAULT NULL,
-  `cnae` varchar(10) DEFAULT NULL,
-  `web` varchar(190) DEFAULT NULL,
-  `email` varchar(190) DEFAULT NULL,
-  `telefono` varchar(30) DEFAULT NULL,
-  `responsable_nombre` varchar(150) DEFAULT NULL,
-  `responsable_cargo` varchar(120) DEFAULT NULL,
-  `responsable_email` varchar(190) DEFAULT NULL,
-  `responsable_telefono` varchar(30) DEFAULT NULL,
-  `ciudad` varchar(120) DEFAULT NULL,
-  `provincia` varchar(120) DEFAULT NULL,
-  `notas` text DEFAULT NULL,
-  `estado` enum('nuevo','pendiente','contactada','interesada','descartada') NOT NULL DEFAULT 'nuevo',
-  `origen` enum('manual','busqueda','import') NOT NULL DEFAULT 'manual',
-  `fuente_url` varchar(255) DEFAULT NULL,
-  `prospecto_etiquetas` varchar(255) DEFAULT NULL,
-  `asignado_profesor_id` int(10) UNSIGNED DEFAULT NULL,
-  `curso_id` int(10) UNSIGNED DEFAULT NULL,
-  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
-  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `deleted_at` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `empresas_prospectos`
---
-
-INSERT INTO `empresas_prospectos` (`id`, `nombre`, `sector`, `cnae`, `web`, `email`, `telefono`, `responsable_nombre`, `responsable_cargo`, `responsable_email`, `responsable_telefono`, `ciudad`, `provincia`, `notas`, `estado`, `origen`, `fuente_url`, `prospecto_etiquetas`, `asignado_profesor_id`, `curso_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'Daniel Rodríguez', 'software, frontend, backend, móvil, móviles', NULL, 'https://es.linkedin.com/in/danir-dev', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '... Desarrollo web | Aplicaciones móviles | Inteligencia Artificial. Bluumi Mobile Apps. Sevilla, Andalucía, España. 977 seguidores Más de 500 contactos. Ver tus ...', 'nuevo', 'busqueda', 'https://es.linkedin.com/in/danir-dev', NULL, 3, NULL, '2025-11-02 17:58:30', '2025-11-02 18:02:49', '2025-11-02 18:02:49'),
-(2, 'Desarrollo De Aplicaciones Móviles 100% Rápido Y Eficiente ...', 'software, frontend, backend, móvil, móviles', NULL, 'https://allsavfe.com/desarrollo-de-aplicaciones-moviles/', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Desarrollamos desde apps nativas hasta aplicaciones web progresivas (PWA), garantizando seguridad, velocidad y rendimiento. Nuestro equipo de desarrolladores ...', 'nuevo', 'busqueda', 'https://allsavfe.com/desarrollo-de-aplicaciones-moviles/', NULL, 3, NULL, '2025-11-02 17:58:30', '2025-11-02 18:02:27', '2025-11-02 18:02:27'),
-(3, 'Auroralabs', 'software, frontend, backend, móvil, móviles', NULL, 'https://es.linkedin.com/company/auroralabsapps', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Auroralabs es una compañía de desarrollo y diseño de software que ayuda a las empresas a crear aplicaciones móviles desde cero. Somos unos apasionados de la ...', 'interesada', 'busqueda', 'https://es.linkedin.com/company/auroralabsapps', NULL, 3, NULL, '2025-11-02 17:58:30', '2025-11-02 18:02:01', '2025-11-02 18:02:01'),
-(4, 'Optimization of Emergency Notification Processes in University ...', 'software, frontend, backend, móvil, móviles', NULL, 'https://www.researchgate.net/publication/396802000_Optimization_of_Emergency_Notification_Processes_in_University_Campuses_Through_Multiplatform_Mobile_Applications_A_Case_Study', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Oct 23, 2025 ... This research presents the design, development, and implementation of a multiplatform mobile application to optimize emergency notifications at ...', 'nuevo', 'busqueda', 'https://www.researchgate.net/publication/396802000_Optimization_of_Emergency_Notification_Processes_in_University_Campuses_Through_Multiplatform_Mobile_Applications_A_Case_Study', NULL, 3, NULL, '2025-11-02 17:58:30', '2025-11-02 18:01:40', '2025-11-02 18:01:40'),
-(5, 'Las 10 mejores empresas de desarrollo de aplicaciones móviles en ...', 'software, frontend, backend, móvil, móviles', NULL, 'https://www.sortlist.es/aplicaciones/andalucia-al-es', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '... app móvil en Andalucía. Algunos trabajos que podrían inspirarte. Inspírate en lo que se ha hecho para otras empresas. App elSuper.cl.', 'nuevo', 'busqueda', 'https://www.sortlist.es/aplicaciones/andalucia-al-es', NULL, 3, NULL, '2025-11-02 17:58:30', '2025-11-02 18:01:33', '2025-11-02 18:01:33'),
-(6, '10Code — Desarrollo de software a medida y equipos dedicados', 'software, frontend, backend, móvil, móviles', NULL, 'https://desarrollosoftware.es/', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Aplicaciones web modernas con backend robusto, APIs RESTful y GraphQL, frontend responsivo y optimizado para conversión. Laravel PHP React Next.js Vue.js.', 'interesada', 'busqueda', 'https://desarrollosoftware.es/', NULL, 3, NULL, '2025-11-02 17:58:30', '2025-11-02 18:01:14', '2025-11-02 18:01:14'),
-(7, 'Arquitectura de referencia en APIs', 'software, frontend, backend, móvil, móviles', NULL, 'https://desarrollo.juntadeandalucia.es/recursos/reglas-pautas/arquitectura-referencia-en-apis', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '... backend de nuestra organización para obtener unos datos concretos. “El cliente X está desarrollando una aplicación web y móvil conectada con sistemas de ...', 'nuevo', 'busqueda', 'https://desarrollo.juntadeandalucia.es/recursos/reglas-pautas/arquitectura-referencia-en-apis', NULL, 3, NULL, '2025-11-02 17:58:30', '2025-11-02 18:01:03', '2025-11-02 18:01:03'),
-(8, '¿Cuál es la diferencia entre DAM y DAW?', 'software, frontend, backend, móvil, móviles', NULL, 'https://www.uax.com/blog/ingenieria/diferencia-dam-y-daw', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Jan 30, 2025 ... ... desarrollo móvil (iOS/Android) o en software empresarial. Evolución salarial. Los desarrolladores de aplicaciones móviles (DAM) que trabajan ...', 'nuevo', 'busqueda', 'https://www.uax.com/blog/ingenieria/diferencia-dam-y-daw', NULL, 3, NULL, '2025-11-02 17:58:30', '2025-11-02 18:00:54', '2025-11-02 18:00:54'),
-(9, 'Innovacodex: Desarrollo de Software Personalizado en España', 'software, frontend, backend, móvil, móviles', NULL, 'https://innovacodex.io/', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Empresa líder en desarrollo de software, páginas web y apps móviles en España. Más de 50 proyectos exitosos. Consulta gratuita incluida. ¡Contacta ahora!', 'interesada', 'busqueda', 'https://innovacodex.io/', NULL, 3, NULL, '2025-11-02 17:58:30', '2025-11-02 17:59:54', '2025-11-02 17:59:54'),
-(10, 'Solbyte: Empresa de Servicios Informáticos en Málaga', 'software, frontend, backend, móvil, móviles', NULL, 'https://www.solbyte.com/', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Solbyte, empresa de servicios informáticos ubicada en Málaga especializada en desarrollo de software a medida y diseño web.', 'interesada', 'busqueda', 'https://www.solbyte.com/', NULL, 3, NULL, '2025-11-02 17:58:30', '2025-11-02 17:59:03', '2025-11-02 17:59:03'),
-(11, 'App Informática', NULL, NULL, 'https://www.openstreetmap.org/N4856539942', NULL, NULL, NULL, NULL, NULL, NULL, 'Málaga', 'Málaga', '2, 29013, Málaga', 'nuevo', '', 'https://www.openstreetmap.org/N4856539942', NULL, 3, NULL, '2025-11-02 21:37:45', '2025-11-02 21:39:33', '2025-11-02 21:39:33'),
-(12, 'CSI Servicios Informática', NULL, NULL, 'https://www.infocsi.es/', NULL, '+34 952 31 28 86', NULL, NULL, NULL, NULL, 'Málaga', 'Málaga', 'Calle Edom, 6, 29006, Málaga', 'interesada', '', 'https://www.infocsi.es/', NULL, 3, NULL, '2025-11-02 21:37:45', '2025-11-02 21:37:58', '2025-11-02 21:37:58'),
-(13, 'App Informática', NULL, NULL, 'https://www.openstreetmap.org/node/4856539942', NULL, NULL, NULL, NULL, NULL, NULL, 'Málaga', 'Málaga', '2, 29013, Málaga', 'interesada', '', 'https://www.openstreetmap.org/node/4856539942', NULL, 3, NULL, '2025-11-02 21:42:25', '2025-11-02 21:43:07', '2025-11-02 21:43:07'),
-(14, 'CSI Servicios Informática', NULL, NULL, 'https://www.infocsi.es/', NULL, '+34 952 31 28 86', NULL, NULL, NULL, NULL, 'Málaga', 'Málaga', 'Calle Edom, 6, 29006, Málaga', 'interesada', '', 'https://www.infocsi.es/', NULL, 3, NULL, '2025-11-02 21:42:25', '2025-11-02 21:42:54', '2025-11-02 21:42:54'),
-(15, 'La Tienda de Informática del Centro', NULL, NULL, 'https://www.openstreetmap.org/node/5574303199', NULL, '+34 952 21 75 96', NULL, NULL, NULL, NULL, 'Málaga', 'Málaga', 'Calle Moreno Carbonero, 5, 29005', 'interesada', '', 'https://www.openstreetmap.org/node/5574303199', NULL, 3, NULL, '2025-11-02 21:42:25', '2025-11-02 21:42:29', '2025-11-02 21:42:29'),
-(16, 'APP Informática', NULL, NULL, 'https://www.openstreetmap.org/node/1537230608', NULL, NULL, NULL, NULL, NULL, NULL, 'sevilla', 'sevilla', NULL, 'nuevo', '', 'https://www.openstreetmap.org/node/1537230608', NULL, 3, NULL, '2025-11-09 13:52:06', '2025-11-09 13:52:06', NULL),
-(17, 'APP Informática', NULL, NULL, 'https://www.appinformatica.com/tienda-de-informatica-sevilla-sevilla-r.tamarguillo.php', NULL, '+34 628222212', NULL, NULL, NULL, NULL, 'sevilla', 'sevilla', 'Avenida Poeta Manuel Benitez Carrasco', 'nuevo', '', 'https://www.appinformatica.com/tienda-de-informatica-sevilla-sevilla-r.tamarguillo.php', NULL, 3, NULL, '2025-11-09 13:52:06', '2025-11-09 13:52:06', NULL),
-(18, 'APP Informática Los Remedios', NULL, NULL, 'https://www.openstreetmap.org/node/6617891185', NULL, '+34 954 08 79 47', NULL, NULL, NULL, NULL, 'sevilla', 'sevilla', NULL, 'nuevo', '', 'https://www.openstreetmap.org/node/6617891185', NULL, 3, NULL, '2025-11-09 13:52:06', '2025-11-09 13:52:06', NULL),
-(19, 'Abaxial Informática S.L', NULL, NULL, 'https://www.abaxial.es/', NULL, '+34 954 34 77 25;+34 629 59 44', NULL, NULL, NULL, NULL, 'sevilla', 'sevilla', 'Calle San Vicente de Paúl, 10D, Local 8, 41010, Sevilla', 'nuevo', '', 'https://www.abaxial.es/', NULL, 3, NULL, '2025-11-09 13:52:06', '2025-11-09 13:52:06', NULL),
-(20, 'Andaluza de Programación', NULL, NULL, 'https://www.apsl.es/', NULL, '+34954086600', NULL, NULL, NULL, NULL, 'sevilla', 'sevilla', 'Calle Condes Bustillo, 44B, 41010, Sevilla', 'interesada', '', 'https://www.apsl.es/', NULL, 3, NULL, '2025-11-09 13:52:06', '2025-11-09 13:53:06', '2025-11-09 13:53:06'),
-(21, 'App Informática', NULL, NULL, 'https://www.openstreetmap.org/node/2211649435', NULL, NULL, NULL, NULL, NULL, NULL, 'sevilla', 'sevilla', 'Calle Monzón, 4 E, 41012, Sevilla', 'interesada', '', 'https://www.openstreetmap.org/node/2211649435', NULL, 3, NULL, '2025-11-09 13:52:06', '2025-11-09 13:52:57', '2025-11-09 13:52:57'),
-(22, 'App Informática', NULL, NULL, 'https://www.pcbox.com/', NULL, NULL, NULL, NULL, NULL, NULL, 'sevilla', 'sevilla', 'Calle Amador de Los Rios, 5, Sevilla', 'interesada', '', 'https://www.pcbox.com/', NULL, 3, NULL, '2025-11-09 13:52:06', '2025-11-09 13:52:51', '2025-11-09 13:52:51'),
-(23, 'App Informática', '', '', 'https://www.appinformatica.com/', NULL, NULL, NULL, NULL, NULL, NULL, 'Sevilla', 'Sevilla', 'Calle Correduría, 17-19, 41002, Sevilla', 'interesada', 'manual', 'https://www.appinformatica.com/', NULL, 3, NULL, '2025-11-09 13:52:06', '2025-11-09 13:52:45', '2025-11-09 13:52:45');
+INSERT INTO `empresas` (`id`, `nombre`, `cif`, `nif`, `email`, `telefono`, `web`, `direccion`, `ciudad`, `provincia`, `codigo_postal`, `sector`, `horario_practicas`, `es_publica`, `responsable_nombre`, `responsable_cargo`, `responsable_email`, `responsable_telefono`, `tutor_nif`, `tutor_departamento`, `rep_legal_nombre`, `rep_legal_nif`, `rep_legal_email`, `activo`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(503, 'Atech', NULL, NULL, 'administracion@atech.es', '691269705', 'www.atech.es', 'C/ Fernan Núñez 16, oficina 4', 'Málaga', 'Málaga', '29002', 'TIC', NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, '2025-10-22 15:01:51', '2025-10-22 15:01:51', NULL),
+(504, 'Dadisa', NULL, NULL, 'joseluis@dadisa.net', '952360412', 'www.dadisa.es', 'C/ Almogía 14, bloque 14, local 4', 'Malaga', 'Málaga', '29007', 'Informática', NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, '2025-10-22 17:01:29', '2025-10-22 17:01:29', NULL),
+(505, 'Factoria Biz', NULL, NULL, 'rzaragoza@factoriabiz.com', '951923301', 'https://www.factoriabiz.com/', 'Parque Empresarial El Pinillo, C. Decano Antonio Zedano, 3, Nave 5A', 'Torremolinos', 'Málaga', '29620', 'TIC', NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, '2025-10-23 15:09:17', '2025-10-23 15:09:17', NULL),
+(506, 'factoriakreativa.com', 'ertyertyerty', 'rtyertyerty', 'rrhh@factoriakreativa.com', '5674567567', 'factoriakreativa.com', NULL, 'Málaga', 'Málaga', '567456', 'tecnología', NULL, 0, 'Nombre y Apellidos del Contacto', 'Currito', 'currito@curro.com', '666666666', NULL, NULL, NULL, NULL, NULL, 1, '2025-10-23 15:17:16', '2025-10-29 17:04:32', NULL),
+(507, 'Solbyte: Empresa de Servicios Informáticos en Málaga', NULL, NULL, NULL, NULL, 'https://www.solbyte.com/', NULL, NULL, NULL, NULL, 'software, frontend, backend, móvil, móviles', NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, '2025-11-02 16:59:03', '2025-11-02 16:59:03', NULL),
+(508, 'Innovacodex: Desarrollo de Software Personalizado en España', NULL, NULL, NULL, NULL, 'https://innovacodex.io/', NULL, NULL, NULL, NULL, 'software, frontend, backend, móvil, móviles', NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, '2025-11-02 16:59:54', '2025-11-02 16:59:54', NULL),
+(509, '10Code — Desarrollo de software a medida y equipos dedicados', 'A87654321', 'fghfghdfghdfgh', 'fpalacioschaves@gmail.com', '952360412', 'https://desarrollosoftware.es/', 'C/ Almogía 14, bloque 14, local 4', 'Malaga', 'Málaga', '29007', 'software, frontend, backend, móvil, móviles', NULL, 1, 'Pepito Responsable', 'Gargo de Responsable', 'joseluis@dadisa.net', '+34952360412', NULL, NULL, NULL, NULL, NULL, 1, '2025-11-02 17:01:14', '2026-02-03 11:08:26', NULL),
+(510, 'Auroralabs', NULL, NULL, NULL, NULL, 'https://es.linkedin.com/company/auroralabsapps', NULL, NULL, NULL, NULL, 'software, frontend, backend, móvil, móviles', NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, '2025-11-02 17:02:01', '2025-11-02 17:02:01', NULL),
+(511, 'CSI Servicios Informática', NULL, NULL, NULL, '+34 952 31 28 86', 'https://www.infocsi.es/', NULL, 'Málaga', 'Málaga', NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, '2025-11-02 20:37:58', '2025-11-02 20:37:58', NULL),
+(512, 'La Tienda de Informática del Centro', NULL, NULL, NULL, '+34 952 21 75 96', 'https://www.openstreetmap.org/node/5574303199', NULL, 'Málaga', 'Málaga', NULL, 'TIC', NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, '2025-11-02 20:42:29', '2025-11-09 12:53:51', '2025-11-09 12:53:51'),
+(513, 'App Informática', NULL, NULL, NULL, NULL, 'https://www.openstreetmap.org/node/4856539942', NULL, 'Málaga', 'Málaga', NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, '2025-11-02 20:43:07', '2025-11-09 12:53:30', '2025-11-09 12:53:30'),
+(514, 'App Informática', NULL, NULL, NULL, NULL, 'https://www.appinformatica.com/', NULL, 'Sevilla', 'Sevilla', NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, '2025-11-09 12:52:45', '2026-02-22 15:40:43', NULL),
+(515, 'PC BOX', NULL, NULL, NULL, NULL, 'https://www.pcbox.com/', NULL, 'Sevilla', 'Sevilla', NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, '2025-11-09 12:52:51', '2026-01-29 17:03:02', NULL),
+(516, 'App Informática', NULL, NULL, NULL, NULL, 'https://www.openstreetmap.org/node/2211649435', NULL, 'sevilla', 'sevilla', NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, '2025-11-09 12:52:57', '2025-11-09 12:52:57', NULL),
+(517, 'Andaluza de Programación', NULL, NULL, NULL, '+34954086600', 'https://www.apsl.es/', NULL, 'Sevilla', 'Sevilla', NULL, 'TIC', NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, '2025-11-09 12:53:06', '2026-02-22 15:40:20', NULL),
+(518, 'sdsadtswft', NULL, NULL, NULL, NULL, 'sdfgsdfg', 'dfgsdfgsdfg', 'sdfgsdfgdfg', 'sdfgsdfgsdf', 'sdfdfgdfg', 'sdtsdrtsdert', NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, '2025-11-12 18:02:38', '2025-11-12 18:03:25', '2025-11-12 18:03:25'),
+(519, 'Empresa de Testeoq', NULL, NULL, NULL, '666666666', NULL, NULL, NULL, NULL, NULL, 'TIC', NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, '2025-11-12 18:09:25', '2025-11-12 18:09:25', NULL),
+(520, 'Emergya', NULL, NULL, '', '', 'http://www.emergya.es', NULL, 'Sevilla', NULL, NULL, 'software', NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, '2026-02-12 18:20:12', '2026-02-12 18:20:12', NULL);
 
 -- --------------------------------------------------------
 
@@ -724,12 +695,53 @@ INSERT INTO `empresa_cursos` (`empresa_id`, `curso_id`) VALUES
 (511, 2),
 (512, 2),
 (513, 2),
+(514, 1),
+(514, 2),
 (515, 2),
 (517, 1),
 (517, 2),
 (518, 101),
 (519, 1),
 (519, 2);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `evaluaciones_notas`
+--
+
+CREATE TABLE `evaluaciones_notas` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `alumno_id` int(10) UNSIGNED NOT NULL,
+  `asignatura_id` int(10) UNSIGNED NOT NULL,
+  `convocatoria` enum('Enero','Mayo','Junio') NOT NULL,
+  `nota_foro` decimal(4,2) DEFAULT NULL,
+  `nota_actividades` decimal(4,2) DEFAULT NULL,
+  `nota_examen` decimal(4,2) DEFAULT NULL,
+  `nota_dualizacion` decimal(4,2) DEFAULT NULL,
+  `nota_final` decimal(4,2) DEFAULT NULL,
+  `observaciones` text DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `evaluacion_config`
+--
+
+CREATE TABLE `evaluacion_config` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `asignatura_id` int(10) UNSIGNED NOT NULL,
+  `convocatoria` enum('Enero','Mayo','Junio') NOT NULL,
+  `peso_foro` decimal(5,2) DEFAULT 10.00,
+  `peso_actividades` decimal(5,2) DEFAULT 30.00,
+  `peso_examen` decimal(5,2) DEFAULT 40.00,
+  `peso_dualizacion` decimal(5,2) DEFAULT 20.00,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -843,6 +855,13 @@ ALTER TABLE `alumnos`
   ADD KEY `idx_alumnos_nombre` (`apellidos`,`nombre`);
 
 --
+-- Indices de la tabla `alumnos_asignaturas`
+--
+ALTER TABLE `alumnos_asignaturas`
+  ADD PRIMARY KEY (`alumno_id`,`asignatura_id`),
+  ADD KEY `fk_enroll_asignatura` (`asignatura_id`);
+
+--
 -- Indices de la tabla `alumnos_cursos`
 --
 ALTER TABLE `alumnos_cursos`
@@ -940,18 +959,6 @@ ALTER TABLE `empresas`
   ADD KEY `idx_empresas_resp_tel` (`responsable_telefono`);
 
 --
--- Indices de la tabla `empresas_prospectos`
---
-ALTER TABLE `empresas_prospectos`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `idx_leads_estado` (`estado`),
-  ADD KEY `idx_leads_prof` (`asignado_profesor_id`),
-  ADD KEY `idx_leads_curso` (`curso_id`),
-  ADD KEY `idx_leads_email` (`email`),
-  ADD KEY `idx_leads_web` (`web`),
-  ADD KEY `idx_leads_nombre` (`nombre`);
-
---
 -- Indices de la tabla `empresa_alumnos`
 --
 ALTER TABLE `empresa_alumnos`
@@ -990,6 +997,21 @@ ALTER TABLE `empresa_contactos`
 ALTER TABLE `empresa_cursos`
   ADD PRIMARY KEY (`empresa_id`,`curso_id`),
   ADD KEY `fk_empcur_curso` (`curso_id`);
+
+--
+-- Indices de la tabla `evaluaciones_notas`
+--
+ALTER TABLE `evaluaciones_notas`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `uk_alumno_asig_conv` (`alumno_id`,`asignatura_id`,`convocatoria`),
+  ADD KEY `asignatura_id` (`asignatura_id`);
+
+--
+-- Indices de la tabla `evaluacion_config`
+--
+ALTER TABLE `evaluacion_config`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `uk_asig_conv` (`asignatura_id`,`convocatoria`);
 
 --
 -- Indices de la tabla `practicas`
@@ -1090,13 +1112,7 @@ ALTER TABLE `email_templates`
 -- AUTO_INCREMENT de la tabla `empresas`
 --
 ALTER TABLE `empresas`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=520;
-
---
--- AUTO_INCREMENT de la tabla `empresas_prospectos`
---
-ALTER TABLE `empresas_prospectos`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=521;
 
 --
 -- AUTO_INCREMENT de la tabla `empresa_alumnos`
@@ -1109,6 +1125,18 @@ ALTER TABLE `empresa_alumnos`
 --
 ALTER TABLE `empresa_contactos`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT de la tabla `evaluaciones_notas`
+--
+ALTER TABLE `evaluaciones_notas`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `evaluacion_config`
+--
+ALTER TABLE `evaluacion_config`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `practicas`
@@ -1131,6 +1159,13 @@ ALTER TABLE `usuarios`
 --
 -- Restricciones para tablas volcadas
 --
+
+--
+-- Filtros para la tabla `alumnos_asignaturas`
+--
+ALTER TABLE `alumnos_asignaturas`
+  ADD CONSTRAINT `fk_enroll_alumno` FOREIGN KEY (`alumno_id`) REFERENCES `alumnos` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_enroll_asignatura` FOREIGN KEY (`asignatura_id`) REFERENCES `asignaturas` (`id`) ON DELETE CASCADE;
 
 --
 -- Filtros para la tabla `alumnos_cursos`
@@ -1193,13 +1228,6 @@ ALTER TABLE `email_templates`
   ADD CONSTRAINT `fk_email_templates_profesor` FOREIGN KEY (`profesor_id`) REFERENCES `usuarios` (`id`);
 
 --
--- Filtros para la tabla `empresas_prospectos`
---
-ALTER TABLE `empresas_prospectos`
-  ADD CONSTRAINT `fk_lead_curso` FOREIGN KEY (`curso_id`) REFERENCES `cursos` (`id`),
-  ADD CONSTRAINT `fk_lead_profesor` FOREIGN KEY (`asignado_profesor_id`) REFERENCES `usuarios` (`id`);
-
---
 -- Filtros para la tabla `empresa_alumnos`
 --
 ALTER TABLE `empresa_alumnos`
@@ -1234,6 +1262,19 @@ ALTER TABLE `empresa_contactos`
 ALTER TABLE `empresa_cursos`
   ADD CONSTRAINT `fk_empcur_curso` FOREIGN KEY (`curso_id`) REFERENCES `cursos` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_empcur_empresa` FOREIGN KEY (`empresa_id`) REFERENCES `empresas` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `evaluaciones_notas`
+--
+ALTER TABLE `evaluaciones_notas`
+  ADD CONSTRAINT `evaluaciones_notas_ibfk_1` FOREIGN KEY (`alumno_id`) REFERENCES `alumnos` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `evaluaciones_notas_ibfk_2` FOREIGN KEY (`asignatura_id`) REFERENCES `asignaturas` (`id`) ON DELETE CASCADE;
+
+--
+-- Filtros para la tabla `evaluacion_config`
+--
+ALTER TABLE `evaluacion_config`
+  ADD CONSTRAINT `evaluacion_config_ibfk_1` FOREIGN KEY (`asignatura_id`) REFERENCES `asignaturas` (`id`) ON DELETE CASCADE;
 
 --
 -- Filtros para la tabla `practicas`

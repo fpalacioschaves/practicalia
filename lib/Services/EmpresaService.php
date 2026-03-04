@@ -102,13 +102,19 @@ class EmpresaService
                 INSERT INTO empresas (
                     nombre, cif, nif, email, telefono, web,
                     direccion, ciudad, provincia, codigo_postal,
-                    sector, es_publica, responsable_nombre, responsable_cargo,
-                    responsable_email, responsable_telefono, activo
+                    sector, horario_practicas, es_publica, 
+                    responsable_nombre, responsable_cargo, responsable_email, responsable_telefono,
+                    tutor_nif, tutor_departamento,
+                    rep_legal_nombre, rep_legal_nif, rep_legal_email,
+                    activo
                 ) VALUES (
                     :nombre, :cif, :nif, :email, :tel, :web,
                     :dir, :ciudad, :provincia, :cp,
-                    :sector, :publica, :rnom, :rcargo,
-                    :remail, :rtel, :activo
+                    :sector, :horario, :publica,
+                    :rnom, :rcargo, :remail, :rtel,
+                    :tnif, :tdep,
+                    :rpnom, :rpnif, :rpemail,
+                    :activo
                 )
             ');
             $st->execute([
@@ -123,11 +129,17 @@ class EmpresaService
                 ':provincia' => ($data['provincia'] !== '' ? $data['provincia'] : null),
                 ':cp' => ($cp !== '' ? $cp : null),
                 ':sector' => ($data['sector'] !== '' ? $data['sector'] : null),
+                ':horario' => ($data['horario_practicas'] !== '' ? $data['horario_practicas'] : null),
                 ':publica' => $esPublica ? 1 : 0,
                 ':rnom' => ($data['responsable_nombre'] !== '' ? $data['responsable_nombre'] : null),
                 ':rcargo' => ($data['responsable_cargo'] !== '' ? $data['responsable_cargo'] : null),
                 ':remail' => ($responsable_email !== '' ? $responsable_email : null),
                 ':rtel' => ($data['responsable_telefono'] !== '' ? $data['responsable_telefono'] : null),
+                ':tnif' => ($data['tutor_nif'] !== '' ? $data['tutor_nif'] : null),
+                ':tdep' => ($data['tutor_departamento'] !== '' ? $data['tutor_departamento'] : null),
+                ':rpnom' => ($data['rep_legal_nombre'] !== '' ? $data['rep_legal_nombre'] : null),
+                ':rpnif' => ($data['rep_legal_nif'] !== '' ? $data['rep_legal_nif'] : null),
+                ':rpemail' => ($data['rep_legal_email'] !== '' ? $data['rep_legal_email'] : null),
                 ':activo' => (int) ($data['activo'] ?? 1)
             ]);
             $empresaId = (int) $this->pdo->lastInsertId();
@@ -218,11 +230,16 @@ class EmpresaService
                 UPDATE empresas SET
                     nombre=:nombre, cif=:cif, nif=:nif, email=:email, telefono=:tel, web=:web,
                     direccion=:dir, ciudad=:ciudad, provincia=:provincia, codigo_postal=:cp,
-                    sector=:sector, es_publica=:publica,
+                    sector=:sector, horario_practicas=:horario, es_publica=:publica,
                     responsable_nombre=:rnom,
                     responsable_cargo=:rcargo,
                     responsable_email=:remail,
                     responsable_telefono=:rtel,
+                    tutor_nif=:tnif,
+                    tutor_departamento=:tdep,
+                    rep_legal_nombre=:rpnom,
+                    rep_legal_nif=:rpnif,
+                    rep_legal_email=:rpemail,
                     activo=:activo
                 WHERE id=:id
             ');
@@ -238,11 +255,17 @@ class EmpresaService
                 ':provincia' => ($data['provincia'] !== '' ? $data['provincia'] : null),
                 ':cp' => ($cp !== '' ? $cp : null),
                 ':sector' => ($data['sector'] !== '' ? $data['sector'] : null),
+                ':horario' => ($data['horario_practicas'] !== '' ? $data['horario_practicas'] : null),
                 ':publica' => $esPublica ? 1 : 0,
                 ':rnom' => ($data['responsable_nombre'] !== '' ? $data['responsable_nombre'] : null),
                 ':rcargo' => ($data['responsable_cargo'] !== '' ? $data['responsable_cargo'] : null),
                 ':remail' => ($responsable_email !== '' ? $responsable_email : null),
                 ':rtel' => ($data['responsable_telefono'] !== '' ? $data['responsable_telefono'] : null),
+                ':tnif' => ($data['tutor_nif'] !== '' ? $data['tutor_nif'] : null),
+                ':tdep' => ($data['tutor_departamento'] !== '' ? $data['tutor_departamento'] : null),
+                ':rpnom' => ($data['rep_legal_nombre'] !== '' ? $data['rep_legal_nombre'] : null),
+                ':rpnif' => ($data['rep_legal_nif'] !== '' ? $data['rep_legal_nif'] : null),
+                ':rpemail' => ($data['rep_legal_email'] !== '' ? $data['rep_legal_email'] : null),
                 ':activo' => (int) ($data['activo'] ?? 0),
                 ':id' => $id
             ]);

@@ -90,11 +90,11 @@ class AlumnoService
 
         $sqlList = "
             SELECT 
-                a.id, a.nombre, a.apellidos, a.email, a.telefono, a.activo,
+                a.id, a.nombre, a.apellidos, a.email, a.telefono, a.dni, a.activo,
                 GROUP_CONCAT(DISTINCT c.nombre ORDER BY c.nombre SEPARATOR ', ') AS cursos
             $fromJoin
             WHERE $where
-            GROUP BY a.id, a.nombre, a.apellidos, a.email, a.telefono, a.activo
+            GROUP BY a.id, a.nombre, a.apellidos, a.email, a.telefono, a.dni, a.activo
             ORDER BY a.apellidos ASC
             LIMIT :limit OFFSET :offset
         ";
@@ -113,7 +113,7 @@ class AlumnoService
     public function getById(int $id): ?array
     {
         $st = $this->pdo->prepare('
-            SELECT id, nombre, apellidos, email, telefono, COALESCE(activo,1) AS activo, fecha_nacimiento, notas
+            SELECT id, nombre, apellidos, dni, seg_social, provincia_localidad, email, telefono, COALESCE(activo,1) AS activo, fecha_nacimiento, notas
             FROM alumnos WHERE id = :id AND deleted_at IS NULL LIMIT 1
         ');
         $st->execute([':id' => $id]);
@@ -165,12 +165,15 @@ class AlumnoService
         $this->pdo->beginTransaction();
         try {
             $st = $this->pdo->prepare("
-                INSERT INTO alumnos (nombre, apellidos, email, telefono, activo, fecha_nacimiento, notas)
-                VALUES (:n, :a, :e, :t, :ac, :fn, :no)
+                INSERT INTO alumnos (nombre, apellidos, dni, seg_social, provincia_localidad, email, telefono, activo, fecha_nacimiento, notas)
+                VALUES (:n, :a, :dni, :ss, :pl, :e, :t, :ac, :fn, :no)
             ");
             $st->execute([
                 ':n' => $nombre,
                 ':a' => $apellidos,
+                ':dni' => trim($data['dni'] ?? '') ?: null,
+                ':ss' => trim($data['seg_social'] ?? '') ?: null,
+                ':pl' => trim($data['provincia_localidad'] ?? '') ?: null,
                 ':e' => ($email !== '' ? $email : null),
                 ':t' => ($data['telefono'] ?? null),
                 ':ac' => (int) ($data['activo'] ?? 1),
@@ -229,12 +232,15 @@ class AlumnoService
         $this->pdo->beginTransaction();
         try {
             $st = $this->pdo->prepare("
-                UPDATE alumnos SET nombre=:n, apellidos=:a, email=:e, telefono=:t, activo=:ac, fecha_nacimiento=:fn, notas=:no
+                UPDATE alumnos SET nombre=:n, apellidos=:a, dni=:dni, seg_social=:ss, provincia_localidad=:pl, email=:e, telefono=:t, activo=:ac, fecha_nacimiento=:fn, notas=:no
                 WHERE id = :id
             ");
             $st->execute([
                 ':n' => $nombre,
                 ':a' => $apellidos,
+                ':dni' => trim($data['dni'] ?? '') ?: null,
+                ':ss' => trim($data['seg_social'] ?? '') ?: null,
+                ':pl' => trim($data['provincia_localidad'] ?? '') ?: null,
                 ':e' => ($email !== '' ? $email : null),
                 ':t' => ($data['telefono'] ?? null),
                 ':ac' => (int) ($data['activo'] ?? 1),
@@ -572,5 +578,96 @@ class AlumnoService
 
         $stDel = $this->pdo->prepare('DELETE FROM alumno_contactos WHERE id = :id');
         $stDel->execute([':id' => $contactoId]);
+    }
+
+    /**
+     * Obtiene los IDs de las asignaturas en las que está matriculado un alumno
+     */
+    public function getEnrolledAsignaturas(int $alumnoId): array
+    {
+        $st = $this->pdo->prepare("SELECT asignatura_id FROM alumnos_asignaturas WHERE alumno_id = :aid");
+        $st->execute([':aid' => $alumnoId]);
+        return $st->fetchAll(PDO::FETCH_COLUMN);
+    }
+
+    /**
+     * Actualiza las asignaturas de un alumno
+     */
+    public function setEnrolledAsignaturas(int $alumnoId, array $asigIds): void
+    {
+        $this->pdo->beginTransaction();
+        try {
+            $this->pdo->prepare("DELETE FROM alumnos_asignaturas WHERE alumno_id = :aid")
+                ->execute([':aid' => $alumnoId]);
+
+            if (!empty($asigIds)) {
+                $st = $this->pdo->prepare("INSERT INTO alumnos_asignaturas (alumno_id, asignatura_id) VALUES (?, ?)");
+                foreach ($asigIds as $asid) {
+                    $st->execute([$alumnoId, $asid]);
+                }
+            }
+            $this->pdo->commit();
+        } catch (Throwable $e) {
+            $this->pdo->rollBack();
+            throw $e;
+        }
+    }
+
+    /**
+     * Obtiene todas las asignaturas disponibles para el profesor, agrupadas por curso
+     */
+    public function getAvailableAsignaturasGrouped(bool $isAdmin, int $profId, ?int $cursoId = null): array
+    {
+        $params = [];
+        $sql = "
+            SELECT DISTINCT a.id, a.nombre, a.nivel, c.id AS curso_id, c.nombre AS curso_nombre
+            FROM asignaturas a
+            LEFT JOIN asignatura_cursos ac ON ac.asignatura_id = a.id
+            LEFT JOIN cursos c ON c.id = ac.curso_id
+            WHERE a.deleted_at IS NULL AND a.activo = 1
+        ";
+
+        if (!$isAdmin) {
+            $sql .= " AND EXISTS (
+                SELECT 1 FROM cursos_profesores cp 
+                WHERE cp.curso_id = c.id AND cp.profesor_id = :pid
+            ) ";
+            $params[':pid'] = $profId;
+        }
+
+        if ($cursoId !== null && $cursoId > 0) {
+            $sql .= " AND c.id = :cid ";
+            $params[':cid'] = $cursoId;
+        }
+
+        $sql .= " ORDER BY c.nombre, a.nivel, a.nombre ";
+
+        $st = $this->pdo->prepare($sql);
+        $st->execute($params);
+
+        $grouped = [];
+        foreach ($st->fetchAll() as $row) {
+            $cid = (int) ($row['curso_id'] ?? 0);
+            $cname = $row['curso_nombre'] ?? 'Sin curso';
+            $nivelNum = (int) ($row['nivel'] ?? 1);
+            $nivelLabel = $nivelNum . 'º Curso';
+
+            if (!isset($grouped[$cid])) {
+                $grouped[$cid] = [
+                    'nombre' => $cname,
+                    'niveles' => []
+                ];
+            }
+
+            if (!isset($grouped[$cid]['niveles'][$nivelLabel])) {
+                $grouped[$cid]['niveles'][$nivelLabel] = [];
+            }
+
+            $grouped[$cid]['niveles'][$nivelLabel][] = [
+                'id' => $row['id'],
+                'nombre' => $row['nombre']
+            ];
+        }
+        return $grouped;
     }
 }
