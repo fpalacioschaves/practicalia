@@ -109,10 +109,10 @@ require_once __DIR__ . '/../partials/_header.php';
       placeholder="Buscar (nombre, código, año)">
     <button class="rounded-xl bg-black text-white px-4">Buscar</button>
     <?php if ($hasSearch): ?>
-      <a href="./index.php" class="rounded-xl border px-3 py-2 text-sm">Limpiar</a>
+      <a href="./index.php" class="btn-secondary px-3">Limpiar</a>
     <?php endif; ?>
   </form>
-  <a href="./create.php" class="rounded-xl bg-black text-white px-4 py-2">Nuevo curso</a>
+  <a href="./create.php" class="btn-add">Nuevo curso</a>
 </div>
 
 <div class="mb-2 text-sm text-gray-600">
@@ -150,13 +150,15 @@ require_once __DIR__ . '/../partials/_header.php';
               <span class="px-2 py-1 text-xs rounded bg-red-100 text-red-800">No</span>
             <?php endif; ?>
           </td>
-          <td class="p-3 flex items-center gap-2">
-            <a class="underline" href="./edit.php?id=<?= $cid ?>">Editar</a>
-            <form method="post" action="./delete.php" onsubmit="return confirm('¿Eliminar este curso?');">
-              <input type="hidden" name="csrf" value="<?= h(csrf_token()) ?>">
-              <input type="hidden" name="id" value="<?= $cid ?>">
-              <button class="text-red-600 underline">Eliminar</button>
-            </form>
+          <td class="p-3">
+            <div class="flex items-center gap-2">
+              <a class="btn-edit" href="./edit.php?id=<?= $cid ?>">Editar</a>
+              <form method="post" action="./delete.php" onsubmit="return confirm('¿Eliminar este curso?');">
+                <input type="hidden" name="csrf" value="<?= h(csrf_token()) ?>">
+                <input type="hidden" name="id" value="<?= $cid ?>">
+                <button class="btn-delete">Eliminar</button>
+              </form>
+            </div>
           </td>
         </tr>
       <?php endforeach; ?>

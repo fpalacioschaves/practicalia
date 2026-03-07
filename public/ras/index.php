@@ -170,8 +170,7 @@ require_once __DIR__ . '/../partials/_header.php';
 ?>
 <div class="flex items-center justify-between mb-4">
   <h1 class="text-xl font-semibold">Resultados de Aprendizaje (RA)</h1>
-  <a href="./create.php<?= $asigIdF ? '?asignatura_id=' . (int) $asigIdF : '' ?>"
-    class="px-4 py-2 rounded-xl bg-black text-white">+ Nuevo RA</a>
+  <a href="./create.php" class="btn-add">+ Nuevo RA</a>
 </div>
 
 <!-- Filtros -->
@@ -209,7 +208,7 @@ require_once __DIR__ . '/../partials/_header.php';
     </select>
   </div>
   <div class="flex items-end gap-2">
-    <button class="btn-secondary px-6">Filtrar</button>
+    <button class="btn-filter px-6">Filtrar</button>
     <a href="./index.php" class="btn-secondary px-6">Limpiar</a>
   </div>
 </form>
@@ -258,11 +257,11 @@ require_once __DIR__ . '/../partials/_header.php';
             </td>
             <td class="p-3">
               <div class="flex gap-2">
-                <a class="px-3 py-1 rounded border text-xs" href="./edit.php?id=<?= (int) $r['id'] ?>">Editar</a>
+                <a class="btn-edit" href="./edit.php?id=<?= (int) $r['id'] ?>">Editar</a>
                 <form method="post" action="./delete.php" onsubmit="return confirm('¿Eliminar este RA?');">
                   <input type="hidden" name="csrf" value="<?= h(csrf_token()) ?>">
                   <input type="hidden" name="id" value="<?= (int) $r['id'] ?>">
-                  <button class="px-3 py-1 rounded border text-xs" type="submit">Eliminar</button>
+                  <button class="btn-delete" type="submit">Eliminar</button>
                 </form>
               </div>
             </td>

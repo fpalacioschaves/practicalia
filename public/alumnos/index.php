@@ -75,12 +75,12 @@ require_once __DIR__ . '/../partials/_header.php';
 <div class="mb-4 flex items-center justify-between">
   <form class="flex gap-2" method="get">
     <input name="q" value="<?= h($search) ?>" class="form-control" placeholder="Buscar (nombre, apellidos, email)">
-    <button class="btn-primary">Buscar</button>
+    <button class="btn-filter">Buscar</button>
     <?php if ($hasSearch): ?>
       <a href="./index.php" class="btn-secondary px-3">Limpiar</a>
     <?php endif; ?>
   </form>
-  <a href="./create.php" class="rounded-2xl bg-black text-white px-4 py-2">Nuevo alumno</a>
+  <a href="./create.php" class="btn-add">Nuevo alumno</a>
 </div>
 
 <div class="mb-2 text-sm text-gray-600">
@@ -122,11 +122,11 @@ require_once __DIR__ . '/../partials/_header.php';
           </td>
           <td class="p-3">
             <div class="flex items-center gap-2">
-              <a class="underline" href="./edit.php?id=<?= $aid ?>">Editar</a>
+              <a class="btn-edit" href="./edit.php?id=<?= $aid ?>">Editar</a>
               <form method="post" action="./delete.php" onsubmit="return confirm('¿Eliminar este alumno?');">
                 <input type="hidden" name="csrf" value="<?= h(csrf_token()) ?>">
                 <input type="hidden" name="id" value="<?= $aid ?>">
-                <button class="text-red-600 underline">Eliminar</button>
+                <button class="btn-delete">Eliminar</button>
               </form>
             </div>
           </td>

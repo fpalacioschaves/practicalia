@@ -211,7 +211,7 @@ require_once __DIR__ . '/../partials/_header.php';
       <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
         <div>
           <label class="block text-sm font-medium">Grado *</label>
-          <select name="curso_id" required class="mt-1 w-full border rounded-xl p-2" onchange="this.form.accion.value='cambiar_curso'; this.form.submit();">
+          <select name="curso_id" required class="form-control" onchange="this.form.accion.value='cambiar_curso'; this.form.submit();">
             <?php foreach ($cursos as $c): ?>
               <option value="<?= (int)$c['id'] ?>" <?= ((string)$c['id'] === (string)$data['curso_id']) ? 'selected' : '' ?>>
                 <?= h($c['nombre']) ?>
@@ -224,7 +224,7 @@ require_once __DIR__ . '/../partials/_header.php';
 
         <div>
           <label class="block text-sm font-medium">Asignatura *</label>
-          <select name="asignatura_id" required class="mt-1 w-full border rounded-xl p-2">
+          <select name="asignatura_id" required class="form-control">
             <?php foreach ($asignaturas as $a): ?>
               <option value="<?= (int)$a['id'] ?>" <?= ((string)$a['id'] === (string)$data['asignatura_id']) ? 'selected' : '' ?>>
                 <?= h($a['nombre']) ?>
@@ -240,22 +240,22 @@ require_once __DIR__ . '/../partials/_header.php';
       <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
         <div>
           <label class="block text-sm font-medium">Código *</label>
-          <input name="codigo" value="<?= h($data['codigo']) ?>" required class="mt-1 w-full border rounded-xl p-2">
+          <input name="codigo" value="<?= h($data['codigo']) ?>" required class="form-control">
         </div>
         <div>
           <label class="block text-sm font-medium">Orden</label>
-          <input name="orden" type="number" min="0" max="10000" value="<?= h($data['orden']) ?>" class="mt-1 w-full border rounded-xl p-2" placeholder="p.ej. 1">
+          <input name="orden" type="number" min="0" max="10000" value="<?= h($data['orden']) ?>" class="form-control" placeholder="p.ej. 1">
         </div>
       </div>
 
       <div>
         <label class="block text-sm font-medium">Título *</label>
-        <input name="titulo" value="<?= h($data['titulo']) ?>" required class="mt-1 w-full border rounded-xl p-2">
+        <input name="titulo" value="<?= h($data['titulo']) ?>" required class="form-control">
       </div>
 
       <div>
         <label class="block text-sm font-medium">Descripción</label>
-        <textarea name="descripcion" rows="5" class="mt-1 w-full border rounded-xl p-2"><?= h($data['descripcion']) ?></textarea>
+        <textarea name="descripcion" rows="5" class="form-control"><?= h($data['descripcion']) ?></textarea>
       </div>
 
       <div class="flex items-center gap-2">
@@ -265,8 +265,8 @@ require_once __DIR__ . '/../partials/_header.php';
       </div>
 
       <div class="flex gap-2">
-        <button class="rounded-xl bg-black text-white px-4 py-2" onclick="this.form.accion.value='actualizar_ra'">Guardar</button>
-        <a href="./index.php" class="rounded-xl px-4 py-2 border">Volver</a>
+        <button class="btn-save">Guardar cambios</button>
+        <a href="./index.php" class="btn-secondary">Cancelar</a>
       </div>
     </form>
   </main>

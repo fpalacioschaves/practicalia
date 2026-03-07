@@ -108,7 +108,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   }
 }
 $pageTitle = 'Mi perfil';
-$mainClass = 'max-w-lg mx-auto p-6';
+$mainClass = 'max-w-3xl mx-auto p-6';
 require_once __DIR__ . '/../partials/_header.php';
 ?>
 <h1 class="text-xl font-semibold mb-4">Mi perfil</h1>
@@ -122,52 +122,56 @@ require_once __DIR__ . '/../partials/_header.php';
 <form method="post" class="bg-white p-6 rounded-2xl shadow space-y-4">
   <input type="hidden" name="csrf" value="<?= htmlspecialchars(csrf_token()) ?>">
 
-  <div>
-    <label class="block text-sm font-medium">Nombre completo</label>
-    <input name="nombre" value="<?= htmlspecialchars($dbUser['nombre'] ?? '') ?>" required
-      class="mt-1 w-full border rounded-xl p-2">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div class="md:col-span-2">
+      <label class="block text-sm font-medium">Nombre completo</label>
+      <input name="nombre" value="<?= htmlspecialchars($dbUser['nombre'] ?? '') ?>" required class="form-control">
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium">Email</label>
+      <input name="email" type="email" value="<?= htmlspecialchars($dbUser['email'] ?? '') ?>" required
+        class="form-control">
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium">Contraseña <span class="text-gray-400 font-normal">(dejar en blanco para
+          no cambiar)</span></label>
+      <input name="password" type="password" class="form-control">
+    </div>
   </div>
 
-  <div>
-    <label class="block text-sm font-medium">Email</label>
-    <input name="email" type="email" value="<?= htmlspecialchars($dbUser['email'] ?? '') ?>" required
-      class="mt-1 w-full border rounded-xl p-2">
-  </div>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div>
+      <label class="block text-sm font-medium mb-1">Centro</label>
+      <select name="centro_id" class="form-control">
+        <option value="0">— Sin centro —</option>
+        <?php foreach ($centros as $c): ?>
+          <option value="<?= (int) $c['id'] ?>" <?= ((int) ($dbUser['centro_id'] ?? 0) === (int) $c['id']) ? 'selected' : '' ?>>
+            <?= htmlspecialchars($c['nombre'] . (!empty($c['ciudad']) ? ' — ' . $c['ciudad'] : '')) ?>
+          </option>
+        <?php endforeach; ?>
+      </select>
+    </div>
 
-  <div>
-    <label class="block text-sm font-medium">Contraseña (dejar en blanco para no cambiar)</label>
-    <input name="password" type="password" class="mt-1 w-full border rounded-xl p-2">
-  </div>
-
-  <div>
-    <label class="block text-sm font-medium mb-1">Centro</label>
-    <select name="centro_id" class="mt-1 w-full border rounded-xl p-2">
-      <option value="0">— Sin centro —</option>
-      <?php foreach ($centros as $c): ?>
-        <option value="<?= (int) $c['id'] ?>" <?= ((int) ($dbUser['centro_id'] ?? 0) === (int) $c['id']) ? 'selected' : '' ?>>
-          <?= htmlspecialchars($c['nombre'] . (!empty($c['ciudad']) ? ' — ' . $c['ciudad'] : '')) ?>
-        </option>
-      <?php endforeach; ?>
-    </select>
-  </div>
-
-  <div>
-    <label class="block text-sm font-medium mb-1">Curso / familia profesional</label>
-    <select name="curso_id" class="mt-1 w-full border rounded-xl p-2">
-      <option value="0">— Sin curso —</option>
-      <?php foreach ($cursos as $c):
-        $cid = (int) $c['id']; ?>
-        <option value="<?= $cid ?>" <?= ($cid === (int) $cursoActual) ? 'selected' : '' ?>>
-          <?= htmlspecialchars($c['nombre']) ?>
-        </option>
-      <?php endforeach; ?>
-    </select>
-    <p class="text-xs text-gray-500 mt-1">Esto influye en los alumnos y empresas que verás asociados.</p>
+    <div>
+      <label class="block text-sm font-medium mb-1">Curso / familia profesional</label>
+      <select name="curso_id" class="form-control">
+        <option value="0">— Sin curso —</option>
+        <?php foreach ($cursos as $c):
+          $cid = (int) $c['id']; ?>
+          <option value="<?= $cid ?>" <?= ($cid === (int) $cursoActual) ? 'selected' : '' ?>>
+            <?= htmlspecialchars($c['nombre']) ?>
+          </option>
+        <?php endforeach; ?>
+      </select>
+      <p class="text-xs text-gray-500 mt-1">Esto influye en los alumnos y empresas que verás asociados.</p>
+    </div>
   </div>
 
   <div class="flex gap-2">
-    <button class="rounded-xl bg-black text-white px-4 py-2">Guardar</button>
-    <a href="<?= $base ?>/index.php" class="rounded-xl border px-4 py-2">Cancelar</a>
+    <button class="btn-primary">Guardar</button>
+    <a href="<?= $base ?>/index.php" class="btn-secondary">Cancelar</a>
   </div>
 </form>
 </main>

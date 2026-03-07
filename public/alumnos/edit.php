@@ -141,6 +141,7 @@ function h(?string $s): string
 }
 
 $pageTitle = 'Editar alumno';
+$mainClass = 'max-w-4xl';
 require_once __DIR__ . '/../partials/_header.php';
 ?>
 <h1 class="text-xl font-semibold mb-4">Editar alumno #<?= (int) $al['id'] ?> —
@@ -162,37 +163,37 @@ require_once __DIR__ . '/../partials/_header.php';
   <div class="grid grid-cols-2 gap-3">
     <div>
       <label class="block text-sm font-medium">Nombre *</label>
-      <input name="nombre" value="<?= h($al['nombre']) ?>" required class="mt-1 w-full border rounded-xl p-2">
+      <input name="nombre" value="<?= h($al['nombre']) ?>" required class="form-control">
     </div>
     <div>
       <label class="block text-sm font-medium">Apellidos *</label>
-      <input name="apellidos" value="<?= h($al['apellidos']) ?>" required class="mt-1 w-full border rounded-xl p-2">
+      <input name="apellidos" value="<?= h($al['apellidos']) ?>" required class="form-control">
     </div>
   </div>
 
   <div class="grid grid-cols-2 gap-3">
     <div>
       <label class="block text-sm font-medium">Email</label>
-      <input name="email" type="email" value="<?= h($al['email'] ?? '') ?>" class="mt-1 w-full border rounded-xl p-2">
+      <input name="email" type="email" value="<?= h($al['email'] ?? '') ?>" class="form-control">
     </div>
     <div>
       <label class="block text-sm font-medium">Teléfono</label>
-      <input name="telefono" value="<?= h($al['telefono'] ?? '') ?>" class="mt-1 w-full border rounded-xl p-2">
+      <input name="telefono" value="<?= h($al['telefono'] ?? '') ?>" class="form-control">
     </div>
   </div>
 
   <div class="grid grid-cols-3 gap-3">
     <div>
       <label class="block text-sm font-medium">DNI</label>
-      <input name="dni" value="<?= h($al['dni'] ?? '') ?>" class="mt-1 w-full border rounded-xl p-2">
+      <input name="dni" value="<?= h($al['dni'] ?? '') ?>" class="form-control">
     </div>
     <div>
       <label class="block text-sm font-medium">Seg Social</label>
-      <input name="seg_social" value="<?= h($al['seg_social'] ?? '') ?>" class="mt-1 w-full border rounded-xl p-2">
+      <input name="seg_social" value="<?= h($al['seg_social'] ?? '') ?>" class="form-control">
     </div>
     <div>
       <label class="block text-sm font-medium">Provincia/Localidad</label>
-      <input name="provincia_localidad" value="<?= h($al['provincia_localidad'] ?? '') ?>" class="mt-1 w-full border rounded-xl p-2">
+      <input name="provincia_localidad" value="<?= h($al['provincia_localidad'] ?? '') ?>" class="form-control">
     </div>
   </div>
 
@@ -200,11 +201,11 @@ require_once __DIR__ . '/../partials/_header.php';
     <div>
       <label class="block text-sm font-medium">Fecha de nacimiento</label>
       <input name="fecha_nacimiento" type="date" value="<?= h($al['fecha_nacimiento'] ?? '') ?>"
-        class="mt-1 w-full border rounded-xl p-2">
+        class="form-control">
     </div>
     <div>
       <label class="block text-sm font-medium">Curso</label>
-      <select name="curso_id" class="mt-1 w-full border rounded-xl p-2">
+      <select name="curso_id" class="form-control">
         <option value="0">— Sin curso —</option>
         <?php foreach ($cursos as $c):
           $cid = (int) $c['id']; ?>
@@ -217,7 +218,7 @@ require_once __DIR__ . '/../partials/_header.php';
 
   <div>
     <label class="block text-sm font-medium">Notas</label>
-    <textarea name="notas" rows="4" class="mt-1 w-full border rounded-xl p-2"><?= h($al['notas'] ?? '') ?></textarea>
+    <textarea name="notas" rows="4" class="form-control"><?= h($al['notas'] ?? '') ?></textarea>
   </div>
 
   <div class="flex items-center gap-2">
@@ -226,10 +227,10 @@ require_once __DIR__ . '/../partials/_header.php';
     <label for="activo" class="text-sm">Alumno activo</label>
   </div>
 
-  <div class="flex gap-2">
-    <button class="rounded-xl bg-black text-white px-4 py-2">Guardar</button>
-    <a href="./index.php" class="rounded-xl px-4 py-2 border">Cancelar</a>
-  </div>
+    <div class="flex gap-2">
+      <button class="btn-save">Guardar cambios</button>
+      <a href="./index.php" class="btn-secondary">Volver</a>
+    </div>
 </form>
 
 <!-- MATRÍCULA EN ASIGNATURAS -->
@@ -290,15 +291,13 @@ require_once __DIR__ . '/../partials/_header.php';
 
       <div>
         <label class="block text-sm font-medium">Empresa *</label>
-        <select class="mt-1 w-full border rounded-xl p-2 bg-gray-50 text-gray-600" disabled>
-          <option><?= h($actual['empresa_nombre'] ?? '') ?></option>
-        </select>
+        <input type="text" class="form-control bg-gray-100 text-gray-500 cursor-not-allowed" value="<?= h($actual['empresa_nombre'] ?? '') ?>" readonly>
         <input type="hidden" name="empresa_id" value="<?= (int) $actual['empresa_id'] ?>">
       </div>
 
       <div>
         <label class="block text-sm font-medium">Tipo</label>
-        <select name="tipo" class="mt-1 w-full border rounded-xl p-2">
+        <select name="tipo" class="form-control">
           <?php foreach (['dual', 'fct', 'practicas', 'otros'] as $opt): ?>
             <option value="<?= $opt ?>" <?= ($opt === $actual['tipo']) ? 'selected' : '' ?>><?= ucfirst($opt) ?></option>
           <?php endforeach; ?>
@@ -308,49 +307,49 @@ require_once __DIR__ . '/../partials/_header.php';
       <div>
         <label class="block text-sm font-medium">Fecha inicio *</label>
         <input type="date" name="fecha_inicio" value="<?= h($actual['fecha_inicio']) ?>"
-          class="mt-1 w-full border rounded-xl p-2" required>
+          class="form-control" required>
       </div>
 
       <div>
         <label class="block text-sm font-medium">Fecha fin</label>
         <input type="date" name="fecha_fin" value="<?= h($actual['fecha_fin'] ?? '') ?>"
-          class="mt-1 w-full border rounded-xl p-2">
+          class="form-control">
       </div>
 
       <div>
         <label class="block text-sm font-medium">Horas previstas</label>
         <input type="number" name="horas_previstas" min="0" max="2000"
-          value="<?= h((string) ($actual['horas_previstas'] ?? '')) ?>" class="mt-1 w-full border rounded-xl p-2">
+          value="<?= h((string) ($actual['horas_previstas'] ?? '')) ?>" class="form-control">
       </div>
 
       <div class="md:col-span-3 grid grid-cols-1 md:grid-cols-3 gap-3">
         <div>
           <label class="block text-sm font-medium">Tutor (empresa)</label>
           <input name="tutor_nombre" value="<?= h($actual['tutor_nombre'] ?? '') ?>"
-            class="mt-1 w-full border rounded-xl p-2">
+            class="form-control">
         </div>
         <div>
           <label class="block text-sm font-medium">Email tutor</label>
           <input name="tutor_email" type="email" value="<?= h($actual['tutor_email'] ?? '') ?>"
-            class="mt-1 w-full border rounded-xl p-2">
+            class="form-control">
         </div>
         <div>
           <label class="block text-sm font-medium">Teléfono tutor</label>
           <input name="tutor_telefono" value="<?= h($actual['tutor_telefono'] ?? '') ?>"
-            class="mt-1 w-full border rounded-xl p-2">
+            class="form-control">
         </div>
       </div>
 
       <div class="md:col-span-3">
         <label class="block text-sm font-medium">Observaciones</label>
         <textarea name="observaciones" rows="3"
-          class="mt-1 w-full border rounded-xl p-2"><?= h($actual['observaciones'] ?? '') ?></textarea>
+          class="form-control !h-auto py-3"><?= h($actual['observaciones'] ?? '') ?></textarea>
       </div>
 
       <div class="md:col-span-3">
         <label class="block text-sm font-medium">Asignaturas a dualizar</label>
         <?php if ($cursoActual > 0 && $asignaturasCurso): ?>
-          <select name="asignaturas[]" multiple size="6" class="mt-1 w-full border rounded-xl p-2">
+          <select name="asignaturas[]" multiple size="6" class="form-control !h-auto">
             <?php foreach ($asignaturasCurso as $as):
               $aid = (int) $as['id']; ?>
               <option value="<?= $aid ?>" <?= in_array($aid, $asigIdsActual) ? 'selected' : '' ?>>
@@ -360,7 +359,7 @@ require_once __DIR__ . '/../partials/_header.php';
           </select>
           <p class="text-xs text-gray-500 mt-1">Mantén Ctrl/Cmd para seleccionar varias.</p>
         <?php else: ?>
-          <select disabled class="mt-1 w-full border rounded-xl p-2">
+          <select disabled class="form-control">
             <option>
               <?= $cursoActual > 0 ? 'No hay asignaturas asociadas a este curso' : 'Asigna primero un curso al alumno' ?>
             </option>
@@ -368,28 +367,29 @@ require_once __DIR__ . '/../partials/_header.php';
         <?php endif; ?>
       </div>
 
-      <div class="md:col-span-3 flex flex-wrap gap-2">
-        <button class="rounded-xl bg-black text-white px-4 py-2">Guardar cambios</button>
-    </form>
-    <!-- Cerrar -->
-    <form method="post" onsubmit="return confirm('¿Cerrar esta asignación?');" class="inline">
-      <input type="hidden" name="csrf" value="<?= h(csrf_token()) ?>">
-      <input type="hidden" name="id" value="<?= (int) $al['id'] ?>">
-      <input type="hidden" name="ea_id" value="<?= (int) $actual['id'] ?>">
-      <input type="hidden" name="accion" value="cerrar_asignacion">
-      <input type="date" name="fecha_fin" value="<?= date('Y-m-d') ?>" class="border rounded px-2 text-xs">
-      <button class="px-3 py-2 rounded border text-xs align-middle" type="submit">Cerrar</button>
+      <div class="md:col-span-3 flex flex-wrap items-center gap-3">
+        <button class="btn-primary">Guardar cambios</button>
     </form>
 
-    <!-- Eliminar -->
-    <form method="post" onsubmit="return confirm('¿Eliminar esta asignación?');" class="inline">
-      <input type="hidden" name="csrf" value="<?= h(csrf_token()) ?>">
-      <input type="hidden" name="id" value="<?= (int) $al['id'] ?>">
-      <input type="hidden" name="ea_id" value="<?= (int) $actual['id'] ?>">
-      <input type="hidden" name="accion" value="eliminar_asignacion">
-      <button class="px-3 py-2 rounded border text-xs" type="submit">Eliminar</button>
-    </form>
-    </div>
+      <!-- Cerrar -->
+      <form method="post" onsubmit="return confirm('¿Cerrar esta asignación?');" class="m-0 flex items-center gap-2">
+        <input type="hidden" name="csrf" value="<?= h(csrf_token()) ?>">
+        <input type="hidden" name="id" value="<?= (int) $al['id'] ?>">
+        <input type="hidden" name="ea_id" value="<?= (int) $actual['id'] ?>">
+        <input type="hidden" name="accion" value="cerrar_asignacion">
+        <input type="date" name="fecha_fin" value="<?= date('Y-m-d') ?>" class="form-control" style="width: auto;">
+        <button class="btn-secondary whitespace-nowrap" type="submit">Cerrar</button>
+      </form>
+
+      <!-- Eliminar -->
+      <form method="post" onsubmit="return confirm('¿Eliminar esta asignación?');" class="m-0">
+        <input type="hidden" name="csrf" value="<?= h(csrf_token()) ?>">
+        <input type="hidden" name="id" value="<?= (int) $al['id'] ?>">
+        <input type="hidden" name="ea_id" value="<?= (int) $actual['id'] ?>">
+        <input type="hidden" name="accion" value="eliminar_asignacion">
+        <button class="btn-danger whitespace-nowrap" type="submit">Eliminar asignación</button>
+      </form>
+      </div>
 
   <?php else: ?>
     <!-- Alta sólo si no hay ninguna empresa asignada -->
@@ -400,7 +400,7 @@ require_once __DIR__ . '/../partials/_header.php';
 
       <div>
         <label class="block text-sm font-medium">Empresa *</label>
-        <select name="empresa_id" class="mt-1 w-full border rounded-xl p-2" required>
+        <select name="empresa_id" class="form-control" required>
           <option value="">— Selecciona —</option>
           <?php foreach ($empresasDisponibles as $e): ?>
             <option value="<?= (int) $e['id'] ?>"><?= h($e['nombre'] ?? '') ?></option>
@@ -410,7 +410,7 @@ require_once __DIR__ . '/../partials/_header.php';
 
       <div>
         <label class="block text-sm font-medium">Tipo</label>
-        <select name="tipo" class="mt-1 w-full border rounded-xl p-2">
+        <select name="tipo" class="form-control">
           <option value="dual">Dual</option>
           <option value="fct">FCT</option>
           <option value="practicas">Prácticas</option>
@@ -420,31 +420,31 @@ require_once __DIR__ . '/../partials/_header.php';
 
       <div>
         <label class="block text-sm font-medium">Fecha inicio *</label>
-        <input type="date" name="fecha_inicio" class="mt-1 w-full border rounded-xl p-2" required>
+        <input type="date" name="fecha_inicio" class="form-control" required>
       </div>
 
       <div>
         <label class="block text-sm font-medium">Fecha fin</label>
-        <input type="date" name="fecha_fin" class="mt-1 w-full border rounded-xl p-2">
+        <input type="date" name="fecha_fin" class="form-control">
       </div>
 
       <div>
         <label class="block text-sm font-medium">Horas previstas</label>
-        <input type="number" name="horas_previstas" min="0" max="2000" class="mt-1 w-full border rounded-xl p-2">
+        <input type="number" name="horas_previstas" min="0" max="2000" class="form-control">
       </div>
 
       <div class="md:col-span-3 grid grid-cols-1 md:grid-cols-3 gap-3">
         <div>
           <label class="block text-sm font-medium">Tutor (empresa)</label>
-          <input name="tutor_nombre" class="mt-1 w-full border rounded-xl p-2">
+          <input name="tutor_nombre" class="form-control">
         </div>
         <div>
           <label class="block text-sm font-medium">Email tutor</label>
-          <input name="tutor_email" type="email" class="mt-1 w-full border rounded-xl p-2">
+          <input name="tutor_email" type="email" class="form-control">
         </div>
         <div>
           <label class="block text-sm font-medium">Teléfono tutor</label>
-          <input name="tutor_telefono" class="mt-1 w-full border rounded-xl p-2">
+          <input name="tutor_telefono" class="form-control">
         </div>
       </div>
 

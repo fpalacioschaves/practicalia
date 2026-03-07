@@ -105,8 +105,8 @@ require_once __DIR__ . '/../partials/_header.php';
   </div>
 
   <div class="flex gap-2">
-    <button class="rounded-xl bg-black text-white px-4 py-2">Guardar</button>
-    <a href="./index.php" class="rounded-xl px-4 py-2 border">Cancelar</a>
+    <button class="btn-add">Crear centro</button>
+    <a href="./index.php" class="btn-secondary">Cancelar</a>
   </div>
 </form>
 </main>

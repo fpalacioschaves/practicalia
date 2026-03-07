@@ -83,6 +83,80 @@ class DashboardService
         }
         $stats['ras'] = (int) ($st->fetch()['c'] ?? 0);
 
+        // Alumnos con asignación activa (fecha_fin es NULL o futura)
+        if ($isAdmin) {
+            $st = $this->pdo->query("
+                SELECT COUNT(DISTINCT alumno_id) AS c
+                FROM empresa_alumnos
+                WHERE (fecha_fin IS NULL OR fecha_fin >= CURDATE())
+            ");
+        } else {
+            $st = $this->pdo->prepare("
+                SELECT COUNT(DISTINCT ea.alumno_id) AS c
+                FROM empresa_alumnos ea
+                JOIN alumnos al ON al.id = ea.alumno_id
+                JOIN alumnos_cursos ac ON ac.alumno_id = al.id
+                JOIN cursos_profesores cp ON cp.curso_id = ac.curso_id AND cp.profesor_id = :pid
+                WHERE (ea.fecha_fin IS NULL OR ea.fecha_fin >= CURDATE())
+                  AND al.deleted_at IS NULL
+            ");
+            $st->execute([':pid' => $profId]);
+        }
+        $stats['alumnos_activos'] = (int) ($st->fetch()['c'] ?? 0);
+
+        // Asignaciones activas totales (fecha_fin es NULL o futura)
+        if ($isAdmin) {
+            $st = $this->pdo->query("
+                SELECT COUNT(*) AS c FROM empresa_alumnos
+                WHERE (fecha_fin IS NULL OR fecha_fin >= CURDATE())
+            ");
+        } else {
+            $st = $this->pdo->prepare("
+                SELECT COUNT(ea.id) AS c
+                FROM empresa_alumnos ea
+                JOIN alumnos al ON al.id = ea.alumno_id
+                JOIN alumnos_cursos ac ON ac.alumno_id = al.id
+                JOIN cursos_profesores cp ON cp.curso_id = ac.curso_id AND cp.profesor_id = :pid
+                WHERE (ea.fecha_fin IS NULL OR ea.fecha_fin >= CURDATE())
+                  AND al.deleted_at IS NULL
+            ");
+            $st->execute([':pid' => $profId]);
+        }
+        $stats['asignaciones_activas'] = (int) ($st->fetch()['c'] ?? 0);
+
+        // Últimas 4 empresas añadidas
+        $st = $this->pdo->query("
+            SELECT id, nombre, sector, ciudad
+            FROM empresas
+            WHERE deleted_at IS NULL
+            ORDER BY created_at DESC
+            LIMIT 4
+        ");
+        $stats['ultimas_empresas'] = $st->fetchAll();
+
+        // Últimos 4 alumnos modificados (para el profesor, filtrado por sus cursos)
+        if ($isAdmin) {
+            $st = $this->pdo->query("
+                SELECT a.id, a.nombre, a.apellidos, a.email
+                FROM alumnos a
+                WHERE a.deleted_at IS NULL
+                ORDER BY a.updated_at DESC
+                LIMIT 4
+            ");
+        } else {
+            $st = $this->pdo->prepare("
+                SELECT DISTINCT a.id, a.nombre, a.apellidos, a.email
+                FROM alumnos a
+                JOIN alumnos_cursos ac ON ac.alumno_id = a.id
+                JOIN cursos_profesores cp ON cp.curso_id = ac.curso_id AND cp.profesor_id = :pid
+                WHERE a.deleted_at IS NULL
+                ORDER BY a.updated_at DESC
+                LIMIT 4
+            ");
+            $st->execute([':pid' => $profId]);
+        }
+        $stats['ultimos_alumnos'] = $st->fetchAll();
+
         return $stats;
     }
 }

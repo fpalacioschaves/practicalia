@@ -38,39 +38,39 @@ require_once __DIR__ . '/../partials/_header.php';
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                             <?php foreach ($asignaturas as $asig): ?>
                                 <div
-                                    class="bg-white rounded-3xl shadow-sm border border-gray-100 p-6 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-                                    <h4 class="text-lg font-bold text-gray-900 mb-6 min-h-[3rem] line-clamp-2">
-                                        <?= htmlspecialchars($asig['nombre']) ?></h4>
+                                    class="bg-white rounded-2xl shadow-sm border border-gray-200 p-5 hover:border-gray-300 transition-colors flex flex-col">
+                                    <h4 class="text-base font-semibold text-gray-900 mb-4 flex-grow">
+                                        <?= htmlspecialchars($asig['nombre']) ?>
+                                    </h4>
 
-                                    <div class="space-y-4">
+                                    <div class="space-y-2 mt-auto">
                                         <?php
+                                        // Diseño plano: Enero (Azul), Mayo (Índigo), Junio (Púrpura)
                                         $convs = [
-                                            'Enero' => 'from-blue-500 to-blue-600',
-                                            'Mayo' => 'from-indigo-500 to-indigo-600',
-                                            'Junio' => 'from-purple-500 to-purple-600'
+                                            'Enero' => 'bg-blue-50 text-blue-700 hover:bg-blue-100',
+                                            'Mayo' => 'bg-indigo-50 text-indigo-700 hover:bg-indigo-100',
+                                            'Junio' => 'bg-purple-50 text-purple-700 hover:bg-purple-100'
                                         ];
-                                        foreach ($convs as $conv => $gradient):
+                                        foreach ($convs as $conv => $pillClass):
                                             ?>
-                                            <div
-                                                class="flex items-center justify-between gap-3 p-3 rounded-2xl bg-gray-50 group/item hover:bg-white hover:ring-1 hover:ring-gray-200 transition-all">
-                                                <span class="text-sm font-semibold text-gray-700"><?= $conv ?></span>
-                                                <div class="flex items-center gap-2">
-                                                    <a href="notas.php?id=<?= (int) $asig['id'] ?>&conv=<?= $conv ?>"
-                                                        class="bg-gradient-to-br <?= $gradient ?> text-white text-xs font-bold px-4 py-2 rounded-xl shadow-sm hover:brightness-110 active:scale-95 transition-all">
-                                                        Notas
-                                                    </a>
-                                                    <a href="config.php?id=<?= (int) $asig['id'] ?>&conv=<?= $conv ?>"
-                                                        title="Configurar Pesos"
-                                                        class="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-xl transition-all">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
-                                                            viewBox="0 0 24 24" stroke="currentColor">
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                                d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                                        </svg>
-                                                    </a>
-                                                </div>
+                                            <div class="flex items-center justify-between group">
+                                                <a href="notas.php?id=<?= (int) $asig['id'] ?>&conv=<?= $conv ?>"
+                                                    class="flex-1 flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors <?= $pillClass ?>">
+                                                    <span><?= $conv ?></span>
+                                                    <span class="text-xs opacity-70 group-hover:opacity-100 transition-opacity">Notas
+                                                        &rarr;</span>
+                                                </a>
+                                                <a href="config.php?id=<?= (int) $asig['id'] ?>&conv=<?= $conv ?>"
+                                                    title="Configurar Pesos"
+                                                    class="ml-2 p-2 text-gray-300 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
+                                                        viewBox="0 0 24 24" stroke="currentColor">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                            d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                    </svg>
+                                                </a>
                                             </div>
                                         <?php endforeach; ?>
                                     </div>

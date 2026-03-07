@@ -360,6 +360,7 @@ function dtlocal(?string $mysqlDt): string {
   return str_replace(' ', 'T', substr($mysqlDt, 0, 16));
 }
 $pageTitle = 'Editar empresa';
+$mainClass = 'max-w-4xl';
 require_once __DIR__ . '/../partials/_header.php';
 ?>
     <h1 class="text-xl font-semibold mb-2">
@@ -398,59 +399,56 @@ require_once __DIR__ . '/../partials/_header.php';
       <!-- SECCIÓN 1: DATOS GENERALES -->
       <div class="bg-gray-50 p-4 rounded-xl border space-y-4">
         <h3 class="font-bold text-gray-800 border-b pb-2">1. Datos Generales</h3>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-          <div class="md:col-span-2">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+          <div class="md:col-span-3">
             <label class="block text-sm font-medium">Nombre *</label>
-            <input name="nombre" value="<?= h($empresa['nombre']) ?>" required class="mt-1 w-full border rounded-xl p-2 bg-white">
+            <input name="nombre" value="<?= h($empresa['nombre']) ?>" required class="form-control">
           </div>
           
           <div>
             <label class="block text-sm font-medium">CIF / NIF Empresa</label>
-            <input name="cif" value="<?= h($empresa['cif'] ?? '') ?>" class="mt-1 w-full border rounded-xl p-2 bg-white">
+            <input name="cif" value="<?= h($empresa['cif'] ?? '') ?>" class="form-control">
           </div>
           <div>
             <label class="block text-sm font-medium">Actividad / Sector</label>
-            <input name="sector" value="<?= h($empresa['sector'] ?? '') ?>" class="mt-1 w-full border rounded-xl p-2 bg-white">
+            <input name="sector" value="<?= h($empresa['sector'] ?? '') ?>" class="form-control">
           </div>
-
           <div>
             <label class="block text-sm font-medium">Email general</label>
-            <input name="email" type="email" value="<?= h($empresa['email'] ?? '') ?>" class="mt-1 w-full border rounded-xl p-2 bg-white">
+            <input name="email" type="email" value="<?= h($empresa['email'] ?? '') ?>" class="form-control">
           </div>
+
           <div>
             <label class="block text-sm font-medium">Teléfono</label>
-            <input name="telefono" value="<?= h($empresa['telefono'] ?? '') ?>" class="mt-1 w-full border rounded-xl p-2 bg-white">
+            <input name="telefono" value="<?= h($empresa['telefono'] ?? '') ?>" class="form-control">
           </div>
-
           <div class="md:col-span-2">
             <label class="block text-sm font-medium">Web</label>
-            <input name="web" type="url" value="<?= h($empresa['web'] ?? '') ?>" class="mt-1 w-full border rounded-xl p-2 bg-white" placeholder="https://...">
+            <input name="web" type="url" value="<?= h($empresa['web'] ?? '') ?>" class="form-control" placeholder="https://...">
           </div>
 
-          <div class="md:col-span-2">
+          <div class="md:col-span-3">
             <label class="block text-sm font-medium">Dirección</label>
-            <input name="direccion" value="<?= h($empresa['direccion'] ?? '') ?>" class="mt-1 w-full border rounded-xl p-2 bg-white">
+            <input name="direccion" value="<?= h($empresa['direccion'] ?? '') ?>" class="form-control">
           </div>
 
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-3 md:col-span-2">
-            <div>
-              <label class="block text-sm font-medium">Código postal</label>
-              <input name="codigo_postal" value="<?= h($empresa['codigo_postal'] ?? '') ?>" class="mt-1 w-full border rounded-xl p-2 bg-white">
-            </div>
-            <div>
-              <label class="block text-sm font-medium">Ciudad</label>
-              <input name="ciudad" value="<?= h($empresa['ciudad'] ?? '') ?>" class="mt-1 w-full border rounded-xl p-2 bg-white">
-            </div>
-            <div>
-              <label class="block text-sm font-medium">Provincia</label>
-              <input name="provincia" value="<?= h($empresa['provincia'] ?? '') ?>" class="mt-1 w-full border rounded-xl p-2 bg-white">
-            </div>
+          <div>
+            <label class="block text-sm font-medium">Código postal</label>
+            <input name="codigo_postal" value="<?= h($empresa['codigo_postal'] ?? '') ?>" class="form-control">
+          </div>
+          <div>
+            <label class="block text-sm font-medium">Ciudad</label>
+            <input name="ciudad" value="<?= h($empresa['ciudad'] ?? '') ?>" class="form-control">
+          </div>
+          <div>
+            <label class="block text-sm font-medium">Provincia</label>
+            <input name="provincia" value="<?= h($empresa['provincia'] ?? '') ?>" class="form-control">
           </div>
 
-          <div class="md:col-span-2">
+          <div class="md:col-span-3">
             <label class="block text-sm font-medium">Horario de realización de las prácticas/dualización</label>
             <input name="horario_practicas" value="<?= h($empresa['horario_practicas'] ?? '') ?>"
-              class="mt-1 w-full border rounded-xl p-2 bg-white" placeholder="Ej: Lunes a Viernes de 08:00 a 14:00">
+              class="form-control" placeholder="Ej: Lunes a Viernes de 08:00 a 14:00">
           </div>
         </div>
       </div>
@@ -458,31 +456,31 @@ require_once __DIR__ . '/../partials/_header.php';
       <!-- SECCIÓN 2: TUTOR DE PRÁCTICAS -->
       <div class="bg-blue-50/50 p-4 rounded-xl border border-blue-100 space-y-4">
         <h3 class="font-bold text-blue-900 border-b border-blue-100 pb-2">2. Datos de Tutor de prácticas en la empresa</h3>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-          <div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+          <div class="md:col-span-2">
             <label class="block text-sm font-medium text-blue-800">Nombre del Tutor</label>
             <input name="responsable_nombre" value="<?= h($empresa['responsable_nombre'] ?? '') ?>"
-              class="mt-1 w-full border border-blue-200 rounded-xl p-2 bg-white">
+              class="form-control border-blue-200 bg-white">
           </div>
           <div>
             <label class="block text-sm font-medium text-blue-800">NIF del Tutor</label>
             <input name="tutor_nif" value="<?= h($empresa['tutor_nif'] ?? '') ?>"
-              class="mt-1 w-full border border-blue-200 rounded-xl p-2 bg-white">
+              class="form-control border-blue-200 bg-white">
           </div>
-          <div>
+          <div class="md:col-span-2">
             <label class="block text-sm font-medium text-blue-800">Email del Tutor</label>
             <input name="responsable_email" type="email" value="<?= h($empresa['responsable_email'] ?? '') ?>"
-              class="mt-1 w-full border border-blue-200 rounded-xl p-2 bg-white">
+              class="form-control border-blue-200 bg-white">
           </div>
           <div>
             <label class="block text-sm font-medium text-blue-800">Teléfono del Tutor</label>
             <input name="responsable_telefono" value="<?= h($empresa['responsable_telefono'] ?? '') ?>"
-              class="mt-1 w-full border border-blue-200 rounded-xl p-2 bg-white">
+              class="form-control border-blue-200 bg-white">
           </div>
-          <div class="md:col-span-2">
+          <div class="md:col-span-3">
             <label class="block text-sm font-medium text-blue-800">Departamento donde realizan las prácticas</label>
             <input name="tutor_departamento" value="<?= h($empresa['tutor_departamento'] ?? '') ?>"
-              class="mt-1 w-full border border-blue-200 rounded-xl p-2 bg-white" placeholder="Ej: IT, Recursos Humanos, Contabilidad...">
+              class="form-control border-blue-200 bg-white" placeholder="Ej: IT, Recursos Humanos, Contabilidad...">
           </div>
         </div>
       </div>
@@ -490,21 +488,21 @@ require_once __DIR__ . '/../partials/_header.php';
       <!-- SECCIÓN 3: REPRESENTANTE LEGAL -->
       <div class="bg-gray-50/50 p-4 rounded-xl border space-y-4">
         <h3 class="font-bold text-gray-800 border-b pb-2">3. Datos del representante legal de la empresa</h3>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-          <div class="md:col-span-2">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+          <div class="md:col-span-3">
             <label class="block text-sm font-medium">Nombre Completo</label>
             <input name="rep_legal_nombre" value="<?= h($empresa['rep_legal_nombre'] ?? '') ?>"
-              class="mt-1 w-full border rounded-xl p-2 bg-white">
+              class="form-control">
           </div>
           <div>
             <label class="block text-sm font-medium">NIF</label>
             <input name="rep_legal_nif" value="<?= h($empresa['rep_legal_nif'] ?? '') ?>"
-              class="mt-1 w-full border rounded-xl p-2 bg-white">
+              class="form-control">
           </div>
-          <div>
+          <div class="md:col-span-2">
             <label class="block text-sm font-medium">Email</label>
             <input name="rep_legal_email" type="email" value="<?= h($empresa['rep_legal_email'] ?? '') ?>"
-              class="mt-1 w-full border rounded-xl p-2 bg-white">
+              class="form-control">
           </div>
         </div>
       </div>
@@ -526,12 +524,12 @@ require_once __DIR__ . '/../partials/_header.php';
             </label>
           </div>
         </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-64 overflow-auto p-2 border rounded-xl">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 max-h-64 overflow-auto p-2 border rounded-xl">
           <?php foreach ($cursos as $c): $cid=(int)$c['id']; ?>
-            <label class="inline-flex items-center gap-2">
+            <label class="inline-flex items-center gap-2 p-1 hover:bg-gray-100 rounded cursor-pointer">
               <input type="checkbox" name="cursos_ids[]" value="<?= $cid ?>"
                      <?= in_array($cid, $cursosActuales, true) ? 'checked' : '' ?>>
-              <span class="text-sm"><?= h($c['nombre']) ?></span>
+              <span class="text-sm truncate"><?= h($c['nombre']) ?></span>
             </label>
           <?php endforeach; ?>
           <?php if (!$cursos): ?>
@@ -549,8 +547,8 @@ require_once __DIR__ . '/../partials/_header.php';
       </div>
 
       <div class="flex gap-2">
-        <button class="rounded-xl bg-black text-white px-4 py-2">Guardar</button>
-        <a href="./index.php" class="rounded-xl px-4 py-2 border">Volver</a>
+        <button class="btn-save">Guardar cambios</button>
+        <a href="./index.php" class="btn-secondary">Volver</a>
       </div>
     </form>
 
@@ -579,7 +577,7 @@ require_once __DIR__ . '/../partials/_header.php';
                     <?php endif; ?>
                   </div>
                 </div>
-                <a class="px-3 py-1 rounded border" href="../alumnos/edit.php?id=<?= (int)$al['id'] ?>">Ver ficha</a>
+                <a class="btn-edit" href="../alumnos/edit.php?id=<?= (int)$al['id'] ?>">Ver ficha</a>
               </div>
 
               <div class="p-4 space-y-5">
@@ -644,7 +642,7 @@ require_once __DIR__ . '/../partials/_header.php';
 
                           <?php if ($hasEAR): ?>
                             <div>
-                              <button class="rounded-xl bg-black text-white px-4 py-2">Guardar RAs</button>
+                              <button class="btn-save">Guardar RAs</button>
                             </div>
                           <?php endif; ?>
                         </form>
@@ -700,12 +698,12 @@ require_once __DIR__ . '/../partials/_header.php';
           <label class="block text-sm font-medium">Fecha</label>
           <input type="datetime-local" name="fecha"
                  value="<?= h($isEdit ? dtlocal($contactoEdit['fecha']) : '') ?>"
-                 class="mt-1 w-full border rounded-xl p-2">
+                 class="form-control">
         </div>
 
         <div>
           <label class="block text-sm font-medium">Canal</label>
-          <select name="canal" class="mt-1 w-full border rounded-xl p-2">
+          <select name="canal" class="form-control">
             <?php
               $valCanal = $isEdit ? (string)$contactoEdit['canal'] : 'otros';
               foreach ($canalesPermitidos as $opt):
@@ -717,22 +715,22 @@ require_once __DIR__ . '/../partials/_header.php';
 
         <div class="md:col-span-2">
           <label class="block text-sm font-medium">Asunto *</label>
-          <input name="asunto" required value="<?= h($isEdit ? $contactoEdit['asunto'] : '') ?>" class="mt-1 w-full border rounded-xl p-2">
+          <input name="asunto" required value="<?= h($isEdit ? $contactoEdit['asunto'] : '') ?>" class="form-control">
         </div>
 
         <div class="md:col-span-2">
           <label class="block text-sm font-medium">Resumen</label>
-          <textarea name="resumen" rows="3" class="mt-1 w-full border rounded-xl p-2"><?= h($isEdit ? (string)$contactoEdit['resumen'] : '') ?></textarea>
+          <textarea name="resumen" rows="3" class="form-control !h-auto py-3"><?= h($isEdit ? (string)$contactoEdit['resumen'] : '') ?></textarea>
         </div>
 
         <div>
           <label class="block text-sm font-medium">Resultado</label>
-          <input name="resultado" value="<?= h($isEdit ? (string)$contactoEdit['resultado'] : '') ?>" class="mt-1 w-full border rounded-xl p-2">
+          <input name="resultado" value="<?= h($isEdit ? (string)$contactoEdit['resultado'] : '') ?>" class="form-control">
         </div>
 
         <div>
           <label class="block text-sm font-medium">Próxima acción</label>
-          <input name="proxima_accion" value="<?= h($isEdit ? (string)$contactoEdit['proxima_accion'] : '') ?>" class="mt-1 w-full border rounded-xl p-2">
+          <input name="proxima_accion" value="<?= h($isEdit ? (string)$contactoEdit['proxima_accion'] : '') ?>" class="form-control">
         </div>
 
         <div class="flex items-center gap-2 md:col-span-2">
@@ -743,9 +741,9 @@ require_once __DIR__ . '/../partials/_header.php';
         </div>
 
         <div class="md:col-span-2 flex gap-2">
-          <button class="rounded-xl bg-black text-white px-4 py-2"><?= $isEdit ? 'Guardar cambios' : 'Añadir contacto' ?></button>
+          <button class="btn-save"><?= $isEdit ? 'Guardar cambios' : 'Añadir contacto' ?></button>
           <?php if ($isEdit): ?>
-            <a href="./edit.php?id=<?= (int)$empresa['id'] ?>#contactos" class="rounded-xl px-4 py-2 border">Cancelar</a>
+            <a href="./edit.php?id=<?= (int)$empresa['id'] ?>#contactos" class="btn-secondary">Cancelar</a>
           <?php endif; ?>
         </div>
       </form>
@@ -789,13 +787,13 @@ require_once __DIR__ . '/../partials/_header.php';
                 <td class="p-3">
                   <div class="flex gap-2">
                     <?php if ($canEdit): ?>
-                      <a class="px-3 py-1 rounded border" href="./edit.php?id=<?= (int)$id ?>&edit_contacto=<?= (int)$c['id'] ?>#contactos">Editar</a>
+                      <a class="btn-edit" href="./edit.php?id=<?= (int)$id ?>&edit_contacto=<?= (int)$c['id'] ?>#contactos">Editar</a>
                       <form method="post" onsubmit="return confirm('¿Eliminar este contacto?')">
                         <input type="hidden" name="csrf" value="<?= h(csrf_token()) ?>">
                         <input type="hidden" name="id" value="<?= (int)$id ?>">
                         <input type="hidden" name="contacto_id" value="<?= (int)$c['id'] ?>">
                         <input type="hidden" name="accion" value="eliminar_contacto">
-                        <button class="px-3 py-1 rounded border" type="submit">Eliminar</button>
+                        <button class="btn-delete" type="submit">Eliminar</button>
                       </form>
                     <?php else: ?>
                       <span class="text-gray-400">—</span>

@@ -129,6 +129,57 @@ require_once __DIR__ . '/partials/_header.php';
     </div>
 </section>
 
+<!-- Sección 4: Gestión de Alumnos y Asignaciones -->
+<section id="alumnos" class="bg-white rounded-3xl shadow-sm border p-8 mt-8">
+    <div class="flex items-center gap-4 mb-6">
+        <div class="p-3 bg-blue-100 text-blue-700 rounded-2xl">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+            </svg>
+        </div>
+        <h2 class="text-2xl font-bold text-gray-800">Gestión de Alumnos y Asignaciones</h2>
+    </div>
+
+    <div class="space-y-6 text-sm text-gray-600">
+        <p>Al editar un alumno, encontrarás la sección <strong>"Formación en empresa"</strong>. Aquí puedes vincular al
+            alumno con una empresa para sus prácticas o formación dual.</p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="border border-green-200 bg-green-50 p-5 rounded-2xl">
+                <h3 class="font-bold text-green-900 mb-2 flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd"
+                            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                            clip-rule="evenodd" />
+                    </svg>
+                    Cerrar Asignación
+                </h3>
+                <p class="text-green-800">Utiliza el botón <strong>"Cerrar"</strong> cuando el alumno haya
+                    <em>finalizado</em> su periodo de prácticas en la empresa. Podrás especificar la fecha exacta de
+                    fin. Esta acción <strong>guarda la asignación en el histórico</strong> del alumno, permitiendo
+                    llevar un registro de todas las empresas por las que ha pasado.</p>
+            </div>
+
+            <div class="border border-red-200 bg-red-50 p-5 rounded-2xl">
+                <h3 class="font-bold text-red-900 mb-2 flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd"
+                            d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                            clip-rule="evenodd" />
+                    </svg>
+                    Eliminar Asignación
+                </h3>
+                <p class="text-red-800">Utiliza el botón <strong>"Eliminar asignación"</strong> únicamente cuando te
+                    hayas equivocado al asignar la empresa o el alumno finalmente no haya ido. Esto borrará por completo
+                    el registro de la base de datos, <strong>no quedará rastro en el histórico</strong>.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+
 </div>
 
 <div class="mt-12 p-8 bg-gray-900 rounded-3xl text-center text-white">

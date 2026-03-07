@@ -151,7 +151,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   }
 }
 $pageTitle = 'Editar usuario';
-$mainClass = 'max-w-xl';
+$mainClass = 'max-w-3xl';
 require_once __DIR__ . '/../../partials/_header.php';
 ?>
 <h1 class="text-xl font-semibold mb-4">Editar usuario #<?= (int) $usuario['id'] ?></h1>
@@ -167,32 +167,28 @@ require_once __DIR__ . '/../../partials/_header.php';
   <div class="grid grid-cols-2 gap-3">
     <div>
       <label class="block text-sm font-medium">Nombre *</label>
-      <input name="nombre" value="<?= htmlspecialchars($usuario['nombre']) ?>" required
-        class="mt-1 w-full border rounded-xl p-2">
+      <input name="nombre" value="<?= htmlspecialchars($usuario['nombre']) ?>" required class="form-control">
     </div>
     <div>
       <label class="block text-sm font-medium">Apellidos</label>
-      <input name="apellidos" value="<?= htmlspecialchars($usuario['apellidos'] ?? '') ?>"
-        class="mt-1 w-full border rounded-xl p-2">
+      <input name="apellidos" value="<?= htmlspecialchars($usuario['apellidos'] ?? '') ?>" class="form-control">
     </div>
   </div>
 
   <div class="grid grid-cols-2 gap-3">
     <div>
       <label class="block text-sm font-medium">Email *</label>
-      <input name="email" type="email" value="<?= htmlspecialchars($usuario['email']) ?>" required
-        class="mt-1 w-full border rounded-xl p-2">
+      <input name="email" type="email" value="<?= htmlspecialchars($usuario['email']) ?>" required class="form-control">
     </div>
     <div>
       <label class="block text-sm font-medium">Teléfono</label>
-      <input name="telefono" value="<?= htmlspecialchars($usuario['telefono'] ?? '') ?>"
-        class="mt-1 w-full border rounded-xl p-2">
+      <input name="telefono" value="<?= htmlspecialchars($usuario['telefono'] ?? '') ?>" class="form-control">
     </div>
   </div>
 
   <div>
     <label class="block text-sm font-medium mb-1">Centro (obligatorio si es profesor)</label>
-    <select name="centro_id" class="mt-1 w-full border rounded-xl p-2">
+    <select name="centro_id" class="form-control">
       <option value="0">— Sin centro —</option>
       <?php foreach ($centros as $c): ?>
         <option value="<?= (int) $c['id'] ?>" <?= ((int) ($usuario['centro_id'] ?? 0) === (int) $c['id']) ? 'selected' : '' ?>>
@@ -204,7 +200,7 @@ require_once __DIR__ . '/../../partials/_header.php';
 
   <div>
     <label class="block text-sm font-medium mb-1">Curso / familia (obligatorio si es profesor)</label>
-    <select name="curso_id" class="mt-1 w-full border rounded-xl p-2">
+    <select name="curso_id" class="form-control">
       <option value="0">— Sin curso —</option>
       <?php foreach ($cursos as $c):
         $cid = (int) $c['id']; ?>
@@ -218,11 +214,11 @@ require_once __DIR__ . '/../../partials/_header.php';
   <div class="grid grid-cols-2 gap-3">
     <div>
       <label class="block text-sm font-medium">Nueva contraseña (opcional)</label>
-      <input name="password" type="password" class="mt-1 w-full border rounded-xl p-2">
+      <input name="password" type="password" class="form-control">
     </div>
     <div>
       <label class="block text-sm font-medium">Repite nueva contraseña</label>
-      <input name="password2" type="password" class="mt-1 w-full border rounded-xl p-2">
+      <input name="password2" type="password" class="form-control">
     </div>
   </div>
 
@@ -247,8 +243,8 @@ require_once __DIR__ . '/../../partials/_header.php';
   </div>
 
   <div class="flex gap-2">
-    <button class="rounded-xl bg-black text-white px-4 py-2">Guardar</button>
-    <a href="./index.php" class="rounded-xl px-4 py-2 border">Cancelar</a>
+    <button class="btn-save">Guardar cambios</button>
+    <a href="./index.php" class="btn-secondary">Volver</a>
   </div>
 </form>
 </main>

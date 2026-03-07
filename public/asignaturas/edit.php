@@ -238,7 +238,7 @@ require_once __DIR__ . '/../partials/_header.php';
 
   <div>
     <label class="block text-sm font-medium mb-1">Grados *</label>
-    <select name="cursos[]" multiple required class="mt-1 w-full border rounded-xl p-2" size="6">
+    <select name="cursos[]" multiple required class="form-control" size="6">
       <?php
       $selecs = array_map('intval', $data['cursos'] ?? []);
       foreach ($cursos as $c):
@@ -258,42 +258,37 @@ require_once __DIR__ . '/../partials/_header.php';
   <div class="grid grid-cols-1 md-grid-cols-2 md:grid-cols-2 gap-3">
     <div>
       <label class="block text-sm font-medium">Nombre *</label>
-      <input name="nombre" value="<?= h($data['nombre']) ?>" required class="mt-1 w-full border rounded-xl p-2">
+      <input name="nombre" value="<?= h($data['nombre']) ?>" required class="form-control">
     </div>
     <div>
       <label class="block text-sm font-medium">Código</label>
-      <input name="codigo" value="<?= h($data['codigo']) ?>" class="mt-1 w-full border rounded-xl p-2"
-        placeholder="p.ej. SIGDAW2">
+      <input name="codigo" value="<?= h($data['codigo']) ?>" class="form-control" placeholder="p.ej. SIGDAW2">
     </div>
   </div>
 
   <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
     <div>
       <label class="block text-sm font-medium">ECTS</label>
-      <input name="ects" inputmode="decimal" value="<?= h($data['ects']) ?>" class="mt-1 w-full border rounded-xl p-2"
-        placeholder="6 o 6.0">
+      <input name="ects" inputmode="decimal" value="<?= h($data['ects']) ?>" class="form-control" placeholder="6 o 6.0">
     </div>
     <div>
       <label class="block text-sm font-medium">Horas</label>
-      <input name="horas" type="number" min="0" max="2000" value="<?= h($data['horas']) ?>"
-        class="mt-1 w-full border rounded-xl p-2">
+      <input name="horas" type="number" min="0" max="2000" value="<?= h($data['horas']) ?>" class="form-control">
     </div>
     <div>
       <label class="block text-sm font-medium">Semestre</label>
-      <input type="number" name="semestre" min="1" max="10" value="<?= h($data['semestre']) ?>"
-        class="mt-1 w-full border rounded-xl p-2">
+      <input type="number" name="semestre" min="1" max="10" value="<?= h($data['semestre']) ?>" class="form-control">
     </div>
     <div>
       <label class="block text-sm font-medium">Nivel (Curso) *</label>
-      <input type="number" name="nivel" min="1" max="10" required value="<?= h($data['nivel']) ?>"
-        class="mt-1 w-full border rounded-xl p-2" placeholder="p.ej. 1 para 1º, 2 para 2º...">
+      <input type="number" name="nivel" min="1" max="10" required value="<?= h($data['nivel']) ?>" class="form-control"
+        placeholder="p.ej. 1 para 1º, 2 para 2º...">
     </div>
   </div>
 
   <div>
     <label class="block text-sm font-medium">Descripción</label>
-    <textarea name="descripcion" rows="4"
-      class="mt-1 w-full border rounded-xl p-2"><?= h($data['descripcion']) ?></textarea>
+    <textarea name="descripcion" rows="4" class="form-control"><?= h($data['descripcion']) ?></textarea>
   </div>
 
   <div class="flex items-center gap-2">
@@ -303,8 +298,8 @@ require_once __DIR__ . '/../partials/_header.php';
   </div>
 
   <div class="flex gap-2">
-    <button class="rounded-xl bg-black text-white px-4 py-2">Guardar</button>
-    <a href="./index.php" class="rounded-xl px-4 py-2 border">Volver</a>
+    <button class="btn-save">Guardar cambios</button>
+    <a href="./index.php" class="btn-secondary">Volver</a>
   </div>
 </form>
 </main>

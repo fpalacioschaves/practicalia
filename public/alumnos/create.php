@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   }
 }
 $pageTitle = 'Nuevo alumno';
-$mainClass = 'max-w-xl';
+$mainClass = 'max-w-4xl';
 require_once __DIR__ . '/../partials/_header.php';
 ?>
 <h1 class="text-xl font-semibold mb-4">Nuevo alumno</h1>
@@ -58,48 +58,48 @@ require_once __DIR__ . '/../partials/_header.php';
   <div class="grid grid-cols-2 gap-3">
     <div>
       <label class="block text-sm font-medium">Nombre *</label>
-      <input name="nombre" required class="mt-1 w-full border rounded-xl p-2">
+      <input name="nombre" required class="form-control">
     </div>
     <div>
       <label class="block text-sm font-medium">Apellidos *</label>
-      <input name="apellidos" required class="mt-1 w-full border rounded-xl p-2">
+      <input name="apellidos" required class="form-control">
     </div>
   </div>
 
   <div class="grid grid-cols-2 gap-3">
     <div>
       <label class="block text-sm font-medium">Email</label>
-      <input name="email" type="email" class="mt-1 w-full border rounded-xl p-2">
+      <input name="email" type="email" class="form-control">
     </div>
     <div>
       <label class="block text-sm font-medium">Teléfono</label>
-      <input name="telefono" class="mt-1 w-full border rounded-xl p-2">
+      <input name="telefono" class="form-control">
     </div>
   </div>
 
   <div class="grid grid-cols-3 gap-3">
     <div>
       <label class="block text-sm font-medium">DNI</label>
-      <input name="dni" class="mt-1 w-full border rounded-xl p-2">
+      <input name="dni" class="form-control">
     </div>
     <div>
       <label class="block text-sm font-medium">Seg Social</label>
-      <input name="seg_social" class="mt-1 w-full border rounded-xl p-2">
+      <input name="seg_social" class="form-control">
     </div>
     <div>
       <label class="block text-sm font-medium">Provincia/Localidad</label>
-      <input name="provincia_localidad" class="mt-1 w-full border rounded-xl p-2">
+      <input name="provincia_localidad" class="form-control">
     </div>
   </div>
 
   <div class="grid grid-cols-2 gap-3">
     <div>
       <label class="block text-sm font-medium">Fecha de nacimiento</label>
-      <input name="fecha_nacimiento" type="date" class="mt-1 w-full border rounded-xl p-2">
+      <input name="fecha_nacimiento" type="date" class="form-control">
     </div>
     <div>
       <label class="block text-sm font-medium">Curso</label>
-      <select name="curso_id" class="mt-1 w-full border rounded-xl p-2">
+      <select name="curso_id" class="form-control">
         <option value="0">— Sin curso —</option>
         <?php foreach ($cursos as $c): ?>
           <option value="<?= (int) $c['id'] ?>"><?= htmlspecialchars($c['nombre']) ?></option>
@@ -110,8 +110,7 @@ require_once __DIR__ . '/../partials/_header.php';
 
   <div>
     <label class="block text-sm font-medium">Notas</label>
-    <textarea name="notas" rows="4" class="mt-1 w-full border rounded-xl p-2"
-      placeholder="Observaciones, necesidades, etc."></textarea>
+    <textarea name="notas" rows="4" class="form-control" placeholder="Observaciones, necesidades, etc."></textarea>
   </div>
 
   <div class="flex items-center gap-2">
@@ -121,8 +120,8 @@ require_once __DIR__ . '/../partials/_header.php';
   </div>
 
   <div class="flex gap-2">
-    <button class="rounded-xl bg-black text-white px-4 py-2">Guardar</button>
-    <a href="./index.php" class="rounded-xl px-4 py-2 border">Cancelar</a>
+    <button class="btn-add">Crear alumno</button>
+    <a href="./index.php" class="btn-secondary">Cancelar</a>
   </div>
 </form>
 <?php require_once __DIR__ . '/../partials/_footer.php'; ?>
