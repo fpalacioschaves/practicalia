@@ -107,11 +107,10 @@ require_once __DIR__ . '/../../partials/_header.php';
 ?>
 <div class="mb-4 flex items-center justify-between">
   <form class="flex gap-2" method="get">
-    <input name="q" value="<?= h($search) ?>" class="rounded-xl border border-gray-300 p-2"
-      placeholder="Buscar (nombre, apellidos, email)">
-    <button class="rounded-xl bg-black text-white px-4">Buscar</button>
+    <input name="q" value="<?= h($search) ?>" class="form-control" placeholder="Buscar (nombre, apellidos, email)">
+    <button class="btn-primary">Buscar</button>
     <?php if ($hasSearch): ?>
-      <a href="./index.php" class="rounded-xl border px-3 py-2 text-sm">Limpiar</a>
+      <a href="./index.php" class="btn-secondary px-3">Limpiar</a>
     <?php endif; ?>
   </form>
   <a href="./create.php" class="rounded-xl bg-black text-white px-4 py-2">Nuevo usuario</a>

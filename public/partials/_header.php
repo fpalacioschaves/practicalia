@@ -7,6 +7,12 @@ declare(strict_types=1);
  */
 $pageTitle = $pageTitle ?? 'Practicalia';
 $mainClass = $mainClass ?? 'max-w-7xl';
+
+// Detecta base URL según entorno (local vs hosting)
+$scriptName = $_SERVER['SCRIPT_NAME'] ?? '';
+$publicPos = strpos($scriptName, '/public/');
+$projectRoot = ($publicPos !== false) ? substr($scriptName, 0, $publicPos) : '';
+$base = $projectRoot . '/public';
 ?>
 <!doctype html>
 <html lang="es">
@@ -17,7 +23,8 @@ $mainClass = $mainClass ?? 'max-w-7xl';
         <?= htmlspecialchars($pageTitle) ?> — Practicalia
     </title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="/practicalia/public/css/tailwind.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tom-select@2.4.1/dist/css/tom-select.css" rel="stylesheet">
+    <link href="<?= $base ?>/css/tailwind.css?v=<?= filemtime(__DIR__ . '/../css/tailwind.css') ?>" rel="stylesheet">
 </head>
 
 <body class="bg-gray-50 min-h-screen text-gray-900">

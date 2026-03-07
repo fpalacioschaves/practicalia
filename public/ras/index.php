@@ -177,12 +177,12 @@ require_once __DIR__ . '/../partials/_header.php';
 <!-- Filtros -->
 <form method="get" class="bg-white p-4 rounded-2xl shadow mb-4 grid grid-cols-1 md:grid-cols-4 gap-3">
   <div>
-    <label class="block text-sm font-medium">Buscar</label>
-    <input name="q" value="<?= h($q) ?>" class="mt-1 w-full border rounded-xl p-2" placeholder="Código, título o texto">
+    <label class="block text-sm font-medium mb-1">Buscar</label>
+    <input name="q" value="<?= h($q) ?>" class="form-control w-full" placeholder="Código, título o texto">
   </div>
   <div>
-    <label class="block text-sm font-medium">Grado</label>
-    <select name="curso_id" class="mt-1 w-full border rounded-xl p-2" onchange="this.form.submit()">
+    <label class="block text-sm font-medium mb-1">Grado</label>
+    <select name="curso_id" class="form-control w-full" onchange="this.form.submit()">
       <option value="">— Todos —</option>
       <?php foreach ($cursos as $c): ?>
         <option value="<?= (int) $c['id'] ?>" <?= ($cursoIdF && (int) $c['id'] === $cursoIdF ? 'selected' : '') ?>>
@@ -195,8 +195,8 @@ require_once __DIR__ . '/../partials/_header.php';
     </select>
   </div>
   <div>
-    <label class="block text-sm font-medium">Asignatura</label>
-    <select name="asignatura_id" class="mt-1 w-full border rounded-xl p-2">
+    <label class="block text-sm font-medium mb-1">Asignatura</label>
+    <select name="asignatura_id" class="form-control w-full">
       <option value="">— Todas —</option>
       <?php foreach ($asignaturasFiltro as $a): ?>
         <option value="<?= (int) $a['id'] ?>" <?= ($asigIdF && (int) $a['id'] === $asigIdF ? 'selected' : '') ?>>
@@ -209,8 +209,8 @@ require_once __DIR__ . '/../partials/_header.php';
     </select>
   </div>
   <div class="flex items-end gap-2">
-    <button class="px-4 py-2 rounded-xl border">Filtrar</button>
-    <a href="./index.php" class="px-4 py-2 rounded-xl border">Limpiar</a>
+    <button class="btn-secondary px-6">Filtrar</button>
+    <a href="./index.php" class="btn-secondary px-6">Limpiar</a>
   </div>
 </form>
 

@@ -8,12 +8,6 @@ $user = current_user();
 $isAdmin = require_role('admin');
 $isProfesor = require_role('profesor');
 
-// Detecta base URL según entorno (local vs hosting)
-$scriptName = $_SERVER['SCRIPT_NAME'] ?? '';
-$publicPos = strpos($scriptName, '/public/');
-$projectRoot = ($publicPos !== false) ? substr($scriptName, 0, $publicPos) : '';
-
-$base = $projectRoot . '/public';
 $apiBase = $projectRoot . '/api';
 
 $path = $_SERVER['SCRIPT_NAME'] ?? '';

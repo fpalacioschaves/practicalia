@@ -40,9 +40,7 @@ require_once __DIR__ . '/partials/_header.php';
     <div class="mt-3">
       <a href="./alumnos/index.php" class="text-sm text-gray-700 hover:underline">Ver listado</a>
     </div>
-    <div class="mt-2 text-xs text-gray-400">
-      <?= $isAdmin ? 'Total en el sistema' : 'Solo los de tus cursos' ?>
-    </div>
+
   </div>
 
   <!-- Empresas -->
@@ -87,9 +85,7 @@ require_once __DIR__ . '/partials/_header.php';
     <div class="mt-3">
       <a href="./asignaturas/index.php" class="text-sm text-gray-700 hover:underline">Ver asignaturas</a>
     </div>
-    <div class="mt-2 text-xs text-gray-400">
-      <?= $isAdmin ? 'Total en el sistema' : 'Solo tus grados' ?>
-    </div>
+
   </div>
 
   <!-- Resultados de Aprendizaje -->
@@ -99,9 +95,7 @@ require_once __DIR__ . '/partials/_header.php';
     <div class="mt-3">
       <a href="./ras/index.php" class="text-sm text-gray-700 hover:underline">Ver RAs</a>
     </div>
-    <div class="mt-2 text-xs text-gray-400">
-      <?= $isAdmin ? 'Total en el sistema' : 'Solo los de tus grados' ?>
-    </div>
+
   </div>
 
   <!-- Centros -->
